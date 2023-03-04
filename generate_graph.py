@@ -12,8 +12,8 @@ from part0 import RecommendationGraph, _Vertex
 # The higher the number, the higher chance that more duplicate anime shows will appear, from 0.0 to 1.0
 TEXT_SIMILARITY_DEGREE = 0.8
 # Limits to constrain the graph to a small enough size for a feasible running-time.
-ANIME_DATASET_LIMIT = 2
-IMDB_DATASET_LIMIT = 2
+ANIME_DATASET_LIMIT = 20000
+IMDB_DATASET_LIMIT = 10
 
 
 def lag_test() -> dict:
