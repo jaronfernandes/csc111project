@@ -33,6 +33,9 @@ def calculate_connection(item1: str, item2: str, graph: RecommendationGraph) \
         -> tuple[float, float, float, float, float]:
     """sample calculate connection thing.
 
+
+    item1 is the anime name, item2 is the IMDB name, and graph is the RecommendationGraph.
+
     algorithm weights:
     genres: 0.3, calculated using difflib
     rating: 0.3
@@ -56,11 +59,13 @@ def calculate_connection(item1: str, item2: str, graph: RecommendationGraph) \
     total -= year
 
     if v1.rating is not None and v2.rating is not None:
-        rating = 0.3 * abs((10 - (v1.rating - v2.rating)) / 10)  # divide it by 10 because rating is from 0.0 to 10.0
+        # Multiply v1.rating by 2 because anime vertices are out of 5 while IMDB are out of 10.
+        # Divide it by 10 because rating is from 0.0 to 10.0
+        rating = 0.3 * abs((10 - ((v1.rating * 2) - v2.rating)) / 10)
         total -= rating
     else:
         rating = 0
-        total *= 1 / 0.7
+        total = (total - 0.3) * (1 / 0.7)
 
     return (total, synopsis, genres, year, rating)
 
