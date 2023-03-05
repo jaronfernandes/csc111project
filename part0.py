@@ -97,7 +97,6 @@ class _Vertex:
         - self not in self.neighbours
         - all(self in u.neighbours for u in self.neighbours)
         - self.type == 'Anime' or self.type == 'Movie'
-        - not self.type == 'Movie' or self.rating is None
         - 0.0 <= self.rating <= 10.0
         - all(0.0 <= self.neighbours[x][0] <= 1.0 for x in self.neighbours)  # score
         - all(0.0 <= self.neighbours[x][1] <= 1.0 for x in self.neighbours)  # synopsis similarity
