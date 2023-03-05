@@ -50,6 +50,9 @@ def calculate_connection(item1: str, item2: str, graph: RecommendationGraph) \
     v1, v2 = graph.get_vertex(item1), graph.get_vertex(item2)
     total = 1.0
 
+    # FIXME: Could replace .ratio() with .real_quick_ratio() whenever it is called to
+    #  make it more efficient, BUT then it doesn't become as accurate (and it's worse as many
+    #  will return a very large similarity rating, even if their similarity is only around 7%).
     genres = 0.3 * SequenceMatcher(None, v1.genres, v2.genres).ratio()
     total -= genres
 
