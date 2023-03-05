@@ -16,17 +16,6 @@ ANIME_DATASET_LIMIT = 20000
 IMDB_DATASET_LIMIT = 10
 
 
-def lag_test() -> dict:
-    """tesing"""
-    thing = {}
-
-    for i in range(1, 20001):
-        thing[i] = _Vertex(i, 'dank', 'meme', ['dank', 'memes'], 'oof', 10.0)
-        print(i)
-
-    return thing
-
-
 def extract_animes(anime_file_one: str, anime_file_two: str, graph: RecommendationGraph) -> (RecommendationGraph, list):
     """extract animes"""
     # TODO/FIXME: In case we want to clean up the code and handle it in helper functions
