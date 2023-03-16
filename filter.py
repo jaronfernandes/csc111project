@@ -12,17 +12,17 @@ for line in open('datasets/IMDB_movie_details.json', 'r'):
 #     print(movie_details)
 
 
-def check_in_thing() -> set[str]:
+def check_in_thing() -> dict:
     """help"""
-    set_thing = set()
+    json_dict = {}
 
-    for x in json_file:
-        set_thing.add(x['movie_id'])
+    for movie in json_file:
+        json_dict[movie['movie_id']] = movie
 
-    return set_thing
+    return json_dict
 
 
-movie_id_set = check_in_thing()
+movie_id_dict = check_in_thing()
 
 
 with open("datasets/title.basics.tsv") as fd:
@@ -33,12 +33,20 @@ with open("datasets/title.basics.tsv") as fd:
     row_list = []
 
     for row in rd:
-        if row[0][0:2] == 'tt' and row[0] in movie_id_set:
-            row_list.append(row)
+        if row[0][0:2] == 'tt' and row[1] == 'movie' and row[0] in movie_id_dict:
+            movie_id_dict[row[0]]['title'] = row[3]
+            movie_id_dict[row[0]].pop('plot_summary')
+            movie_id_dict[row[0]].pop('duration')
+        elif row[0][0:2] == 'tt' and row[0] in movie_id_dict:
+            movie_id_dict.pop(row[0])
 
-    with open("datasets/filtered_basics.txt", 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(row_list)
+    with open('datasets/final_movies.json', 'w') as outfile:
+        json.dump(list(movie_id_dict.values()), outfile, indent=4)
+# print(movie_id_dict)
+
+    # with open("datasets/filtered_basics.txt", 'w', newline='') as file:
+    #     writer = csv.writer(file)
+    #     writer.writerows(row_list)
 
 # with open('datasets/title.basics.tsv') as f:
 #     basics = {str.strip(line.lower()) for line in f}
