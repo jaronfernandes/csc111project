@@ -1,0 +1,6 @@
+tconst	titleType	primaryTitle	originalTitle	isAdult	startYear	endYear	runtimeMinutes	genres
+tt0012349,movie,The Kid,The Kid,0,1921,\N,68,"Comedy,Drama,Family"
+tt0015864,movie,The Gold Rush,The Gold Rush,0,1925,\N,95,"Adventure,Comedy,Drama"
+tt0017136,movie,Metropolis,Metropolis,0,1927,\N,153,"Drama,Sci-Fi"
+tt0017925,movie,The General,The General,0,1926,\N,67,"Action,Adventure,Comedy"
+tt0018455,movie,Sunrise,Sunrise: A Song of Two Humans,0,1927,\N,94,"Drama,Romance"

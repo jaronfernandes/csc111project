@@ -135,7 +135,7 @@ def load_graph(imdb_file: str,
         From there, we take the successful matches we found (i.e. it IS in the TV series.csv dataset), and use those as
         the ONLY IMDB vertices.
 
-    >>> test_graph = load_graph('datasets/TV Series.csv', 'datasets/Anime_small.csv')
+    >>> test_graph = load_graph('datasets/raw/TV Series.csv', 'datasets/raw/Anime_small.csv')
     >>> [anime_show for anime_show in test_graph._vertices]
     ['Demon Slayer: Kimetsu no Yaiba - Entertainment District Arc', 'Fruits Basket the Final Season', 'Mo Dao Zu Shi 3',
      'Fullmetal Alchemist: Brotherhood', 'Attack on Titan 3rd Season: Part II', 'Jujutsu Kaisen', 'Attack on Titan The
@@ -148,7 +148,7 @@ def load_graph(imdb_file: str,
     >>> [[(neighbour.item, test_graph._vertices[vertex].neighbours[neighbour])
     ...     for neighbour in test_graph._vertices[vertex].neighbours] for vertex in test_graph._vertices]
     ... # (too long to show)
-    >>> test_graph2 = load_graph('datasets/TV Series.csv', 'datasets/Anime.csv')
+    >>> test_graph2 = load_graph('datasets/raw/TV Series.csv', 'datasets/raw/Anime.csv')
     >>> [anime_show for anime_show in test_graph2._vertices]
     ... # (too long to show)
     >>> [test_graph2._vertices[vertex].neighbours for vertex in test_graph2._vertices]
