@@ -1,5 +1,13 @@
 [
     {
+        "title": "Rick and Morty",
+        "release_date": "2013",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 9.1,
+        "plot_summary": "An animated series that follows the exploits of a super scientist and his not-so-bright grandson.",
+        "tags": []
+    },
+    {
         "title": "Chainsaw Man",
         "release_date": "2022",
         "genre": "Animation, Action, Adventure",
@@ -14,6 +22,14 @@
             " Demons",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Shingeki no Kyojin",
+        "release_date": "2013",
+        "genre": "Animation, Action, Adventure",
+        "rating": 9.0,
+        "plot_summary": "After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.",
+        "tags": []
     },
     {
         "title": "Bleach: Sennen Kessen-hen",
@@ -33,6 +49,14 @@
             " War",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Kimetsu no Yaiba",
+        "release_date": "2019",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.7,
+        "plot_summary": "A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon slowly. Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.",
+        "tags": []
     },
     {
         "title": "Monster",
@@ -64,6 +88,14 @@
         ]
     },
     {
+        "title": "Invincible",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.7,
+        "plot_summary": "An adult animated series based on the Skybound/Image comic about a teenager whose father is the most powerful superhero on the planet.",
+        "tags": []
+    },
+    {
         "title": "Cyberpunk: Edgerunners",
         "release_date": "2022",
         "genre": "Animation, Action, Adventure",
@@ -74,6 +106,14 @@
             " Cyberpunk",
             " Based on a Video Game"
         ]
+    },
+    {
+        "title": "SPY\u00d7FAMILY",
+        "release_date": "2022",
+        "genre": "Animation, Action, Comedy",
+        "rating": 8.5,
+        "plot_summary": "A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.",
+        "tags": []
     },
     {
         "title": "Vinland Saga",
@@ -186,6 +226,14 @@
         ]
     },
     {
+        "title": "Hagane no renkinjutsushi",
+        "release_date": "2009",
+        "genre": "Animation, Action, Adventure",
+        "rating": 9.1,
+        "plot_summary": "Two brothers search for a Philosopher's Stone after an attempt to revive their deceased mother goes awry and leaves them in damaged physical forms.",
+        "tags": []
+    },
+    {
         "title": "Black Clover",
         "release_date": "2017",
         "genre": "Animation, Action, Adventure",
@@ -202,6 +250,14 @@
             " Based on a Manga",
             " Violence"
         ]
+    },
+    {
+        "title": "Kenpuu Denki Berserk",
+        "release_date": "1997",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.7,
+        "plot_summary": "Guts is a skilled swordsman who joins forces with a mercenary group named 'The Band of the Hawk', lead by the charismatic Griffith, and fights with them as they battle their way into the royal court.",
+        "tags": []
     },
     {
         "title": "Dragon Ball Z",
@@ -267,6 +323,14 @@
             "",
             " Sexual Content"
         ]
+    },
+    {
+        "title": "Gokushufudo",
+        "release_date": "2021",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.3,
+        "plot_summary": "A retired gangster spends his time as a househusband carrying out home chores.",
+        "tags": []
     },
     {
         "title": "Boruto: Naruto Next Generations",
@@ -402,6 +466,14 @@
         ]
     },
     {
+        "title": "Nanatsu no taizai",
+        "release_date": "2014",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "The story of the Seven Deadly Sins, a group of warriors who were wrongly accused of a crime they didn't commit and went on a quest to vindicate themselves.",
+        "tags": []
+    },
+    {
         "title": "Made in Abyss",
         "release_date": "2017",
         "genre": "Animation, Action, Adventure",
@@ -426,6 +498,14 @@
             " Based on a Manga",
             " Explicit Violence"
         ]
+    },
+    {
+        "title": "Sono Bisque Doll wa Koi wo Suru",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 8.1,
+        "plot_summary": "Traumatized by a childhood incident with a friend who took exception to his love of traditional dolls, doll-artisan hopeful Wakana Gojou passes his days as a loner, finding solace in a room at his high school.",
+        "tags": []
     },
     {
         "title": "Sword Art Online",
@@ -456,6 +536,38 @@
             "",
             " Suicide"
         ]
+    },
+    {
+        "title": "Teenage Mutant Ninja Turtles",
+        "release_date": "2012",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "Four ninja turtles, mutated by a mysterious alien substance, must rise up out of the sewers and defend their city against evil forces from both the past and present.",
+        "tags": []
+    },
+    {
+        "title": "Hajime no ippo",
+        "release_date": "2000",
+        "genre": "Animation, Action, Comedy",
+        "rating": 8.8,
+        "plot_summary": "Ippo, a teenage boy with a pure heart and unrelenting determination, discovers a passion for boxing after veteran fighter Takamura saves him from bullies.",
+        "tags": []
+    },
+    {
+        "title": "Yakusoku no Neverland",
+        "release_date": "2019",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.3,
+        "plot_summary": "When three gifted kids at an isolated idyllic orphanage discover the secret and sinister purpose they were raised for, they look for a way to escape from their evil caretaker and lead the other children in a risky escape plan.",
+        "tags": []
+    },
+    {
+        "title": "Fumetsu no Anata e",
+        "release_date": "2021",
+        "genre": "Animation, Adventure, Drama",
+        "rating": 8.5,
+        "plot_summary": "A lonely boy wandering the Arctic regions of North America meets a wolf, and the two become fast friends, depending on each other to survive the harsh environment. But the boy has a history, and the wolf is more than meets the eye as well.",
+        "tags": []
     },
     {
         "title": "The Eminence in Shadow",
@@ -497,6 +609,14 @@
             " Roommates",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Re:Zero kara hajimeru isekai seikatsu",
+        "release_date": "2016",
+        "genre": "Animation, Adventure, Drama",
+        "rating": 8.1,
+        "plot_summary": "After being suddenly transported to another world, Subaru Natsuki and his new female partner are brutally murdered. However, Subaru awakens to a familiar scene, meeting the same girl again. The day begins to mysteriously repeat itself.",
+        "tags": []
     },
     {
         "title": "X-Men",
@@ -586,6 +706,22 @@
         ]
     },
     {
+        "title": "Teenage Mutant Ninja Turtles",
+        "release_date": "1987",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "Mutant heroes live in New York sewers and train in martial arts to protect the city from crime.",
+        "tags": []
+    },
+    {
+        "title": "Shigatsu wa kimi no uso",
+        "release_date": "2014",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 8.6,
+        "plot_summary": "A piano prodigy who lost his ability to play after suffering a traumatic event in his childhood is forced back into the spotlight by an eccentric girl with a secret of her own.",
+        "tags": []
+    },
+    {
         "title": "Star Wars: Visions",
         "release_date": "2021",
         "genre": "Animation, Action, Adventure",
@@ -607,6 +743,22 @@
             " Based on a Movie",
             " Violence"
         ]
+    },
+    {
+        "title": "Kangoku gakuen",
+        "release_date": "2015",
+        "genre": "Animation, Comedy",
+        "rating": 7.6,
+        "plot_summary": "Hachimitsu Academy, once an all-girls school, has become co-ed, and teen Kiyoshi is one of five boys to enroll. When he is caught peeping, Kiyoshi is sent to the schools prison, where his punishment is carried out.",
+        "tags": []
+    },
+    {
+        "title": "Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.4,
+        "plot_summary": "In the city of Orario, where adventurers hunt monsters in a place called Dungeon, Bell Cranel's life was saved by a swordswoman, who is then become the source of Bell's determination to get stronger.",
+        "tags": []
     },
     {
         "title": "Fire Force",
@@ -657,6 +809,30 @@
         ]
     },
     {
+        "title": "Dota: Dragon's Blood",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.8,
+        "plot_summary": "After encounters with a dragon and a princess on her own mission, a Dragon Knight becomes embroiled in events larger than he could have ever imagined.",
+        "tags": []
+    },
+    {
+        "title": "86",
+        "release_date": "2021",
+        "genre": "Animation, Action, Drama",
+        "rating": 8.2,
+        "plot_summary": "The Republic of San Magnolia is at war with its neighboring country, the Empire of Giad. Both sides use unmanned drones to conduct a \"war without casualties\". The story follows Lena as she commands a squad of drones called the 86.",
+        "tags": []
+    },
+    {
+        "title": "Meitantei Conan",
+        "release_date": "1996",
+        "genre": "Animation, Action, Comedy",
+        "rating": 8.5,
+        "plot_summary": "The cases of a detective whose physical age was chemically reversed to that of a prepubescent boy but must hide his true mental development.",
+        "tags": []
+    },
+    {
         "title": "Blade Runner: Black Lotus",
         "release_date": "2021",
         "genre": "Animation, Action, Drama",
@@ -688,6 +864,14 @@
             " Based on a Manga",
             " Explicit Violence"
         ]
+    },
+    {
+        "title": "Teenage Mutant Ninja Turtles",
+        "release_date": "2003",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.8,
+        "plot_summary": "The continuing adventures of a quartet of turtle superheroes.",
+        "tags": []
     },
     {
         "title": "Dororo",
@@ -730,6 +914,22 @@
         ]
     },
     {
+        "title": "Daria",
+        "release_date": "1997",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 8.1,
+        "plot_summary": "A smart and cynical girl goes through teenage life as a proud outsider in a world of mainly idiotic adolescents and condescending adults.",
+        "tags": []
+    },
+    {
+        "title": "Hagane no renkinjutsushi",
+        "release_date": "2003",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.5,
+        "plot_summary": "When a failed alchemical ritual leaves brothers Edward and Alphonse Elric with severely damaged bodies, they begin searching for the one thing that can save them: the fabled philosopher's stone.",
+        "tags": []
+    },
+    {
         "title": "Psycho-Pass",
         "release_date": "2012",
         "genre": "Animation, Action, Crime",
@@ -751,6 +951,22 @@
             " Original Work",
             " Explicit Violence"
         ]
+    },
+    {
+        "title": "Tate no Yuusha no Nariagari",
+        "release_date": "2019",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.0,
+        "plot_summary": "A gamer is magically summoned into a parallel universe, where he is chosen as one of four heroes destined to save the world from its prophesied doom.",
+        "tags": []
+    },
+    {
+        "title": "Transformers",
+        "release_date": "1984",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.0,
+        "plot_summary": "Two opposing factions of transforming alien robots engage in a battle that has the fate of Earth in the balance.",
+        "tags": []
     },
     {
         "title": "Black Lagoon",
@@ -810,6 +1026,14 @@
         ]
     },
     {
+        "title": "Inuyasha",
+        "release_date": "2000",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "A teenage girl periodically travels back in time to feudal Japan to help a young half-demon recover the shards of a jewel of great power.",
+        "tags": []
+    },
+    {
         "title": "Dragon Ball",
         "release_date": "1995",
         "genre": "Animation, Action, Adventure",
@@ -828,6 +1052,22 @@
         ]
     },
     {
+        "title": "Kaifuku Jutsushi no Yarinaoshi",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.3,
+        "plot_summary": "Keyaru is a healing magician who is sexually abused repeatedly by others. Using his healing magic, he goes back four years into the past to get revenge on the ones who abused him.",
+        "tags": []
+    },
+    {
+        "title": "Arthur",
+        "release_date": "1996",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.4,
+        "plot_summary": "Based on the books by Marc Brown, these are the adventures of Arthur, an 8-year-old aardvark, and his family and friends as they grow up and learn how to be good neighbors to one another.",
+        "tags": []
+    },
+    {
         "title": "Horimiya",
         "release_date": "I) (",
         "genre": "Animation, Comedy, Drama",
@@ -841,6 +1081,22 @@
             " School Life",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Domestic na Kanojo",
+        "release_date": "2019",
+        "genre": "Animation, Drama, Romance",
+        "rating": 6.8,
+        "plot_summary": "The daily life of high-school student Natsuo is heavily complicated after his single father marries the mother of his teacher crush Hina Tachibana and her sister Rui - who he had shared his first experience with with at a preceding mixer.",
+        "tags": []
+    },
+    {
+        "title": "Mirai nikki",
+        "release_date": "2011",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.5,
+        "plot_summary": "A young man competes with people around the world for a chance to become the succesor of God, with a diary that is able to tell the future.",
+        "tags": []
     },
     {
         "title": "Nana",
@@ -903,6 +1159,22 @@
             " Vampires",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Saiki Kusuo no Psi Nan",
+        "release_date": "2016",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 8.4,
+        "plot_summary": "Saiki Kusuo is a powerful psychic who hates attracting attention, yet he is surrounded by colorful characters who always find a way to remove him from his everyday life.",
+        "tags": []
+    },
+    {
+        "title": "Yu yu hakusho",
+        "release_date": "1992",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.5,
+        "plot_summary": "One day, 14-year-old Yusuke Urameshi suddenly finds himself dead, having died pushing a child out of the way of oncoming traffic. Since he has such a bad personality, even the Spirit World ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Kakegurui",
@@ -1025,6 +1297,14 @@
         ]
     },
     {
+        "title": "Tengen toppa gurren lagann",
+        "release_date": "2007",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.3,
+        "plot_summary": "Two friends, Simon and Kamina, become the symbols of rebellion against the powerful Spiral King, who forced mankind into subterranean villages.",
+        "tags": []
+    },
+    {
         "title": "Ultraman",
         "release_date": "2019",
         "genre": "Animation, Action, Adventure",
@@ -1065,6 +1345,38 @@
         ]
     },
     {
+        "title": "Kimi ni todoke",
+        "release_date": "2009",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.8,
+        "plot_summary": "Sawako Kuronuma is misunderstood due to her resemblance to the ghost girl from The Ring. But one day the nicest boy in the class, Kazehaya befriends her and everything changed after that and also everyone perspective of Sawako but there's going to be struggle await for her up in the future.",
+        "tags": []
+    },
+    {
+        "title": "Ginga Eiyuu Densetsu",
+        "release_date": "1988",
+        "genre": "Animation, Action, Drama",
+        "rating": 9.1,
+        "plot_summary": "Various people, especially two rising commanders, cope with a massive continual space conflict between two interstellar nations.",
+        "tags": []
+    },
+    {
+        "title": "Thunderbirds",
+        "release_date": "1965",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "In the year 2026, the Tracy family run International Rescue - a top-secret organization whose ongoing mission is to rescue people trapped in extraordinarily dangerous situations using their advanced Thunderbirds machines.",
+        "tags": []
+    },
+    {
+        "title": "Monster High",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Family",
+        "rating": 7.7,
+        "plot_summary": "Clawdeen Wolf arrives at Monster High with a dark secret. With the help of her friends Draculaura and Frankie Stein, she is able to embrace her true monster heart and save the school from total destruction.",
+        "tags": []
+    },
+    {
         "title": "The Daily Life of the Immortal King",
         "release_date": "2020",
         "genre": "Animation, Action, Adventure",
@@ -1082,6 +1394,14 @@
             " Xianxia",
             " Based on a Web Novel"
         ]
+    },
+    {
+        "title": "Nande Koko ni Sensei ga!?",
+        "release_date": "2019",
+        "genre": "Animation, Short, Comedy",
+        "rating": 6.3,
+        "plot_summary": "A comedy about female teachers who can't help developing romantic interests in their male students.",
+        "tags": []
     },
     {
         "title": "Super Dragon Ball Heroes",
@@ -1129,6 +1449,14 @@
             " Based on a Manga",
             " Violence"
         ]
+    },
+    {
+        "title": "Ijiranaide, Nagatoro-san",
+        "release_date": "2021",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.3,
+        "plot_summary": "High schooler Hayase Nagatoro loves to spend her free time doing one thing, and that is to bully her Senpai. After Nagatoro and her friends stumble upon the aspiring artist's drawings, they...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Dorohedoro",
@@ -1252,6 +1580,22 @@
         ]
     },
     {
+        "title": "Tensei shitara ken deshita",
+        "release_date": "2022",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.1,
+        "plot_summary": "The hero of Tensei shitara Ken deshita differs from your standard otherworldly protagonist in that he is reincarnated as a sword! Beginning his quest by spawning in the middle of a ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Uzaki-chan wa Asobitai!",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.9,
+        "plot_summary": "Sakurai Shinichi's one wish is for a little peace and quiet. But Uzaki Hana his boisterous, well-endowed underclassman has other plans. All she wants is to hang out and poke fun at him, this might be the start of a beautiful relationship.",
+        "tags": []
+    },
+    {
         "title": "Thundercats",
         "release_date": "1985",
         "genre": "Animation, Action, Adventure",
@@ -1264,6 +1608,14 @@
             " Non-Human Protagonists",
             " Based on a Cartoon"
         ]
+    },
+    {
+        "title": "Transformers: War for Cybertron",
+        "release_date": "2020",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.3,
+        "plot_summary": "Animated series set in the world of battling Autobots and Decepticons.",
+        "tags": []
     },
     {
         "title": "Sailor Moon",
@@ -1345,6 +1697,14 @@
         ]
     },
     {
+        "title": "Hataraku Maou-sama!",
+        "release_date": "2013",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.6,
+        "plot_summary": "Hilarity and fun ensues when Satan ends up in modern day Japan without any magic to return, and starts working part time in a fast food joint.",
+        "tags": []
+    },
+    {
         "title": "Tower of God",
         "release_date": "2020",
         "genre": "Animation, Action, Adventure",
@@ -1368,6 +1728,14 @@
         ]
     },
     {
+        "title": "Shinmai Maou no Testament",
+        "release_date": "2015",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.6,
+        "plot_summary": "First-year high school student, Toujo Basara, was suddenly have two beautiful step-sisters adopted by his father. But Mio and Maria's true forms are actually the newbie Demon Lord and a succubus!?",
+        "tags": []
+    },
+    {
         "title": "Toradora!",
         "release_date": "2008",
         "genre": "Animation, Comedy, Drama",
@@ -1389,6 +1757,22 @@
         ]
     },
     {
+        "title": "Aladdin",
+        "release_date": "1994",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.3,
+        "plot_summary": "Aladdin, the clever hero of Agrabah, continues his adventures with the help of his fiancee Princess Jasmine, his pet monkey Abu, Magic Carpet, Iago the greedy parrot, and of course his best friend the semi-cosmic Genie.",
+        "tags": []
+    },
+    {
+        "title": "ReBoot",
+        "release_date": "1994",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "In the inner computer world of Mainframe, a guardian program sprite and his friends defend the system from threats from viruses and the User.",
+        "tags": []
+    },
+    {
         "title": "Tomodachi Game",
         "release_date": "2022",
         "genre": "Animation, Drama, Mystery",
@@ -1403,6 +1787,30 @@
             " Psychological",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Gantz",
+        "release_date": "2004",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.2,
+        "plot_summary": "A group of people are resurrected from their deaths by a mysterious black ball called GANTZ to combat alien criminals hiding on Earth.",
+        "tags": []
+    },
+    {
+        "title": "Darker Than Black: Kuro no keiyakusha",
+        "release_date": "2007",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.7,
+        "plot_summary": "In Tokyo, an impenetrable field known as \"Hell's Gate\" appeared ten years ago. At the same time, psychics who wield paranormal powers at the cost of their conscience also emerged. Hei is ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Hajime No Ippo: Rising",
+        "release_date": "2013",
+        "genre": "Animation, Action, Comedy",
+        "rating": 8.7,
+        "plot_summary": "Ippo the Japanese Featherweight champion will defend his title against amazing challengers. Takamura fights for the second WBC title in the middleweight class, and Aoki fights for the Lightweight title.",
+        "tags": []
     },
     {
         "title": "Interspecies Reviewers",
@@ -1426,6 +1834,30 @@
             "",
             " Prostitution"
         ]
+    },
+    {
+        "title": "Pacific Rim",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.0,
+        "plot_summary": "After Kaiju ravage Australia, two siblings pilot a Jaeger to search for their parents, encountering new creatures, seedy characters and chance allies.",
+        "tags": []
+    },
+    {
+        "title": "Kuroshitsuji",
+        "release_date": "2008",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.7,
+        "plot_summary": "Big Buddha Master hires black Butler to take out black people and turtled",
+        "tags": []
+    },
+    {
+        "title": "Moominvalley",
+        "release_date": "2019",
+        "genre": "Animation, Drama, Family",
+        "rating": 7.3,
+        "plot_summary": "A 2019 adaptation of Tove Jansson's loved body of work around the Moomin family.",
+        "tags": []
     },
     {
         "title": "Baki the Grappler",
@@ -1456,6 +1888,14 @@
             " Sudden Girlfriend Appearance",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Kanojo, Okarishimasu",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.2,
+        "plot_summary": "After being dumped by his girlfriend, a college student enlists a dating service to \"rent\" a girlfriend who, unbeknownst to him, happens to be both a fellow student and his neighbor.",
+        "tags": []
     },
     {
         "title": "Exception",
@@ -1495,6 +1935,14 @@
             "",
             " Suicide"
         ]
+    },
+    {
+        "title": "The Prince",
+        "release_date": "2021",
+        "genre": "Animation, Comedy",
+        "rating": 5.6,
+        "plot_summary": "Animated series takes a satirical look at the life of young Prince George from his time at home in the palace to primary school with commoners.",
+        "tags": []
     },
     {
         "title": "Steins;Gate 0",
@@ -1537,6 +1985,14 @@
         ]
     },
     {
+        "title": "Ore dake Haireru Kakushi Dungeon",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.4,
+        "plot_summary": "The Hidden Dungeon is a place of legend where rare treasures and items are hidden. Nor, the third son of an impoverished noble family who's lost the one job offer he had, was lucky enough to hear about this dungeon.",
+        "tags": []
+    },
+    {
         "title": "Link Click",
         "release_date": "2021",
         "genre": "Animation, Action, Fantasy",
@@ -1568,6 +2024,14 @@
             " Sci Fi",
             " Based on a Light Novel"
         ]
+    },
+    {
+        "title": "Tonikaku Kawaii",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.7,
+        "plot_summary": "A Young Prodigy accepts a Sudden Proposal from a Mysterious Woman who he falls in love with after she saves him from a Near-Death Experience.",
+        "tags": []
     },
     {
         "title": "Bakemonogatari",
@@ -1626,6 +2090,22 @@
         ]
     },
     {
+        "title": "Gate: Jieitai Kanochi nite, Kaku Tatakaeri",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.5,
+        "plot_summary": "A gate appears in modern-day Tokyo which allows access to a fantasy world. A Japanese military squad is formed to establish ties between both worlds.",
+        "tags": []
+    },
+    {
+        "title": "GTO",
+        "release_date": "1999",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 8.5,
+        "plot_summary": "About Eikichi Onizuka, a 22-year-old ex-gangster member and a virgin. He has one ambition that no one ever expected from him. His solely life purpose is to become the greatest high school teacher ever.",
+        "tags": []
+    },
+    {
         "title": "Grand Blue",
         "release_date": "2018",
         "genre": "Animation, Adventure, Comedy",
@@ -1646,6 +2126,14 @@
         ]
     },
     {
+        "title": "Boku wa tomodachi ga sukunai",
+        "release_date": "2011",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.0,
+        "plot_summary": "A friendless teenager, feared by his fellow classmates, joins a club hoping to finally make some friends.",
+        "tags": []
+    },
+    {
         "title": "San Ti",
         "release_date": "2022",
         "genre": "Animation",
@@ -1656,6 +2144,46 @@
             " Chinese Animation",
             " Based on a Novel"
         ]
+    },
+    {
+        "title": "Yuukoku no Moriarty",
+        "release_date": "2020",
+        "genre": "Animation, Crime, History",
+        "rating": 8.0,
+        "plot_summary": "William James Moriarty lives as a regular noble while also being a consultant for the common folk to solve their problems. However, deep inside him lies a desire to destroy the current structure that dominates British society.",
+        "tags": []
+    },
+    {
+        "title": "Hanma Baki: Son of Ogre",
+        "release_date": "2021",
+        "genre": "Animation, Action, Drama",
+        "rating": 6.7,
+        "plot_summary": "To gain the skills he needs to surpass his powerful father, Baki enters Arizona State Prison to take on the notorious inmate known as Mr. Unchained.",
+        "tags": []
+    },
+    {
+        "title": "Ao Haru Ride",
+        "release_date": "2014",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.5,
+        "plot_summary": "Revolves around Futaba, a girl who was in love with a boy named Ko Tanaka in middle school. However, it did not work because he transferred but in high school, her world is turned around once again when she meets him again.",
+        "tags": []
+    },
+    {
+        "title": "Kobayashi-san Chi No Maid Dragon",
+        "release_date": "2017",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.8,
+        "plot_summary": "An office worker employs a kindhearted dragon to serve as her maid, and enters a world of comic misadventures.",
+        "tags": []
+    },
+    {
+        "title": "Kuzu no honkai",
+        "release_date": "I) (",
+        "genre": "Animation, Drama, Romance",
+        "rating": 6.8,
+        "plot_summary": "A perfect couple struggles with a secret longing each has for someone else.",
+        "tags": []
     },
     {
         "title": "Resident Evil: Infinite Darkness",
@@ -1732,6 +2260,22 @@
         ]
     },
     {
+        "title": "Clannad: After Story",
+        "release_date": "2008",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 8.6,
+        "plot_summary": "A sequel to the recently wrapped anime based on the Key Clannad franchise. After Story is a path that opens in the original visual novel after all the other paths have been opened. Life ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Owari No Seraph",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.4,
+        "plot_summary": "In 2012, the world allegedly comes to an end at the hands of a human-made virus, ravaging the global populace and leaving only children untouched. It is at this time that vampires emerge from the recesses of the earth.",
+        "tags": []
+    },
+    {
         "title": "Darwin's Game",
         "release_date": "2020",
         "genre": "Animation, Action, Drama",
@@ -1752,6 +2296,14 @@
         ]
     },
     {
+        "title": "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu",
+        "release_date": "2020",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.5,
+        "plot_summary": "Honjou Kaede is invited by her friend Shiramine Risa to play a virtual reality MMO game with her. While Kaede doesn't dislike games, what she really, truly dislikes is being in pain.",
+        "tags": []
+    },
+    {
         "title": "Spriggan",
         "release_date": "2022",
         "genre": "Animation, Action, Adventure",
@@ -1766,6 +2318,38 @@
             " Based on a Manga",
             " Violence"
         ]
+    },
+    {
+        "title": "Doug",
+        "release_date": "1991",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.4,
+        "plot_summary": "The life of a young boy as he meets friends, falls in love, maneuvers his way through grade 6 and writes all about it in his journal.",
+        "tags": []
+    },
+    {
+        "title": "Shuumatsu no Harem",
+        "release_date": "2021",
+        "genre": "Animation, Drama, Romance",
+        "rating": 5.9,
+        "plot_summary": "A man wakes from suspended animation to find himself in a world where only a million men survived an epidemic. He is selected for breeding as part of a repopulation program.",
+        "tags": []
+    },
+    {
+        "title": "Higurashi no naku koro ni",
+        "release_date": "2006",
+        "genre": "Animation, Drama, Horror",
+        "rating": 7.9,
+        "plot_summary": "The story of a group of young friends and the mysterious events that occur in the rural village of Hinamizawa.",
+        "tags": []
+    },
+    {
+        "title": "Blue Period",
+        "release_date": "2021",
+        "genre": "Animation, Drama",
+        "rating": 7.7,
+        "plot_summary": "Bored with life, popular high schooler Yatora Yaguchi jumps into the beautiful yet unrelenting world of art after finding inspiration in a painting.",
+        "tags": []
     },
     {
         "title": "Hyouka",
@@ -1886,6 +2470,22 @@
         ]
     },
     {
+        "title": "Vanitas no Carte",
+        "release_date": "2021",
+        "genre": "Animation, Fantasy, Horror",
+        "rating": 7.6,
+        "plot_summary": "A human wields a magic book that can cure vampires of their bloodlust, and sets out to find vampires to cure with the book.",
+        "tags": []
+    },
+    {
+        "title": "Seikon no Qwaser",
+        "release_date": "2010",
+        "genre": "Animation, Action, Comedy",
+        "rating": 5.5,
+        "plot_summary": "When tomo and her adopted sister Mafuyu Oribe rescue a strange wounded man, they have no idea what they're getting involved with or what the consequences will be. Alexander Nikolaevith Hell...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Shaman King",
         "release_date": "2021",
         "genre": "Animation, Action, Adventure",
@@ -1899,6 +2499,14 @@
             " Tournaments",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Trinity Seven: 7-nin no Masho Tsukai",
+        "release_date": "2014",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.8,
+        "plot_summary": "In this \"romantic comedy but sometimes serious magical school story,\" life as Arata Kasuga knows it is wiped out by a bizarre incident known as \"Collapse Phenomenon,\" which causes worldwide...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Fate/stay night: Unlimited Blade Works",
@@ -1937,6 +2545,22 @@
             " Political",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "G.I. Joe",
+        "release_date": "1985",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.7,
+        "plot_summary": "An elite special missions force fights against the terrorist forces of Cobra.",
+        "tags": []
+    },
+    {
+        "title": "Bakuten shoot beyblade",
+        "release_date": "2001",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.8,
+        "plot_summary": "Four beybladers and their genius friend travel the world as team 'Bladebreakers' to win a championship, realizing there's much more at stake on the go.",
+        "tags": []
     },
     {
         "title": "Fate/stay night",
@@ -2027,6 +2651,22 @@
         ]
     },
     {
+        "title": "Kekkai Sensen",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.2,
+        "plot_summary": "In a city where the paranormal and ordinary co-exist, the Libra organization battles to ensure peace and order.",
+        "tags": []
+    },
+    {
+        "title": "Sasaki to Miyano",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.7,
+        "plot_summary": "Shy and easily flustered Miyano harbors an embarrassing secret - he is a \"fudanshi\", a boy who likes boys' love manga. Intrigued, the clueless delinquent Sasaki requests to borrow one, marking a shift in their strange dynamic.",
+        "tags": []
+    },
+    {
         "title": "Mieruko-chan",
         "release_date": "2021",
         "genre": "Animation, Comedy, Fantasy",
@@ -2059,6 +2699,22 @@
         ]
     },
     {
+        "title": "Rambo",
+        "release_date": "1986",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.4,
+        "plot_summary": "On Colonel Trautman's request, John Rambo leads special unit The Force of Freedom against paramilitary terrorist organization S.A.V.A.G.E. (Specialist-Administrators of Vengeance, Anarchy and Global Extortion) all over the globe.",
+        "tags": []
+    },
+    {
+        "title": "Pingu",
+        "release_date": "1980",
+        "genre": "Animation, Short, Comedy",
+        "rating": 7.4,
+        "plot_summary": "\"Pingu finds himself in tricky and comical situations, but he always learns a lesson. Pingu spends his days with his parents and baby sister, Pinga. Everyone in his town speaks \"\"Penguinese.\"\" Laugh along and find out what happens.",
+        "tags": []
+    },
+    {
         "title": "Space Dandy",
         "release_date": "2014",
         "genre": "Animation, Adventure, Comedy",
@@ -2077,6 +2733,62 @@
             " Robots",
             " Original Work"
         ]
+    },
+    {
+        "title": "Sonic the Hedgehog",
+        "release_date": "1993",
+        "genre": "Animation, Short, Action",
+        "rating": 6.8,
+        "plot_summary": "In a post-apocalyptic and dystopian future, all life has been challenged by oppression and tyranny, as the evil Dr. Robotnik is on the wake of controlling Mobius.",
+        "tags": []
+    },
+    {
+        "title": "Kamisama hajimemashita",
+        "release_date": "2012",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 8.1,
+        "plot_summary": "Momozono Nanami is only 17 years old, but she has never felt lucky. She has quite an average academic progress and boys do not think that she is cute. She would love to fix her school ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Mad",
+        "release_date": "2010",
+        "genre": "Animation, Comedy",
+        "rating": 5.8,
+        "plot_summary": "The animated version of the classic humor magazine satirizes current pop culture.",
+        "tags": []
+    },
+    {
+        "title": "Kawaii dake ja nai Shikimori-san",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.7,
+        "plot_summary": "Shikimori seems like the perfect girlfriend. But she has a cool dark side that comes out under the right circumstances. And her boyfriend Izumi loves to be around when that happens.",
+        "tags": []
+    },
+    {
+        "title": "Kidou Senshi Gundam: Tekketsu no Orphans",
+        "release_date": "2015",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.9,
+        "plot_summary": "300 years after the Calamity War, a ragtag group of freedom fighters and an ancient Mobile Suit rise to the call for justice, once and for all.",
+        "tags": []
+    },
+    {
+        "title": "Bing",
+        "release_date": "2014",
+        "genre": "Animation, Family",
+        "rating": 6.2,
+        "plot_summary": "Celebrating the noisy, joyful, messy reality of pre-school life.",
+        "tags": []
+    },
+    {
+        "title": "Ajin",
+        "release_date": "2016",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.6,
+        "plot_summary": "A high school student discovers he is an Ajin, a demi-human being. He ends up a fugitive on the run because of his powers.",
+        "tags": []
     },
     {
         "title": "K-On!",
@@ -2115,6 +2827,14 @@
         ]
     },
     {
+        "title": "Mahouka koukou no rettousei",
+        "release_date": "2014",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.1,
+        "plot_summary": "Siblings Miyuki and Tatsuya Shiba are turning the National Magic University Affiliated First High School campus upside down.",
+        "tags": []
+    },
+    {
         "title": "Charlotte",
         "release_date": "2015",
         "genre": "Animation, Drama, Family",
@@ -2130,6 +2850,14 @@
             " Superpowers",
             " Original Work"
         ]
+    },
+    {
+        "title": "Maken-Ki! Battling Venus",
+        "release_date": "2011",
+        "genre": "Animation, Action, Comedy",
+        "rating": 5.9,
+        "plot_summary": "Takeru Ohyama is a typical perverted teenage boy. His new school doesn't require entrance exams, and it just turned co-ed! Unfortunately, his dreams of a happy high school life are dashed ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Wonder Egg Priority",
@@ -2161,6 +2889,54 @@
         ]
     },
     {
+        "title": "The Deep",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "The adventures of the Nekton family, a family of daring underwater explorers who live aboard a state-of-the-art submarine, The Aronnax, and explore uncharted areas of the earth's oceans to unravel the mysteries of the deep.",
+        "tags": []
+    },
+    {
+        "title": "Little Bear",
+        "release_date": "1995",
+        "genre": "Animation, Adventure, Family",
+        "rating": 7.3,
+        "plot_summary": "Based upon a series of children's books, a grizzly cub has many misadventures with his friends.",
+        "tags": []
+    },
+    {
+        "title": "Akatsuki no Yona",
+        "release_date": "2014",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.0,
+        "plot_summary": "After being betrayed and run out of her home, the red-haired Princess Yona searches for four legendary dragons to take back her stolen kingdom.",
+        "tags": []
+    },
+    {
+        "title": "The Mummy",
+        "release_date": "2001",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.2,
+        "plot_summary": "Set one year after The Mummy Returns, this series follows the adventures of Alex O'Connell and his archaeologist parents, as The Mummy tracks them down.",
+        "tags": []
+    },
+    {
+        "title": "The Little Mermaid",
+        "release_date": "1992",
+        "genre": "Animation, Short, Adventure",
+        "rating": 6.7,
+        "plot_summary": "The 1989 animated feature adapted by Disney for television in a prequel that leads up to the events of the movie.",
+        "tags": []
+    },
+    {
+        "title": "Chuunibyou demo koi ga shitai!",
+        "release_date": "2012",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.4,
+        "plot_summary": "Yuuta suffered from \"chuunibyou\" while he was in middle school. When he graduated, he try to forgot about it but he accidentally got into a contract with Rikka and disrupts his desperately ordinary life.",
+        "tags": []
+    },
+    {
         "title": "Angel Beats!",
         "release_date": "2010",
         "genre": "Animation, Action, Comedy",
@@ -2176,6 +2952,14 @@
             " Supernatural",
             " Original Work"
         ]
+    },
+    {
+        "title": "Hokuto no Ken",
+        "release_date": "1984",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.2,
+        "plot_summary": "In the year 199X, human civilization has been all but destroyed by a nuclear holocaust. In an age where the strong rule over the weak, the survivors of the fallout struggle over the ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "B: The Beginning",
@@ -2194,6 +2978,22 @@
             " Original Work",
             " Explicit Violence"
         ]
+    },
+    {
+        "title": "UQ Holder",
+        "release_date": "2017",
+        "genre": "Animation, Action, Fantasy",
+        "rating": 6.7,
+        "plot_summary": "In the decade since the world became aware of the existence of magic, the world has undergone a massive upheaval. However, a boy named Touta lives in seclusion in a rural town far removed ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Kami-tachi ni Hirowareta Otoko",
+        "release_date": "2020",
+        "genre": "Animation, Adventure, Fantasy",
+        "rating": 7.1,
+        "plot_summary": "Ryoma didn't have good luck in his former life. But three deities decide to give him a second chance in a fantasy world of magic.",
+        "tags": []
     },
     {
         "title": "Yu-Gi-Oh!",
@@ -2228,6 +3028,14 @@
         ]
     },
     {
+        "title": "Peter Grill to Kenja no Jikan",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 5.3,
+        "plot_summary": "Peter Grill is the strongest man in the world, but that means he's got a host of women who are after him and steal him away from the woman he loves.",
+        "tags": []
+    },
+    {
         "title": "Transformers: Robots in Disguise",
         "release_date": "2014",
         "genre": "Animation, Action, Adventure",
@@ -2245,6 +3053,14 @@
             " Transforming Mecha",
             " War"
         ]
+    },
+    {
+        "title": "Hataraku Saibou",
+        "release_date": "2018",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.6,
+        "plot_summary": "One newcomer red blood cell just wants to do her job. Between bacteria incursions and meeting a certain white blood cell, she's got a lot to learn.",
+        "tags": []
     },
     {
         "title": "Monogatari Series: Second Season",
@@ -2320,6 +3136,22 @@
         ]
     },
     {
+        "title": "Voltron: Defender of the Universe",
+        "release_date": "1984",
+        "genre": "Animation, Family, Sci-Fi",
+        "rating": 7.9,
+        "plot_summary": "This series focuses on five lion robots and their pilots as they fight the evil forces of King Zarkon and Prince Lotor.",
+        "tags": []
+    },
+    {
+        "title": "Kyokou Suiri",
+        "release_date": "2020",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.5,
+        "plot_summary": "Meet the cute, smug, cane-wielding 17-year old Iwanaga Kotoko as she (very) aggressively tries to woo the older Sakuragawa Kurou and act as a mediator/problem-solver for the supernatural world.",
+        "tags": []
+    },
+    {
         "title": "Gleipnir",
         "release_date": "2020",
         "genre": "Animation, Action, Fantasy",
@@ -2368,6 +3200,30 @@
         ]
     },
     {
+        "title": "Otomege Sekai wa Mob ni Kibishii Sekai Desu",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.2,
+        "plot_summary": "A young man is transported into a video game world dominated by females.",
+        "tags": []
+    },
+    {
+        "title": "Akagami no Shirayuki-hime",
+        "release_date": "2015",
+        "genre": "Animation, Drama, Fantasy",
+        "rating": 7.7,
+        "plot_summary": "Shirayuki was a young girl born with unique apple-red hair. She meets a famous but foolish Prince Raji, who falls in love with her at first sight and orders her to become his concubine. ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Robotech",
+        "release_date": "1985",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.5,
+        "plot_summary": "An alien spaceship crash lands on Earth and the technology and secrets she bears lead Earth into three destructive interplanetary wars.",
+        "tags": []
+    },
+    {
         "title": "Drifters",
         "release_date": "2016",
         "genre": "Animation, Action, Adventure",
@@ -2402,6 +3258,22 @@
             " Tournaments",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Madan no Ou to Vanadis",
+        "release_date": "2014",
+        "genre": "Animation, Adventure, Fantasy",
+        "rating": 7.0,
+        "plot_summary": "Tigre, a young noble, is captured by a beautiful female general from an enemy country. Though enchanting, her curves aren't the only dangerous thing about her. She's backed by an army of desirable warrior-goddesses called the Vanadis!",
+        "tags": []
+    },
+    {
+        "title": "Shinka No Mi: Shiranai Uchi ni Kachigumi Jinsei",
+        "release_date": "2021",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 6.2,
+        "plot_summary": "A fat schoolkid is thrown into a fantasy world and must team up with a female gorilla to survive.",
+        "tags": []
     },
     {
         "title": "Shiki",
@@ -2454,6 +3326,14 @@
             " Religion",
             " Based on a Religious Text"
         ]
+    },
+    {
+        "title": "ID:Invaded",
+        "release_date": "2020",
+        "genre": "Animation, Crime, Drama",
+        "rating": 7.6,
+        "plot_summary": "A detective is called upon to solve a murder in a virtual reality world. But how can he manage a case when its rules can and are constantly being changed?",
+        "tags": []
     },
     {
         "title": "Mushishi Zoku Shou",
@@ -2512,6 +3392,14 @@
         ]
     },
     {
+        "title": "Sora no otoshimono",
+        "release_date": "2009",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.2,
+        "plot_summary": "Girl-crazy Tomoki's quiet life gets turned upside down when beautiful, winged Ikaros falls from the sky -- and starts calling him master.",
+        "tags": []
+    },
+    {
         "title": "Angels of Death",
         "release_date": "2021",
         "genre": "Animation, Sci-Fi",
@@ -2532,6 +3420,14 @@
             "",
             " Violence"
         ]
+    },
+    {
+        "title": "Kakkou no Iinazuke",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 6.7,
+        "plot_summary": "Two children who got swapped at birth grow up to become engaged to each other. It's an arrangement neither of them like, at first.",
+        "tags": []
     },
     {
         "title": "Nisekoi",
@@ -2577,6 +3473,14 @@
         ]
     },
     {
+        "title": "Masamune-kun No Revenge",
+        "release_date": "2017",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.4,
+        "plot_summary": "As a child, Masamune Makabe once suffered greatly at the hands of a wealthy and beautiful girl named Aki Adagaki, who nicknamed him \"Piggy\" due to his chubby appearance. Seeking revenge ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Orange",
         "release_date": "2016",
         "genre": "Animation, Drama, Romance",
@@ -2599,6 +3503,22 @@
             "",
             " Suicide"
         ]
+    },
+    {
+        "title": "Arknights: Reimei Zensou",
+        "release_date": "2022",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.3,
+        "plot_summary": "In the land of Terra, natural disasters of unknown causes have been occurring irregularly in many areas. Therefore, the majority of the people, in order to escape those natural disasters, ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Ghostbusters",
+        "release_date": "1986",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 6.3,
+        "plot_summary": "A squad of supernatural investigators are Earth's only defense against an evil ghost wizard and his minions.",
+        "tags": []
     },
     {
         "title": "Ex-Arm",
@@ -2748,6 +3668,38 @@
         ]
     },
     {
+        "title": "Nichijou",
+        "release_date": "2011",
+        "genre": "Animation, Comedy",
+        "rating": 8.3,
+        "plot_summary": "A group of students lead normal lives and cope with normal predicaments, but all too often find themselves in abnormal situations.",
+        "tags": []
+    },
+    {
+        "title": "Rainbow",
+        "release_date": "1972",
+        "genre": "Animation, Family, Talk-Show",
+        "rating": 6.9,
+        "plot_summary": "Children's puppet programme featuring music and stories.",
+        "tags": []
+    },
+    {
+        "title": "Arslan Senki",
+        "release_date": "2015",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.5,
+        "plot_summary": "In the prosperous kingdom of Pars lies the Royal Capital of Ecbatana, a city of splendor and wonder, ruled by the undefeated and fearsome King Andragoras. Arslan is the young and curious ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Star Blazers",
+        "release_date": "1979",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.4,
+        "plot_summary": "In the year 2199, a starship must make a dangerous voyage to the distant planet Iscandar and back to save Earth from an alien invasion.",
+        "tags": []
+    },
+    {
         "title": "Girls Bravo",
         "release_date": "2004",
         "genre": "Animation, Comedy, Fantasy",
@@ -2789,6 +3741,22 @@
         ]
     },
     {
+        "title": "MASK",
+        "release_date": "1985",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.3,
+        "plot_summary": "Matt Trakker leads a special team of masked crime fighters with a fleet of hidden function vehicles against Miles Mayhem and his criminal organization known as V.E.N.O.M.",
+        "tags": []
+    },
+    {
+        "title": "Grisaia no Kajitsu",
+        "release_date": "2014",
+        "genre": "Animation, Drama, Romance",
+        "rating": 7.0,
+        "plot_summary": "Mihama Academy is a prison-like school. It is home to five female students who each have their own reasons. One day, Yuuji the institute's first male student arrives and throws the orderly rhythm of Mihama off balance.",
+        "tags": []
+    },
+    {
         "title": "Marvel Future Avengers",
         "release_date": "2017",
         "genre": "Animation, Action, Adventure",
@@ -2805,6 +3773,30 @@
         ]
     },
     {
+        "title": "Ranma \u00bd",
+        "release_date": "1989",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.9,
+        "plot_summary": "A girl is involuntarily engaged to a boy who turns female when hit with cold water and male when hit with hot.",
+        "tags": []
+    },
+    {
+        "title": "The Hollow",
+        "release_date": "2018",
+        "genre": "Animation, Drama, Family",
+        "rating": 7.2,
+        "plot_summary": "Three teen strangers awaken in a dangerous world and try to make sense of what connection they have to each other as they attempt to make it out alive.",
+        "tags": []
+    },
+    {
+        "title": "KILLING BITES",
+        "release_date": "2018",
+        "genre": "Animation, Action, Sci-Fi",
+        "rating": 6.3,
+        "plot_summary": "People have been created that are human-animal hybrids, and powerful businesses bet on the outcome of their duels. College student Nomoto Yuuya's casual friends ask him to drive them around...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "K",
         "release_date": "2012",
         "genre": "Animation, Action, Drama",
@@ -2819,6 +3811,30 @@
             " Superpowers",
             " Original Work"
         ]
+    },
+    {
+        "title": "The Mask",
+        "release_date": "1995",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.9,
+        "plot_summary": "A man finds a mystical mask that allows the wearer to make all sorts of unusual things happen.",
+        "tags": []
+    },
+    {
+        "title": "Sora yori mo Tooi Basho",
+        "release_date": "2018",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 8.2,
+        "plot_summary": "Mari Tamaki is in her second year of high school and wants to start something. It's then that she meets Shirase, a girl with few friends who's considered weirdo by the rest of the class and...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "100-man no Inochi no Ue ni Ore wa Tatte Iru",
+        "release_date": "2020",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.5,
+        "plot_summary": "Yotsuya Yuusuke along with his classmates Shindou Iu and Hakozaki Kusue have been transported to a strange and unknown world inhabited by mythological creatures. As soon as they arrive, ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Digimon Adventure",
@@ -2856,6 +3872,22 @@
         ]
     },
     {
+        "title": "Suki-tte Ii na yo",
+        "release_date": "2012",
+        "genre": "Animation, Drama, Romance",
+        "rating": 7.3,
+        "plot_summary": "Mei is a quiet girl, who has had no boyfriend and couldn't even make friends in 16 years. One day she accidentally injures Yamato, the most popular boy in school, and for some reason Yamato takes interest in her.",
+        "tags": []
+    },
+    {
+        "title": "Tonari no kaibutsu-kun",
+        "release_date": "2012",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.2,
+        "plot_summary": "Shizuku, a hardworking student who isn't interested in socializing, finds an unlikely friend, Haru, an emotionally volatile boy at her school.",
+        "tags": []
+    },
+    {
         "title": "ReLIFE",
         "release_date": "2016",
         "genre": "Animation, Comedy, Drama",
@@ -2873,6 +3905,22 @@
             " School Life",
             " Based on a Webtoon"
         ]
+    },
+    {
+        "title": "Jibaku Shounen Hanako-kun",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.6,
+        "plot_summary": "Hanako is an urban legend said to be the spirit of a young girl that haunts school toilets, but as Nene finds out, her academy's Hanako is actually a boy, and he is only one of many spirits inhabiting the place.",
+        "tags": []
+    },
+    {
+        "title": "Kawaikereba Hentai demo Suki ni Natte Kuremasu ka?",
+        "release_date": "2019",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.3,
+        "plot_summary": "A mysterious love letter winds up in Keiki's locker with a pair of white panties! Will he be able to find the panty-leaving-Cinderella?",
+        "tags": []
     },
     {
         "title": "Iron Man",
@@ -2906,6 +3954,14 @@
         ]
     },
     {
+        "title": "Seikoku no Dragonar",
+        "release_date": "2014",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.6,
+        "plot_summary": "In a land of dragons, citizens called breeders train their dragon pals. Races of dragons are born from breeders who are marked with Seikoku, also known as star brands. Learning to ride and ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Fruits Basket",
         "release_date": "2001",
         "genre": "Animation, Comedy, Drama",
@@ -2929,6 +3985,30 @@
         ]
     },
     {
+        "title": "Cross Ange: Tenshi to Ryuu no Rondo",
+        "release_date": "2014",
+        "genre": "Animation, Action, Romance",
+        "rating": 7.2,
+        "plot_summary": "The first season follows the growth of a princess who first falls from grace but grows up to lead a rebellion once she learns the truth about the ignorance of racism in her land. Not ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Aku no hana",
+        "release_date": "2013",
+        "genre": "Animation, Drama, Thriller",
+        "rating": 7.6,
+        "plot_summary": "Takao worships the class beauty, Nanako, from afar. When he is alone in the classroom one day after school, he notices her bag of gym clothes on the floor. He can't resist picking it up. He...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Free!",
+        "release_date": "2013",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.4,
+        "plot_summary": "Free! revolves around members of a high school boy's swimming team. Four boys-Haruka, Makoto, Nagisa and Rin-all participated in a swimming tournament shortly before graduating elementary ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Noblesse",
         "release_date": "2020",
         "genre": "Animation, Action, Fantasy",
@@ -2947,6 +4027,14 @@
             " Based on a Webtoon",
             " Violence"
         ]
+    },
+    {
+        "title": "Gakusen toshi asterisk",
+        "release_date": "2015",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.8,
+        "plot_summary": "The Academy City on the water, Rikka (also known as Asterisk) is the world's largest stage for the integrated battle entertainment, \"Star Wars Festival.\" The young boys and girls of the \"...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Platinum End",
@@ -3009,6 +4097,22 @@
         ]
     },
     {
+        "title": "Kyoukai no kanata",
+        "release_date": "2013",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.2,
+        "plot_summary": "The dark fantasy follows a high school sophomore named Akihito Kanbara. Although the boy appears human, he is half Youmu and invulnerable to wounds because he can heal quickly. One day, ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Sentouin, Hakenshimasu!",
+        "release_date": "2021",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.7,
+        "plot_summary": "Two agents of an evil corporation are assigned to conquer a distant planet, only to find themselves caught up in the wild and zany events of that world.",
+        "tags": []
+    },
+    {
         "title": "Sankarea",
         "release_date": "2012",
         "genre": "Animation, Comedy, Drama",
@@ -3050,6 +4154,14 @@
         ]
     },
     {
+        "title": "Kanojo mo Kanojo",
+        "release_date": "2021",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 6.6,
+        "plot_summary": "A honest young man is compelled to accept every girl who asks to be romantically involved with him.",
+        "tags": []
+    },
+    {
         "title": "Phantom: Requiem for the Phantom",
         "release_date": "2009",
         "genre": "Animation, Action, Crime",
@@ -3068,6 +4180,46 @@
             "",
             " Violence"
         ]
+    },
+    {
+        "title": "Doraemon",
+        "release_date": "1979",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 8.0,
+        "plot_summary": "Doraemon is a robotic cat that comes from the 22nd century. He comes to 20th century and stays with Nobi Family. The Nobis love Doraemon very much. So Doraemon always help the Nobis with the devices from 22nd century.",
+        "tags": []
+    },
+    {
+        "title": "Battle Through the Heavens",
+        "release_date": "2017",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.7,
+        "plot_summary": "Xiao Yan is the genius boy of discipline. When he was 4 years old, he started to practice asceticism. And when he was 10 years old, he got Level9 of the practice asceticism.",
+        "tags": []
+    },
+    {
+        "title": "Tsurune: Kazemai koukou kyuudoubu",
+        "release_date": "2018",
+        "genre": "Animation, Drama, Sport",
+        "rating": 7.3,
+        "plot_summary": "Minato Narumiya used to be in his middle school's archery club until a certain incident in his last tournament caused him to resolve to quit archery for good. When he attends high school, ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Seirei Gensouki",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.2,
+        "plot_summary": "Amakawa Haruto is a young man who died before reuniting with his childhood friend who disappeared five years ago. Rio is a boy living in the slums who wants revenge for his mother who was ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Urusei yatsura",
+        "release_date": "1981",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.5,
+        "plot_summary": "The series begins when aliens from the planet Oniboshi invade Earth. They agree to leave only if Earth's champion can defeat the Oni champion in a game of tag within a ten-day time limit. ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Planetes",
@@ -3105,6 +4257,22 @@
         ]
     },
     {
+        "title": "Shigurui",
+        "release_date": "2007",
+        "genre": "Animation, Action, Drama",
+        "rating": 7.7,
+        "plot_summary": "The series starts off at a tournament where a one armed samurai faces a blind one and quickly flashes back to reveal the history between the two fighters.",
+        "tags": []
+    },
+    {
+        "title": "Yuru Camp",
+        "release_date": "2018",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 8.1,
+        "plot_summary": "Nadeshiko, a high school student who had moved from Shizuoka to Yamanashi, decides to see the famous, 1000 yen-bill-featured Mount Fuji. Even though she manages to bike all the way to ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "World Trigger",
         "release_date": "2014",
         "genre": "Animation, Action, Sci-Fi",
@@ -3117,6 +4285,14 @@
             " Monsters",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Higurashi: When They Cry - GOU",
+        "release_date": "2020",
+        "genre": "Animation, Drama, Horror",
+        "rating": 6.9,
+        "plot_summary": "Keiichi Maebara is in his new home in the peaceful Hinamizawa village, making friends with girls from school. He's here for a big festival. But something about this town seems off, with that fear what dark secrets can this small town hide?",
+        "tags": []
     },
     {
         "title": "Triage X",
@@ -3181,6 +4357,14 @@
         ]
     },
     {
+        "title": "Sekai de Ichiban Tsuyoku Naritai!",
+        "release_date": "2013",
+        "genre": "Animation, Action, Drama",
+        "rating": 5.3,
+        "plot_summary": "Hagiwara Sakura and Miyazawa Erena are the leading members of popular idol group, Sweet Diva. Erena is injured by the attack of a female pro-wrestler called Kazama Rio during the recording ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Wolf's Rain",
         "release_date": "2003",
         "genre": "Animation, Action, Adventure",
@@ -3197,6 +4381,14 @@
             " Original Work",
             " Violence"
         ]
+    },
+    {
+        "title": "Honzuki no Gekokujou",
+        "release_date": "2019",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.9,
+        "plot_summary": "Urano, a young Japanese soon-to-be librarian, dies in an earthquake. She is reincarnated in another world as a young girl named Mayne, but learns that books are scarce and only provided to ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Heaven Official's Blessing",
@@ -3234,6 +4426,22 @@
         ]
     },
     {
+        "title": "Jaku-chara Tomozaki-kun",
+        "release_date": "2021",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.0,
+        "plot_summary": "Tomozaki is one of the best gamers in Japan, and in his opinion, the game of real life is one of the worst. No clear-cut rules for success, horribly balanced, and nothing makes sense. But ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Bokutachi no Remake",
+        "release_date": "2021",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.0,
+        "plot_summary": "Hashiba Kyouya is a 28 year old game developer. With his company going bankrupt, and him losing his job, he returns to his hometown. Looking at the success of creators of his age, he finds ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Carole & Tuesday",
         "release_date": "2019",
         "genre": "Animation, Drama, Music",
@@ -3258,6 +4466,14 @@
         ]
     },
     {
+        "title": "Zombieland Saga",
+        "release_date": "2018",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.1,
+        "plot_summary": "A young singer dies and becomes a zombie. She is put in a musical group with other zombie singer girls as part of a campaign to save the world.",
+        "tags": []
+    },
+    {
         "title": "Megalo Box",
         "release_date": "2018",
         "genre": "Animation, Action, Drama",
@@ -3271,6 +4487,14 @@
             " Boxing",
             " Hand to Hand Combat"
         ]
+    },
+    {
+        "title": "Supercar",
+        "release_date": "1961",
+        "genre": "Animation, Family, Sci-Fi",
+        "rating": 6.9,
+        "plot_summary": "The adventures of the crew of Supercar, an amazing land, sea, and air vehicle, based at a secret laboratory in the Nevada Desert in 1961.",
+        "tags": []
     },
     {
         "title": "Thermae Romae Novae",
@@ -3318,6 +4542,14 @@
         ]
     },
     {
+        "title": "Masou Gakuen HxH",
+        "release_date": "2016",
+        "genre": "Animation, Action, Comedy",
+        "rating": 5.9,
+        "plot_summary": "Hida Kizuna possesses the HHG (Heart Hybrid Gear) ability, but it is not strong enough to make him particularly important. His older sister calls him to transfer to a strategic defense ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "The Last Summoner",
         "release_date": "2022",
         "genre": "Animation, Action, Adventure",
@@ -3331,6 +4563,14 @@
             " School Life",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Koi wa Sekai Seifuku no Ato de",
+        "release_date": "2022",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.1,
+        "plot_summary": "In the public eye, the leaders of the heroic Gelato 5 and the villainous organization Gecko are sworn enemies. In reality? They're pursuing a forbidden romance.",
+        "tags": []
     },
     {
         "title": "Bakuman.",
@@ -3404,6 +4644,22 @@
         ]
     },
     {
+        "title": "Sakurasou no Pet na Kanojo",
+        "release_date": "2012",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 7.7,
+        "plot_summary": "Sorata had a cat living with her and is kicked out and forced to move into a small dorm call Sakuraso. All the residents are strange and very gifted.",
+        "tags": []
+    },
+    {
+        "title": "Death March kara Hajimaru Isekai Kyousoukyoku",
+        "release_date": "2018",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 6.6,
+        "plot_summary": "A computer programmer is transported to a fantasy world where life is an adventure that's fun and full of girls.",
+        "tags": []
+    },
+    {
         "title": "Lovely Complex",
         "release_date": "2007",
         "genre": "Animation, Comedy, Romance",
@@ -3434,6 +4690,22 @@
         ]
     },
     {
+        "title": "Beyblade Burst",
+        "release_date": "2016",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.7,
+        "plot_summary": "Valt Aoi is a hot-blooded kid who loves to attack and wields a Beyblade named Valkyrie. His close friend Shu Kurenai is an elite Blader who is a genius but still puts in a lot of effort, and wields the Beyblade named Spriggan.",
+        "tags": []
+    },
+    {
+        "title": "Dan Vs.",
+        "release_date": "2011",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.7,
+        "plot_summary": "A rude, crude, and scruffy curmudgeon named Dan tries to get revenge on anyone and anything that angers him. His misadventures are coupled with his best friend and summer camp buddy, Chris,...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Neo Yokio",
         "release_date": "2017",
         "genre": "Animation, Action, Adventure",
@@ -3449,6 +4721,14 @@
             " Superpowers",
             " Original Work"
         ]
+    },
+    {
+        "title": "Aharen-san wa hakarenai",
+        "release_date": "2022",
+        "genre": "Animation, Comedy",
+        "rating": 7.0,
+        "plot_summary": "Follows small and cute Reina Aharen, as she starts an odd friendship with her classmate Raidou Matsuboshi.",
+        "tags": []
     },
     {
         "title": "Samurai 7",
@@ -3469,6 +4749,14 @@
         ]
     },
     {
+        "title": "Kino no tabi",
+        "release_date": "2003",
+        "genre": "Animation, Adventure, Drama",
+        "rating": 8.4,
+        "plot_summary": "Young world-weary sharpshooter girl Kino and her talking inquisitive motorcycle Hermes travel around her unusual world, visiting various city-states for three days each to learn about their culture, history and ruling philosophy.",
+        "tags": []
+    },
+    {
         "title": "Shadows House",
         "release_date": "2021",
         "genre": "Animation, Fantasy, Mystery",
@@ -3482,6 +4770,22 @@
             " Supernatural",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Rekka no honoo",
+        "release_date": "1997",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.3,
+        "plot_summary": "In modern Japan where the way of ninja is still practiced secretly, Recca discovers that he has a power to manipulate fire. Eventually he meets people who also has strange power, and he soon has to overcome his past and face his destiny.",
+        "tags": []
+    },
+    {
+        "title": "Cake",
+        "release_date": "2019",
+        "genre": "Animation, Comedy",
+        "rating": 6.6,
+        "plot_summary": "A handcrafted assortment of bite-sized content served up to viewers as a tasty treat for the mind.",
+        "tags": []
     },
     {
         "title": "We Never Learn",
@@ -3500,6 +4804,22 @@
             " Tutors",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Tenchi Muy\u00f4!",
+        "release_date": "1992",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.6,
+        "plot_summary": "Every man needs a good woman. Tenchi Masaki has six.",
+        "tags": []
+    },
+    {
+        "title": "Higashi no Eden",
+        "release_date": "2009",
+        "genre": "Animation, Action, Comedy",
+        "rating": 7.5,
+        "plot_summary": "On November 22, 2010 ten missiles strike Japan. However, this unprecedented terrorist act, later to be called as \"Careless Monday,\" does not result in any apparent victims, and is soon ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Happy Sugar Life",
@@ -3539,6 +4859,22 @@
         ]
     },
     {
+        "title": "Zero no tsukaima",
+        "release_date": "2006",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.0,
+        "plot_summary": "When Saito, an ordinary teen living in Japan, is suddenly whisked away to the magical kingdom of Halkeginia, he becomes the familiar servant of Louise, a young girl enrolled in an academy for aristocrat magicians.",
+        "tags": []
+    },
+    {
+        "title": "Sidonia no Kishi",
+        "release_date": "2014",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.7,
+        "plot_summary": "A thousand years after the destruction of Earth by gigantic aliens called Gauna, mankind is living on massive spaceships. One of these space ships is Sidonia, which is protected by large pilot controlled exosuits called Gardes.",
+        "tags": []
+    },
+    {
         "title": "D.Gray-man",
         "release_date": "2006",
         "genre": "Animation, Action, Adventure",
@@ -3563,6 +4899,22 @@
         ]
     },
     {
+        "title": "Houseki no Kuni",
+        "release_date": "2017",
+        "genre": "Animation, Action, Fantasy",
+        "rating": 7.9,
+        "plot_summary": "The Houseki fight against the Moon Dwellers, beings who attack them and use their shattered bodies as decorations. Each Houseki is assigned a role, and Phos, the youngest, is assigned to create an encyclopedia of natural history.",
+        "tags": []
+    },
+    {
+        "title": "Monster High",
+        "release_date": "2010",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.5,
+        "plot_summary": "In the town of New Salem, the teenage children of famous monsters attend a school for monsters called Monster High.",
+        "tags": []
+    },
+    {
         "title": "Blood+",
         "release_date": "2005",
         "genre": "Animation, Action, Adventure",
@@ -3577,6 +4929,14 @@
             " Vampires",
             " Violence"
         ]
+    },
+    {
+        "title": "Azumanga dai\u00f4",
+        "release_date": "2002",
+        "genre": "Animation, Comedy",
+        "rating": 8.3,
+        "plot_summary": "A humorous and highly unpredictable animated series following a group of high school girls and their teachers.",
+        "tags": []
     },
     {
         "title": "My Next Life as a Villainess: All Routes Lead to Doom!",
@@ -3600,6 +4960,22 @@
         ]
     },
     {
+        "title": "All Saints Street",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 7.9,
+        "plot_summary": "Bowman, a demon who is fascinated by humans, runs away from home to live in the human world. Despite his desire to integrate himself with humans, he ultimately finds himself sharing an apartment with other mythological beings.",
+        "tags": []
+    },
+    {
+        "title": "Getsuyoubi no Tawawa",
+        "release_date": "2016",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 5.7,
+        "plot_summary": "The anime follows a salary man who has a chance meeting with a girl named Ai on the train. They begin to meet every Monday on the train, with the man serving as her bodyguard on the crowded commute while they chat.",
+        "tags": []
+    },
+    {
         "title": "Senran Kagura",
         "release_date": "2013",
         "genre": "Animation, Action, Comedy",
@@ -3614,6 +4990,14 @@
             " School Life",
             " Based on a Video Game"
         ]
+    },
+    {
+        "title": "Fushigi no umi no Nadia",
+        "release_date": "1990",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.8,
+        "plot_summary": "A teen acrobat of mysterious origins and a young inventor find themselves entangled in a sinister plot that involves the fate of the world.",
+        "tags": []
     },
     {
         "title": "Douluo Dalu",
@@ -3636,6 +5020,22 @@
         ]
     },
     {
+        "title": "Koi wa Ameagari no You ni",
+        "release_date": "2018",
+        "genre": "Animation, Drama, Romance",
+        "rating": 7.4,
+        "plot_summary": "A young student falls in love with her middle-aged boss.",
+        "tags": []
+    },
+    {
+        "title": "Munou na Nana",
+        "release_date": "2020",
+        "genre": "Animation, Action, Fantasy",
+        "rating": 7.0,
+        "plot_summary": "A group of super-powered children are gathered to prepare for defending humanity. One of them has no powers, but is in fact the emissary of a grand mystery.",
+        "tags": []
+    },
+    {
         "title": "Captain Tsubasa: Road to 2002",
         "release_date": "2001",
         "genre": "Animation, Adventure, Drama",
@@ -3647,6 +5047,22 @@
             " Soccer",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Ashita no J\u00f4",
+        "release_date": "1970",
+        "genre": "Animation, Action, Drama",
+        "rating": 8.3,
+        "plot_summary": "Tange is a frustrated fighter with poorly life, he loses his eyesight and also his disciple.Passing by a town one day he meets Joe Yabuki, a brawler,lier and deceived person which he saw in...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Ookami shoujo to kuro ouji",
+        "release_date": "2014",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.0,
+        "plot_summary": "Add a Plot",
+        "tags": []
     },
     {
         "title": "Kono Oto Tomare!",
@@ -3665,6 +5081,14 @@
         ]
     },
     {
+        "title": "Dokyuu Hentai HxEros",
+        "release_date": "2020",
+        "genre": "Animation, Action, Comedy",
+        "rating": 5.4,
+        "plot_summary": "Highschooler Retto Enjo is a member of the hero group, HXEROS, and together they fight to save the Earth, with or without clothes.",
+        "tags": []
+    },
+    {
         "title": "Outlaw Star",
         "release_date": "1998",
         "genre": "Animation, Action, Adventure",
@@ -3681,6 +5105,14 @@
             " Based on a Manga",
             " Nudity"
         ]
+    },
+    {
+        "title": "Seirei no moribito",
+        "release_date": "2007",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.2,
+        "plot_summary": "The Second Empress hires a spear-wielding woman to save her son from the Mikado (emperor) who believes the young prince is possessed by a water demon foretold to bring a terrible drought upon the land should he live.",
+        "tags": []
     },
     {
         "title": "Attack on Titan: Junior High",
@@ -3720,6 +5152,14 @@
         ]
     },
     {
+        "title": "Uramichi Oniisan",
+        "release_date": "2021",
+        "genre": "Animation, Comedy",
+        "rating": 7.3,
+        "plot_summary": "A popular TV children's show is run by cheerful hosts, who struggle behind the scenes with production matters and their own bleak lives.",
+        "tags": []
+    },
+    {
         "title": "The Big O",
         "release_date": "1999",
         "genre": "Animation, Action, Adventure",
@@ -3756,6 +5196,14 @@
         ]
     },
     {
+        "title": "Mayo chiki!",
+        "release_date": "2011",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 6.8,
+        "plot_summary": "When you've got acute gynophobia, even a pretty girl can be a malady, and as the sparring partner for his family of female wrestlers, Sakamachi Kinjiro has the worst case EVER!",
+        "tags": []
+    },
+    {
         "title": "Nanbaka",
         "release_date": "2016",
         "genre": "Animation, Action, Adventure",
@@ -3768,6 +5216,14 @@
             " Prison",
             " Based on a Webtoon"
         ]
+    },
+    {
+        "title": "Paripi Koumei",
+        "release_date": "2022",
+        "genre": "Animation, Comedy, Music",
+        "rating": 7.6,
+        "plot_summary": "The music industry becomes a battlefield when ancient strategist Kongming is transported to modern Japan. He'll use military tactics to turn his new friend Eiko into a music star, and together they'll take Shibuya by storm.",
+        "tags": []
     },
     {
         "title": "Kaleido Star",
@@ -3789,6 +5245,14 @@
         ]
     },
     {
+        "title": "Kumo Desu ga, Nanika?",
+        "release_date": "2021",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 7.2,
+        "plot_summary": "Something mysterious happens and an entire class finds themselves reincarnated in a RPG-game-like fantasy world. The main character, a girl, finds herself reincarnated in a spider. Will she able to survive and to find out what happened?",
+        "tags": []
+    },
+    {
         "title": "Monsuno",
         "release_date": "2011",
         "genre": "Animation, Action, Adventure",
@@ -3801,6 +5265,14 @@
             " Monsters",
             " Original Work"
         ]
+    },
+    {
+        "title": "G.I. Joe",
+        "release_date": "1990",
+        "genre": "Animation, Action",
+        "rating": 7.3,
+        "plot_summary": "The elite military team continues their ongoing battle against the evil Cobra Commander and his allies.",
+        "tags": []
     },
     {
         "title": "Kanokon",
@@ -3820,6 +5292,22 @@
             " Based on a Light Novel",
             " Sexual Content"
         ]
+    },
+    {
+        "title": "Kami nomi zo Shiru Sekai",
+        "release_date": "2010",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.3,
+        "plot_summary": "A high school boy who is an expert at winning girls in video games unknowingly signs a demon contract to win them in real life -- or else.",
+        "tags": []
+    },
+    {
+        "title": "Senpai ga Uzai Kouhai no Hanashi",
+        "release_date": "2021",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 7.4,
+        "plot_summary": "Igarashi Futuba's new job would be great if her senpai, Takeda Harumi, wasn't so incredibly annoying. Futuba hates his laugh, she hates how big he is, and she really hates that he treats ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Knight's & Magic",
@@ -3885,6 +5373,22 @@
         ]
     },
     {
+        "title": "Kanata no Astra",
+        "release_date": "2019",
+        "genre": "Animation, Action, Adventure",
+        "rating": 8.0,
+        "plot_summary": "Warped into outer space by a mysterious sphere, nine children find themselves in an assassination plot as they retrieve a spaceship and try to return home safely.",
+        "tags": []
+    },
+    {
+        "title": "Musaigen No Phantom World",
+        "release_date": "2016",
+        "genre": "Animation, Fantasy",
+        "rating": 6.3,
+        "plot_summary": "When phantoms cause trouble, it's up to Haruhiko and his Phantom Hunting Club teammates to take care of them! If they can, that is.",
+        "tags": []
+    },
+    {
         "title": "Eden",
         "release_date": "I) (",
         "genre": "Animation, Action, Adventure",
@@ -3933,6 +5437,22 @@
         ]
     },
     {
+        "title": "Just Because",
+        "release_date": "2017",
+        "genre": "Animation, Drama, Romance",
+        "rating": 6.9,
+        "plot_summary": "Four highschool kids are ready for their university life,but with a new transfer student it all changes.",
+        "tags": []
+    },
+    {
+        "title": "Beck: Mongolian Chop Squad",
+        "release_date": "2004",
+        "genre": "Animation, Drama, Music",
+        "rating": 8.3,
+        "plot_summary": "Koyuki meets the guitarist, Ryuske, and discovers a love and talent for music.",
+        "tags": []
+    },
+    {
         "title": "Transformers: Cybertron",
         "release_date": "2005",
         "genre": "Animation, Action, Adventure",
@@ -3954,6 +5474,22 @@
         ]
     },
     {
+        "title": "Kimi to Boku no Saigo no Senjou, Arui wa Sekai ga Hajimaru Seisen",
+        "release_date": "2020",
+        "genre": "Animation, Action, Fantasy",
+        "rating": 6.4,
+        "plot_summary": "As a war rages on between a machine-based empire and a magic-focused empire, a witch and a soldier meet and fall in love. Will their romance bring an end to their nations' conflict?",
+        "tags": []
+    },
+    {
+        "title": "Dagashi kashi",
+        "release_date": "2016",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 6.2,
+        "plot_summary": "Shikada Kokonotsu's father owns a rural sweets shop, and his plan is for Kokonotsu to take it over one day. However, Kokonotsu wants to be a manga author instead! One day in summer, the ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Princess Connect! Re: Dive",
         "release_date": "2020",
         "genre": "Animation, Action, Adventure",
@@ -3971,6 +5507,38 @@
             " Monsters",
             " Based on a Mobile Game"
         ]
+    },
+    {
+        "title": "Yuragi-sou no Yuuna-san",
+        "release_date": "2018",
+        "genre": "Animation, Comedy, Fantasy",
+        "rating": 6.7,
+        "plot_summary": "A young man with connections to the supernatural rents a room haunted by the ghost of a 16-year-old girl.",
+        "tags": []
+    },
+    {
+        "title": "Back Street Girls",
+        "release_date": "2018",
+        "genre": "Animation, Comedy",
+        "rating": 6.7,
+        "plot_summary": "Three gangsters are forced by their boss into becoming a trio of pop singers.",
+        "tags": []
+    },
+    {
+        "title": "Tatoeba Last Dungeon Mae no Mura no Shounen ga Joban no Machi de Kurasu Youna Monogatari",
+        "release_date": "2021",
+        "genre": "Animation, Adventure, Fantasy",
+        "rating": 6.4,
+        "plot_summary": "Considered a weakling his entire life, novice adventurer Lloyd leaves his village located at the fringe of the mortal world to fulfill his dream of becoming a soldier.",
+        "tags": []
+    },
+    {
+        "title": "Ima, soko ni iru boku",
+        "release_date": "1999",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.9,
+        "plot_summary": "A Japanese boy named Shu tries to save a strange girl, Lala Ru, from kidnappers and is transported to an alternate Earth on the brink of being swallowed by the sun. There he meets an ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Tiger & Bunny",
@@ -4017,6 +5585,14 @@
         ]
     },
     {
+        "title": "Kaze ga tsuyoku fuiteiru",
+        "release_date": "2018",
+        "genre": "Animation, Comedy, Sport",
+        "rating": 8.4,
+        "plot_summary": "Kakeru, a former elite runner at high school, is chased for stealing food. He is saved by a Kansei University student Haiji, who is also a runner. Haiji persuades Kakeru to live in the old ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Infinite Stratos",
         "release_date": "2011",
         "genre": "Animation, Action, Comedy",
@@ -4052,6 +5628,22 @@
             " Supernatural",
             " Based on a Manga"
         ]
+    },
+    {
+        "title": "Shingeki no Bahamut: Genesis",
+        "release_date": "2014",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.3,
+        "plot_summary": "The story first starts off around Favaro Leone who is a bounty hunter, collecting money off of bounties he collects (demons). Favaro Leone soon runs into Amira who has no clue what is ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Akage no An",
+        "release_date": "1979",
+        "genre": "Animation, Drama, Family",
+        "rating": 7.7,
+        "plot_summary": "Based on the books by Lucy Maud Montgomery, this 50 episode series tells the story of Anne Shirley, a young orphan living in 19th century Canada.",
+        "tags": []
     },
     {
         "title": "Dororo",
@@ -4150,6 +5742,14 @@
         ]
     },
     {
+        "title": "Demashita! Powerpuff Girls Z",
+        "release_date": "2006",
+        "genre": "Animation, Action, Adventure",
+        "rating": 5.0,
+        "plot_summary": "Three ordinary girls gain superpowers and protect their home city from a variety of villains.",
+        "tags": []
+    },
+    {
         "title": "SSSS.Gridman",
         "release_date": "2018",
         "genre": "Animation, Action, Adventure",
@@ -4167,6 +5767,14 @@
             " Based on a TV Series",
             " Violence"
         ]
+    },
+    {
+        "title": "Shokei Shoujo no Virgin Road",
+        "release_date": "2022",
+        "genre": "Animation, Action, Adventure",
+        "rating": 6.2,
+        "plot_summary": "The Lost Ones are wanderers who come here from a distant world known as \"Japan.\" No one knows how or why they leave their homes. The only thing that is certain is that they bring disaster ...                See full summary\u00a0\u00bb",
+        "tags": []
     },
     {
         "title": "Yu-Gi-Oh!",
@@ -4202,6 +5810,14 @@
         ]
     },
     {
+        "title": "Doraemon",
+        "release_date": "2005",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 8.3,
+        "plot_summary": "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
+        "tags": []
+    },
+    {
         "title": "Isekai Cheat Magician",
         "release_date": "2019",
         "genre": "Animation, Action, Adventure",
@@ -4223,6 +5839,22 @@
             " Based on a Light Novel",
             " Violence"
         ]
+    },
+    {
+        "title": "Saihate no Paladin",
+        "release_date": "2021",
+        "genre": "Animation, Adventure, Drama",
+        "rating": 6.7,
+        "plot_summary": "A knight raised by three righteous but monstrous guardians sets out on a quest to improve his land.",
+        "tags": []
+    },
+    {
+        "title": "Ore no Yubi de Midarero",
+        "release_date": "2020",
+        "genre": "Animation, Drama, Romance",
+        "rating": 6.9,
+        "plot_summary": "At a hairdresser's salon, a steamy romance develops between a mousy stylist and her handsome mentor.",
+        "tags": []
     },
     {
         "title": "Chobits",
@@ -4256,6 +5888,14 @@
             " Short Episodes",
             " Based on a Video Game"
         ]
+    },
+    {
+        "title": "Gyakuten Saiban",
+        "release_date": "2016",
+        "genre": "Animation, Comedy, Crime",
+        "rating": 6.4,
+        "plot_summary": "A rookie lawyer Ryuuichi Naruhodou stands up to save his defendants by proving their innocence from unusual cases!",
+        "tags": []
     },
     {
         "title": "Takarajima",
@@ -4292,6 +5932,38 @@
         ]
     },
     {
+        "title": "Michiko to Hatchin",
+        "release_date": "2008",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.5,
+        "plot_summary": "Michiko is a free-willed \"sexy diva\" who escaped from prison, while Hatchin is a run away girl fleeing from her strict catholic foster family. The two join forces and set off on an unpredictable road trip seeking their own freedom.",
+        "tags": []
+    },
+    {
+        "title": "The Littles",
+        "release_date": "1983",
+        "genre": "Animation, Short, Adventure",
+        "rating": 6.4,
+        "plot_summary": "Animated series about a 13-year-old boy named Henry Bigg who goes on vacation and finds mouse-like creatures in his suitcase called Littles. There's a whole family of Littles. William and ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Rikei ga Koi ni Ochita no de Shoumei shitemita",
+        "release_date": "2020",
+        "genre": "Animation, Comedy, Romance",
+        "rating": 6.9,
+        "plot_summary": "Two scientists seek to find if love can be solved by a scientific theory. They will find the answer in their own hearts and feelings.",
+        "tags": []
+    },
+    {
+        "title": "Choujin Koukousei-tachi wa Isekai demo Yoyuu de Ikinuku you desu!",
+        "release_date": "2019",
+        "genre": "Animation, Adventure, Comedy",
+        "rating": 6.2,
+        "plot_summary": "Seven high school students that got caught in an airplane accident wake up, in a middle age like fantasy different world where magic and beast-man (juujin) exist - but they do not panic at ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
         "title": "Joshiraku",
         "release_date": "2012",
         "genre": "Animation, Comedy",
@@ -4312,6 +5984,14 @@
         ]
     },
     {
+        "title": "Fate/kaleid liner Prisma Illya",
+        "release_date": "2013",
+        "genre": "Animation, Action, Comedy",
+        "rating": 6.0,
+        "plot_summary": "Normal elementary schoolgirl Illya has her life turned upside down when a peculiar stick turns her to a magical girl whose job is to defeat stray Heroic Spirits and collect their cards.",
+        "tags": []
+    },
+    {
         "title": "Owarimonogatari",
         "release_date": "2015",
         "genre": "Animation, Comedy, Fantasy",
@@ -4323,6 +6003,30 @@
             " Supernatural",
             " Based on a Light Novel"
         ]
+    },
+    {
+        "title": "Kono naka ni hitori, imouto ga iru!",
+        "release_date": "2012",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.1,
+        "plot_summary": "Is insanity hereditary? Shougo Mikadono's beginning to think so, because the terms of his late father's will seem crazy and following them may drive Shougo bonkers as well. Oh, it sounds ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Shijou Saikyou no Deshi Kenichi",
+        "release_date": "2006",
+        "genre": "Animation, Action, Comedy",
+        "rating": 8.1,
+        "plot_summary": "\"Weak Legs\" Kenichi Shirahama would rather spend his time reading self improvement books than fighting.",
+        "tags": []
+    },
+    {
+        "title": "Ore no imouto ga konna ni kawaii wake ga nai",
+        "release_date": "2010",
+        "genre": "Animation, Comedy, Drama",
+        "rating": 6.4,
+        "plot_summary": "After years of resentment, a teenage girl begins warming up to her older brother when he discovers her secret hobbies.",
+        "tags": []
     },
     {
         "title": "Strawberry Panic",
@@ -4369,5 +6073,21 @@
             "Slice of Life",
             " Sports"
         ]
+    },
+    {
+        "title": "Kaizoku oujo",
+        "release_date": "2021",
+        "genre": "Animation, Action, Adventure",
+        "rating": 7.1,
+        "plot_summary": "Fena Houtman, a young orphan girl, has been raised on an island where there is no hope of becoming anything more than chattel, to be used and discarded by soldiers of the British Empire. ...                See full summary\u00a0\u00bb",
+        "tags": []
+    },
+    {
+        "title": "Superman",
+        "release_date": "1988",
+        "genre": "Animation, Short, Action",
+        "rating": 7.0,
+        "plot_summary": "The Man of Steel fights evil in the city of Metropolis and beyond. Each episode ends with a short vignette about key events from Kal-El's youth on Earth.",
+        "tags": []
     }
 ]
