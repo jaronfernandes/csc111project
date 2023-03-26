@@ -47,10 +47,18 @@ new_tvshows = tvshows.copy()
 # Filter new_anime to only have entries with titles in unique_titles
 for index, row in tvshows.iterrows():
     show = str(tvshows.at[index, 'title'])
+    # year = str(tvshows.at[index, 'Release_year'])
     for i in range(0, len(show)):
-        correction = {'î': 'i', 'ô': 'o', '×': ' x '}
+        correction = {'î': 'i', 'ô': 'o', '×': ' x ', 'û': 'u'}
         if show[i] in correction:
             show = show[0:i] + correction[show[i]] + show[i+1:len(show)]
+
+    # for title in unique_titles:
+    #     if show.lower() in title.lower():
+    #         if year == new_anime['title']['Release_year']:
+    #             break
+    # for
+
     if not any((show.lower() in x.lower()) for x in unique_titles) and \
             not any((show.lower() in x.lower()) for x in new_unique_japanese_titles):
         new_tvshows.drop(index, inplace=True)
