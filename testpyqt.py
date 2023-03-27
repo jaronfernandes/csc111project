@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
         self.added_movies = set()
 
         movie_names = extract_movies_file('datasets/filtered/final_imdb_movies.json')
-        movie_names.union(extract_movies_file('datasets/filtered/final_imdb_shows.json'))
+        movie_names.update(extract_movies_file('datasets/filtered/final_imdb_shows.json'))
 
         self.movies = movie_names
 
