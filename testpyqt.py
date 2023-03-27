@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
 
         # Group Box
         group_box = QGroupBox('Movies Added')
-        group_box.setFont(QFont('Callibri', 15))
+        group_box.setFont(QFont('Verdana', 15))
 
         group_box.setLayout(self.form_layout)
 
