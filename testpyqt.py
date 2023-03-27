@@ -7,6 +7,8 @@ i will fix later
 from __future__ import annotations
 
 import json
+import random
+import os
 
 import sys
 
@@ -14,6 +16,9 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6 import QtCore
+
+
+BACKGROUND_IMAGE = f"imgs/{random.choice(os.listdir('imgs'))}"  # Picks a random one at the start
 
 
 def extract_movies_file(filename: str) -> set:
@@ -46,7 +51,7 @@ class MovieWidget(QWidget):
         self.label = QLabel(self.movie_name, self)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
-        self.close_button.setFont(QFont('Verdana', 20))
+        self.close_button.setFont(QFont('Verdana', 30))
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.label)
@@ -60,6 +65,7 @@ class MovieWidget(QWidget):
         """When the button is clicked."""
         self.parent.added_movies.remove(self.movie_name)
         self.layout.removeWidget(self)
+        print(self.parent.added_movies)
         # self.destroy()
 
 
@@ -82,7 +88,9 @@ class MainWindow(QMainWindow):
         self.container = QWidget()
         self.container_layout = QVBoxLayout()
         self.searchbar = QLineEdit()
-        self.add_movie_button = QPushButton('Add Movie')
+        self.searchbar.setFixedSize(QtCore.QSize(200, 40))
+        self.add_movie_button = QPushButton('Add Movie or Show')
+        self.add_movie_button.setFixedSize(QtCore.QSize(200, 40))
         self.form_layout = QFormLayout()
         self.added_movies = set()
 
@@ -92,7 +100,7 @@ class MainWindow(QMainWindow):
         self.movies = movie_names
 
         # To space the drop-down.
-        spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        spacer = QSpacerItem(10, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.container_layout.addItem(spacer)
         self.container.setLayout(self.container_layout)
 
@@ -102,8 +110,8 @@ class MainWindow(QMainWindow):
         self.searchbar.setCompleter(self.completer)
 
         # Group Box
-        group_box = QGroupBox('Movies Added')
-        group_box.setFont(QFont('Verdana', 15))
+        group_box = QGroupBox('Movies and Shows Added')
+        group_box.setFont(QFont('Verdana', 30))
 
         group_box.setLayout(self.form_layout)
 
@@ -139,9 +147,84 @@ class MainWindow(QMainWindow):
         if text in self.movies and text not in self.added_movies:
             self.form_layout.addRow(MovieWidget(text, self))
             self.added_movies.add(text)
+            print(self.added_movies)
 
 
 app = QApplication(sys.argv)
+
+# Note: background-size is not supported by PyQt6, which is why it doesn't work!
+# For MainWindow, simply use MainWindow
+app.setStyleSheet("""
+    QMainWindow {"""f"""
+        background-color: "white";
+        border: none;
+        font-family: "Verdana", monospace;
+        background-image: url({BACKGROUND_IMAGE});
+        background-repeat: no-repeat;
+        border-image: url({BACKGROUND_IMAGE}) 0 0 0 0 stretch stretch;
+        line-height: 20;
+        opacity: 0;
+    """"""}
+    """"""
+    QFormLayout {
+        border: none;
+        background: transparent !important;
+        opacity: 0;
+    }
+    QGroupBox {
+        background-color: "white";
+        border: none;
+        font-family: "Verdana", monospace;
+        background: transparent !important;
+        color: white;
+        font-size: 30px;
+        padding: 70px;
+        opacity: 0;
+    }
+    QGroupBox::title {
+        border: none;
+        font-family: "Verdana", monospace;
+        color: white;
+        font-size: 30px;
+        opacity: 0;
+    }
+    QFormLayout {
+        opacity: 0;
+    }
+    QPushButton {
+        font-size: 16px;
+        font-family: "Verdana", monospace;
+        background-color: "lightblue";
+        border-collapse: separate;
+        border-radius: 20%;
+        opacity: 0;
+    }
+    MainWindow::QPushButton {
+        font-size: 16px;
+        font-family: "Verdana", monospace;
+        background-color: "white";
+        border-collapse: separate;
+        border-radius: 4px;
+        opacity: 0;
+    }
+    QLineEdit {
+        background-color: "white";
+        font-family: "Verdana", monospace;
+        color: "black";
+        opacity: 0;
+    }
+    QLabel {
+        font-family: "Verdana", monospace;
+        font-size: 25px;
+        color: white;
+        opacity: 0;
+    }
+    QScrollArea {
+        opacity: 0;
+        background: transparent !important;
+    }
+""")
+
 w = MainWindow()
 w.show()
 sys.exit(app.exec())
