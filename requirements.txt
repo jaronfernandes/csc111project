@@ -1,0 +1,9 @@
+nltk
+spacy
+PyQt6
+pandas
+
+# run these lines in the console:
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('wordnet')
