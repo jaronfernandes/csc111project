@@ -116,7 +116,7 @@ def write_edges(edge_file: str) -> None:
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
-    nlp = spacy.load('en_core_web_lg')
+    # nlp = spacy.load('en_core_web_lg')
 
     # IMPORTANT!!! (read the following comment):
     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:

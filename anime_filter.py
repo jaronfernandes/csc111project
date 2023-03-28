@@ -91,9 +91,9 @@ def write_file(df: pd.DataFrame) -> None:
             if word in genres or word == 'Sci Fi':
                 if word == 'Sci Fi':
                     word = 'Sci-Fi'
-                    entry['keywords'].remove('Sci Fi')
-                else:
-                    entry['keywords'].remove(word)
+                    # entry['keywords'].remove('Sci Fi')
+                # else:
+                #     entry['keywords'].remove(word)
                 if entry['genre'] == '':
                     entry['genre'] = [word]
                 else:
