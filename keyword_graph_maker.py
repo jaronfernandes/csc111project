@@ -86,7 +86,7 @@ def make_edges(keyword_file: str, threshold: float, sampling: bool = False) -> s
     for word in keyword_set:
         for other_word in keyword_set:
             if word in wn_lemmas and other_word in wn_lemmas and \
-                    word != other_word and frozenset({word, other_word}) not in edges:
+                    word != other_word and (word, other_word) not in edges:
                 similarity_score = word_similarity(word, other_word)
                 if similarity_score > threshold:
                     edges.add((word, other_word))
