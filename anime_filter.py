@@ -28,7 +28,8 @@ def anime_based_json() -> pd.DataFrame:
     new_anime = new_anime[new_anime['Name'].apply(
         lambda title: not any(x in title for x in bad_strings) or any(x in title for x in exceptions)
     )]
-    new_anime['Rating'] = new_anime['Rating'].transform(lambda x: x*2)
+    new_anime['Rating'] = new_anime['Rating'].transform(lambda x: str(x*2))
+    new_anime['Release_year'] = new_anime['Release_year'].transform(lambda x: str(x))
     new_anime = new_anime[["Name", "Release_year", "Rating", "Tags", "Description"]]
     new_anime = new_anime.rename(columns={
         'Name': 'title',
