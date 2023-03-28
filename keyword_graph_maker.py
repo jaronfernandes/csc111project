@@ -31,7 +31,7 @@ def get_anime_keywords(anime_file: str) -> set[str]:
     for index, _ in tvshows.iterrows():
         words_to_add = tvshows.at[index, 'keywords']
         words.update(set(words_to_add))
-    return words
+    return {x.lower() for x in words}
 
 
 def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
