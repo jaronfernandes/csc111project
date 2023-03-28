@@ -39,7 +39,7 @@ class Media:
         self.keywords = entry['keywords']
         self.recommendation = set()
 
-    def compare(self, other: Media, parent_set: set[Media]):
+    def compare(self, other: Media, parent_set: set[Media]) -> float:
         """compares itself to another media with 4 assessments,
         and mutates its recommendation accordingly
 
@@ -47,7 +47,7 @@ class Media:
         - other in parent_set
         """
         sim_scores = (0, 0, 0, 0)
-        mul = (0.1, 0.2, 0.3, 0.4)
+        mul = (0.1, 0.2, 0.3, 0.4)  # this should be subject to change (and tweaking will majorly affect results)
         # 1. date comparison
 
         # 2. rating comparison
@@ -57,6 +57,8 @@ class Media:
         # 4. keyword comparison
 
         # balancing comparison values
-        assert sum(sim_scores) in {0, 1}
+        assert sum(sim_scores) <= 4  # 4 would be if it gets perfect scores in each
         assert len(sim_scores) == len(mul)
-        return sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores)))
+        perfect_score = 4 * sum(mul)
+        score = sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
+        self.recommendation.add((parent_set, score))
