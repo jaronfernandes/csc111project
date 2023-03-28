@@ -97,7 +97,7 @@ def write_keywords(keyword_file: str) -> None:
     """Writes a set of all keywords into keyword_file in the .txt format.
     """
     keyword_set = extract_all_keywords('datasets/filtered/final_imdb_movies.json',
-                                       'datasets/filtered/final_imdb_movies.json',
+                                       'datasets/filtered/final_imdb_shows.json',
                                        'datasets/filtered/final_animes.json',
                                        'plot_summary')
 
