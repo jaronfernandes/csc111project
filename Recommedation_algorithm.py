@@ -61,4 +61,4 @@ class Media:
         assert len(sim_scores) == len(mul)
         perfect_score = 4 * sum(mul)
         score = sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
-        self.recommendation.add((parent_set, score))
+        return score
