@@ -113,6 +113,11 @@ def write_edges(edge_file: str) -> None:
         f.write('\n' + str(connections))
 
 
+def update_dataset_keywords():
+    """Only to be run after the keyword_graph.txt file has at least the first line completed
+    i.e. write_keywords() has been called"""
+
+
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
