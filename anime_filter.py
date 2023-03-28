@@ -1,98 +1,110 @@
 """thing"""
 import json
 import pandas as pd
-import math
-
-new_anime = pd.read_csv('datasets/raw/Anime.csv')
-# anime2 = pd.read_csv('dataset/animes.csv')   this dataset will not be used for this
-tvshows = pd.read_json('datasets/filtered/final_imdb_shows.json')
-
-new_anime = new_anime[["Name", "Japanese_name", "Tags"]]
-
-unique_titles = set(new_anime['Name'])
-unique_japanese_titles = set(new_anime['Japanese_name'])
-new_unique_japanese_titles = unique_japanese_titles.copy()
-for n in unique_japanese_titles:
-    if not isinstance(n, str) and math.isnan(n):
-        new_unique_japanese_titles.remove(n)
-
-# Apply the function to each row in the genres column and filter the dataframe
-tvshows = tvshows[tvshows['genre'].apply(lambda genres: 'Animation' in genres)]
 
 
-def shares_3_words_in_order(str1, str2):
-    """used to see if titles are similar enough"""
-    # split the strings into lists of words
-    words1 = str1.split()
-    words2 = str2.split()
-    if len(words1) < 3:
-        goal = len(words1)
-    else:
-        goal = 3
-    count = 0
-    i = 0
-    for j in range(len(words2)):
-        if words1[i] == words2[j]:
-            count += 1
-            i += 1
-        if count >= goal:
-            return True
-        if i >= len(words1):
-            break
-
-    return False
+def get_genres() -> set[str]:
+    """looks through the imdb_shows.json for all the different genres names"""
+    tvshows = pd.read_json('datasets/filtered/final_imdb_shows.json')
+    genres = set()
+    for index, row in tvshows.iterrows():
+        genres_to_add = tvshows.at[index, 'genre'].split(', ')
+        genres.update(set(genres_to_add))
+    return genres
 
 
-new_tvshows = tvshows.copy()
-# Filter new_anime to only have entries with titles in unique_titles
-for index, row in tvshows.iterrows():
-    show = str(tvshows.at[index, 'title'])
-    # year = str(tvshows.at[index, 'Release_year'])
-    for i in range(0, len(show)):
-        correction = {'î': 'i', 'ô': 'o', '×': ' x ', 'û': 'u'}
-        if show[i] in correction:
-            show = show[0:i] + correction[show[i]] + show[i+1:len(show)]
-
-    # for title in unique_titles:
-    #     if show.lower() in title.lower():
-    #         if year == new_anime['title']['Release_year']:
-    #             break
-    # for
-
-    if not any((show.lower() in x.lower()) for x in unique_titles) and \
-            not any((show.lower() in x.lower()) for x in new_unique_japanese_titles):
-        new_tvshows.drop(index, inplace=True)
-
-new_tvshows = new_tvshows.assign(tags='')
-
-# Group new_anime by title and aggregate the tags into a set for each title
-anime_tags = new_anime.groupby('Name')['Tags'].apply(set)
-anime_tags2 = new_anime.groupby('Japanese_name')['Tags'].apply(set)
-
-
-# Define a function to get the tags for a given title from tags_by_title
-def get_tags(title: str) -> set:
-    """gets the tags for a title entry
-    """
-    if title in anime_tags:
-        return anime_tags[title]
-    elif title in anime_tags2:
-        return anime_tags2[title]
-    else:
-        return set()
+def anime_based_json() -> pd.DataFrame:
+    """makes a dataframe based on the Anime.csv file"""
+    new_anime = pd.read_csv('datasets/raw/Anime.csv')
+    bad_strings = {
+        'II', ' - ', ': ', 'Season', 'season', 'part', 'arc', 'Re-',
+        '!! ', '2nd', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', 'II', 'III'
+    }
+    exceptions = {'1st'}
+    new_anime = new_anime[["Name", "Japanese_name", "Tags", "Release_year", "Rating", "Description", "Type"]]
+    new_anime = new_anime[new_anime['Type'].apply(lambda form: 'TV' in form)]
+    new_anime = new_anime[new_anime['Rating'].apply(lambda score: float(score) >= 3.7)]
+    new_anime = new_anime[new_anime['Release_year'].apply(lambda year: isinstance(year, float))]
+    new_anime = new_anime[new_anime['Name'].apply(
+        lambda title: not any(x in title for x in bad_strings) or any(x in title for x in exceptions)
+    )]
+    new_anime['Rating'] = new_anime['Rating'].transform(lambda x: x*2)
+    new_anime = new_anime[["Name", "Release_year", "Rating", "Tags", "Description"]]
+    new_anime = new_anime.rename(columns={
+        'Name': 'title',
+        'Rating': 'rating',
+        'Release_year': 'release_date',
+        'Description': 'plot_summary',
+        'Tags': 'keywords'
+    })
+    new_anime = new_anime.assign(genre='')
+    return new_anime
 
 
-# Apply the function to each row in filtered_df_A and add a tags column
-new_tvshows['tags'] = new_tvshows['title'].apply(get_tags)
+def tv_show_cleaning() -> pd.DataFrame:
+    """This function isn't the one we'll be using to get the anime final json"""
+    new_anime = pd.read_csv('datasets/raw/Anime.csv')
+    tvshows = pd.read_json('datasets/filtered/final_imdb_shows.json')
+    tvshows = tvshows[tvshows['genre'].apply(lambda genres: 'Animation' in genres)]
+    tvshows = tvshows[tvshows['rating'].apply(lambda score: float(score) >= 5.0)]
+    tvshows = tvshows.assign(tags='')
+    new_tvshows = tvshows.copy()
 
-# Convert dataframe to JSON object
-json_data = json.loads(new_tvshows.to_json(orient='records'))
+    for index, row in tvshows.iterrows():
+        show_name = str(tvshows.at[index, 'title'])
+        for i in range(0, len(show_name)):
+            correction = {'î': 'i', 'ô': 'o', '×': ' x ', 'û': 'u'}
+            if show_name[i] in correction:
+                show_name = show_name[0:i] + correction[show_name[i]] + show_name[i+1:len(show_name)]
+        found_match = False
+        for index_a, row_a in new_anime.iterrows():
+            anime_name = str(new_anime.at[index_a, 'Name'])
+            anime_japanese_name = str(new_anime.at[index_a, 'Name'])
+            if ((not isinstance(tvshows.at[index, 'release_date'], float) or not
+                    isinstance(new_anime.at[index, 'Release_year'], float)) or
+                    int(tvshows.at[index, 'release_date']) == int(new_anime.at[index_a, 'Release_year'])) and \
+                    (show_name.lower() in anime_name.lower() or show_name.lower() in anime_japanese_name.lower()):
+                if new_tvshows.at[index, 'tags'] == '':
+                    new_tvshows.at[index, 'tags'] = set(new_anime.at[index_a, 'Tags'].split(', '))
+                else:
+                    new_tvshows.at[index, 'tags'].update(set(new_anime.at[index_a, 'Tags'].split(', ')))
+                found_match = True
+        if not found_match:
+            print('dropped ' + str(show_name))
+            new_tvshows.drop(index, inplace=True)
+        else:
+            print('added ' + str(show_name))
+    return new_tvshows
 
-for entry in json_data:
-    tags = entry['tags']
-    if len(tags) > 0:
-        entry['tags'] = list(tags[0].split(','))
 
-# Write JSON data to file
-with open('datasets/filtered/final_animes.json', 'w') as f:
-    json.dump(json_data, f, indent=4)
+def write_file(df: pd.DataFrame) -> None:
+    """write the final_animes.json file"""
+    json_data = json.loads(df.to_json(orient='records'))
+    genres = get_genres()
+    for entry in json_data:
+        tags = entry['keywords']
+        if len(tags) > 0:
+            entry['keywords'] = [x.strip() for x in list(tags.split(',')) if x != '']
+        possible_tags = entry['keywords'].copy()
+        for word in possible_tags:
+            if word in genres or word == 'Sci Fi':
+                if word == 'Sci Fi':
+                    word = 'Sci-Fi'
+                    entry['keywords'].remove('Sci Fi')
+                else:
+                    entry['keywords'].remove(word)
+                if entry['genre'] == '':
+                    entry['genre'] = [word]
+                else:
+                    entry['genre'].append(word)
+
+            elif 'Based on' in word:
+                entry['keywords'].remove(word)
+
+    # Write JSON data to file
+    with open('datasets/filtered/final_animes.json', 'w') as f:
+        json.dump(json_data, f, indent=4)
+
+
+if __name__ == '__main__':
+    write_file(anime_based_json())
