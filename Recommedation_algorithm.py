@@ -2,6 +2,7 @@
 # TODO: media dataclass, compare function, other helper functions, read keywords graph function
 from __future__ import annotations
 import graph_classes
+from typing import Optional
 
 
 with open('datasets/filtered/keyword_graph.txt', 'r') as f:
