@@ -86,7 +86,7 @@ def make_edges(keyword_file: str, threshold: float, sampling: bool = False) -> s
     for word in keyword_set:
         for other_word in keyword_set:
             if word in wn_lemmas and other_word in wn_lemmas and \
-                    word != other_word and frozenset({word, other_word}) not in edges:
+                    word != other_word and (word, other_word) not in edges:
                 similarity_score = word_similarity(word, other_word)
                 if similarity_score > threshold:
                     edges.add((word, other_word))
@@ -97,7 +97,7 @@ def write_keywords(keyword_file: str) -> None:
     """Writes a set of all keywords into keyword_file in the .txt format.
     """
     keyword_set = extract_all_keywords('datasets/filtered/final_imdb_movies.json',
-                                       'datasets/filtered/final_imdb_movies.json',
+                                       'datasets/filtered/final_imdb_shows.json',
                                        'datasets/filtered/final_animes.json',
                                        'plot_summary')
 
