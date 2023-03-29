@@ -1,0 +1,57 @@
+[
+   {
+        "title": "Doctor Who",
+        "release_date": "2005",
+        "genre": "Adventure, Drama, Sci-Fi",
+        "rating": "8.6",
+        "plot_summary": "The further adventures in time and space of the alien adventurer known as the Doctor and their companions from planet Earth.",
+        "keywords": ["Time", "Space"]
+    },
+    {
+        "movie_id": "tt0120655",
+        "plot_summary": "An abortion clinic worker with a special heritage is enlisted to prevent two angels from reentering Heaven and thus undoing the fabric of the universe. Along the way, she is aided by two prophets, Jay and Silent Bob. With the help of Rufus, the 13th Apostle, they must stop those who stand in their way and prevent the angels from entering Heaven.                Written by\nJerel Parenton <J.W.Parenton@student.tcu.edu>",
+        "genre": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ],
+        "rating": "7.3",
+        "release_date": "1999-11-12",
+        "title": "Dogma",
+        "keywords": ["Abortion", "worker"]
+    },
+    {
+        "movie_id": "tt0914798",
+        "plot_summary": "Young Bruno lives a wealthy lifestyle in prewar Germany along with his mother, elder sister, and SS Commandant father. The family relocates to the countryside where his father is assigned to take command a prison camp. A few days later, Bruno befriends another youth, strangely dressed in striped pajamas, named Shmuel who lives behind an electrified fence. Bruno will soon find out that he is not permitted to befriend his new friend as he is a Jew, and that the neighboring yard is actually a prison camp for Jews awaiting extermination. Shmuel papa disappears and Shmule bring back a striped pajamas. Bruno puts them on and they both go look for Shmuel papa                Written by\nrAjOo (gunwanti@hotmail.com)",
+        "genre": [
+            "Drama",
+            "War"
+        ],
+        "rating": "7.8",
+        "release_date": "2008-11-26",
+        "title": "The Boy in the Striped Pajamas",
+        "keywords": ["lifestyle", "Germany"]
+    },
+
+    {
+        "title": "Supernatural",
+        "release_date": "2005",
+        "genre": "Drama, Fantasy, Horror",
+        "rating": "8.4",
+        "plot_summary": "Two brothers follow their father's footsteps as hunters, fighting evil supernatural beings of many kinds, including monsters, demons, and gods that roam the earth.",
+        "keywords": ["Brothers", "Hunters"]
+    },
+    {
+        "movie_id": "tt0276751",
+        "plot_summary": "Twelve year old Marcus Brewer lives with his chronically depressed single mother, Fiona Brewer. Both Fiona and Marcus beat to their own respective drummers. Marcus will do whatever he can to make his depressed mother happy, even if it causes himself grief. As such, he realizes that he is perceived as different than most kids, as even the self-professed weird kids don't want to hang out with him as he is the target of bullying. Part of the taunts against him are the fact that he sings and speaks to himself without even realizing that he is doing it. Meanwhile, thirty-eight year old Will Freeman is a slacker who has lived comfortably off the royalties of a song written by his deceased father, and as such has never had to work a day in his life. He is a solitary man who places himself as the first and only priority in life. He comes across the idea that dating single moms meets his selfish carnal needs. It is in this capacity that Will meets Marcus, as one of Will's single mother ...                Written by\nHuggo",
+        "genre": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ],
+        "rating": "7.1",
+        "release_date": "2002-05-17",
+        "title": "About a Boy",
+        "keywords": ["depressed", "drummers"]
+    }
+]
