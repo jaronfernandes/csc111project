@@ -31,7 +31,7 @@ def get_anime_keywords(anime_file: str) -> set[str]:
     for index, _ in tvshows.iterrows():
         words_to_add = tvshows.at[index, 'keywords']
         words.update(set(words_to_add))
-    return words
+    return {x.lower() for x in words}
 
 
 def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
@@ -50,9 +50,10 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
         nouns = set()  # empty set to hold all nouns
         word_types = nltk.pos_tag(words)
         for word, pos in word_types:
-            if len(word) > 2 and (pos == 'NN' or pos == 'NNS'):
+            if pos == 'NN' or pos == 'NNS':
                 word = wnl.lemmatize(word, pos='n')
-                nouns.add(word.lower())
+                if len(word) >= 3:
+                    nouns.add(word.lower())
         keyword_set.update(nouns)
     return keyword_set
 
@@ -113,9 +114,29 @@ def write_edges(edge_file: str) -> None:
         f.write('\n' + str(connections))
 
 
-def update_dataset_keywords():
+def update_dataset_keywords(reference_file: str, edit_file: str, column: str) -> None:
     """Only to be run after the keyword_graph.txt file has at least the first line completed
-    i.e. write_keywords() has been called"""
+    i.e. write_keywords() has been called
+    Preconditions
+    - the column is a valid column of the edit_file's json dataframe, and it contains a string
+    """
+    df = pd.read_json(edit_file)
+    df = df.assign(keywords='')
+    with open(reference_file, 'r') as file:
+        lines = file.readlines()
+    keywords = set(lines[0].split("', '"))
+
+    for index, _ in df.iterrows():
+        synopsis = df.at[index, column].split(' ')
+        for phrase in keywords:
+            if phrase in synopsis:
+                if df.at[index, 'keywords'] == '':
+                    df.at[index, 'keywords'] = [phrase]
+                else:
+                    df.at[index, 'keywords'].append(phrase)
+    json_data = json.loads(df.to_json(orient='records'))
+    with open(edit_file, 'w') as f:
+        json.dump(json_data, f, indent=4)
 
 
 if __name__ == '__main__':
@@ -130,3 +151,10 @@ if __name__ == '__main__':
     # only run this if the previous line has been run or the txt file already exists with a valid keywords set in line 1
     # write_edges('datasets/filtered/keyword_graph.txt')  # this will read that keyword_graph.txt file and then write a
     # second line onto it
+
+    # once we have all our keywords, we can update our datasets to include them
+    # (we don't need to do this for final_animes since that already came with keywords (originally tags))
+    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+                            'datasets/filtered/final_imdb_movies.json', 'plot_summary')
+    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+                            'datasets/filtered/final_imdb_shows.json', 'plot_summary')
