@@ -50,7 +50,8 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
         nouns = set()  # empty set to hold all nouns
         word_types = nltk.pos_tag(words)
         for word, pos in word_types:
-            if pos == 'NN' or pos == 'NNS':
+            unique_score = sum(word_similarity(word, x) for x in words) / len(words)
+            if (pos == 'NN' or pos == 'NNS') and unique_score < 0.3:  # try tweaking this number
                 word = wnl.lemmatize(word, pos='n')
                 if len(word) >= 3:
                     nouns.add(word.lower())
@@ -142,7 +143,7 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
-    # nlp = spacy.load('en_core_web_lg')
+    nlp = spacy.load('en_core_web_lg')
 
     # IMPORTANT!!! (read the following comment):
     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:
