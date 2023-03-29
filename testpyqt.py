@@ -5,6 +5,7 @@ jaiz if you see this im sorry for the code being so messy and undocumented lol
 i will fix later
 """
 from __future__ import annotations
+from typing import Optional
 
 import json
 import random
@@ -14,34 +15,85 @@ import sys
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont, QFontDatabase
+from PyQt6.QtGui import QFont, QPixmap, QFontDatabase
 from PyQt6 import QtCore
+from Recommedation_algorithm import Media
 
 
 BACKGROUND_IMAGE = f"imgs/{random.choice(os.listdir('imgs'))}"  # Picks a random one at the start
 
 
-def extract_movies_file(filename: str) -> set:
+def extract_movies_file(filename: str) -> dict:
     """extract movies file"""
-    names = set()
+    names = {}
 
     with open(filename, 'r') as f:
         string = f.read()
         for line in json.loads(string):
-            names.add(line['title'])
+            if 'movie' in filename:
+                names[line['title']] = 'Movie'
+            elif 'show' in filename:
+                names[line['title']] = 'Show'
 
     return names
+
+
+class AnimeWidget(QWidget):
+    """Widget for each recommended anime."""
+    anime_data: Media
+    full_description: str
+    description: QLabel
+    image: Optional[QPixmap]
+    layout: QVBoxLayout
+    left: Optional[AnimeWidget]
+    left_button: QPushButton
+    parent: MainWindow
+    right: Optional[AnimeWidget]
+    right_button: QPushButton
+    title: QLabel
+
+    def __init__(self, anime_data: Media, parent: MainWindow, image: Optional[str] = None) -> None:
+        """Initializer"""
+        super(AnimeWidget, self).__init__()
+        self.parent = parent
+        self.anime_data = anime_data
+        self.full_description = anime_data.synopsis
+        self.description = QLabel(anime_data.synopsis[:50] + '...')
+        self.description.setFont(QFont('Verdana', 20))
+        self.layout = QVBoxLayout()
+        self.title = QLabel(anime_data.title)
+        self.left = None
+        self.right = None
+        self.left_button = QPushButton('<')
+        self.left_button.setFixedSize(QtCore.QSize(40, 40))
+        self.right_button = QPushButton('>')
+        self.right_button.setFixedSize(QtCore.QSize(40, 40))
+
+        # self.title.move(self.parent.rect().center())
+        self.title.move(50, 50)
+
+        self.layout.addWidget(self.title)
+        self.layout.addWidget(self.description)
+        self.layout.addWidget(self.left_button)
+        self.layout.addWidget(self.right_button)
+
+        if image is not None:
+            self.image = QPixmap('imgs/samplegradient.jpeg')
+            self.title.setPixmap(self.image)
+
+        self.setLayout(self.layout)
 
 
 class MovieWidget(QWidget):
     """Widget for each movie in the dropdown."""
     movie_name: str
+    type: QLabel
     label: QLabel
     close_button: QPushButton
     layout: QHBoxLayout
     parent: MainWindow
 
-    def __init__(self, movie_name: str, parent: MainWindow):
+    def __init__(self, movie_name: str, parent: MainWindow, movie_type: str):
         """Initializer"""
         super(MovieWidget, self).__init__()
         self.parent = parent
@@ -49,12 +101,14 @@ class MovieWidget(QWidget):
         # self.setMaximumHeight(50)
         self.movie_name = movie_name
         self.label = QLabel(self.movie_name, self)
+        self.type = QLabel('Type: '+movie_type, self)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
         self.close_button.setFont(QFont('Verdana', 30))
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.label)
+        self.layout.addWidget(self.type)
         self.layout.addWidget(self.close_button)
         self.setLayout(self.layout)
 
@@ -77,9 +131,12 @@ class MainWindow(QMainWindow):
     container: QWidget
     container_layout: QVBoxLayout
     form_layout: QFormLayout
+    recommendation_layout: QFormLayout
+    recommendation_box: QGroupBox
+    movies: dict
     scroll: QScrollArea
     searchbar: QLineEdit
-    movies: set
+    submit_button: QPushButton
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -92,6 +149,7 @@ class MainWindow(QMainWindow):
         self.add_movie_button = QPushButton('Add Movie or Show')
         self.add_movie_button.setFixedSize(QtCore.QSize(200, 40))
         self.form_layout = QFormLayout()
+        self.recommendation_layout = QFormLayout()
         self.added_movies = set()
 
         movie_names = extract_movies_file('datasets/filtered/final_imdb_movies.json')
@@ -113,6 +171,10 @@ class MainWindow(QMainWindow):
         group_box = QGroupBox('Movies and Shows Added')
         group_box.setFont(QFont('Verdana', 30))
 
+        anime_box = QGroupBox('Recommended Anime:')
+        anime_box.setFont(QFont('Verdana', 30))
+        anime_box.setLayout(self.recommendation_layout)
+
         group_box.setLayout(self.form_layout)
 
         # Scroll Area Properties.
@@ -121,6 +183,7 @@ class MainWindow(QMainWindow):
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(group_box)
+        self.container_layout.addWidget(anime_box)
 
         # Creating the container
         container = QWidget()
@@ -132,22 +195,91 @@ class MainWindow(QMainWindow):
 
         self.scroll.setLayout(thing)
         container_layout.addWidget(self.scroll)
+        container_layout.addWidget(anime_box)
 
-        # for movie in self.movies:
-        #     container_layout.addWidget(movie)
+        self.recommendation_box = anime_box
+        self.recommendation_box.hide()
+
+        self.submit_button = QPushButton('Submit')
+        self.submit_button.setFixedSize(QtCore.QSize(200, 40))
+        container_layout.addWidget(self.submit_button)
 
         container.setLayout(container_layout)
         self.setCentralWidget(container)
 
         self.add_movie_button.clicked.connect(self.on_movie_added)
+        self.submit_button.clicked.connect(self.on_submit)
 
     def on_movie_added(self) -> None:
-        """Button for when movies are added"""
+        """Button event for when movies are added"""
         text = self.searchbar.text()
         if text in self.movies and text not in self.added_movies:
-            self.form_layout.addRow(MovieWidget(text, self))
+            self.form_layout.addRow(MovieWidget(text, self, self.movies[text]))
             self.added_movies.add(text)
             print(self.added_movies)
+
+    def on_submit(self) -> None:
+        """Button event that triggers recommendation generation
+        when the user submits their list of movies/shows.
+        """
+        things_to_recommend = self.added_movies
+        self.searchbar.hide()
+        self.submit_button.hide()
+        self.add_movie_button.hide()
+        self.scroll.hide()
+        self.recommendation_box.show()
+        lst = [
+            Media({
+                "title": "Jujutsu Kaisen",
+                "release_date": '2020.0',
+                "rating": 9.12,
+                "keywords": [
+                    "Shounen",
+                    "Curse",
+                    "Exorcists",
+                    "Monsters",
+                    "School Life",
+                    "Supernatural",
+                    "Explicit Violence"
+                ],
+                "plot_summary": "'Although Yuji Itadori looks like your average teenager, "
+                                "his immense physical strength is something to behold! Every sports club w"
+                                "ants him to join, but Itadori would rather hang out with the school outcasts in "
+                                "the Occult Research Club. One day, the club manages to get their hands on a sealed"
+                                " cursed object. Little do they know the terror they\u2019ll unleash when they break"
+                                " the seal\u2026'",
+                "genre": [
+                    "Action",
+                    "Horror"
+                ]
+            }, 'anime'),
+            Media({
+                "title": "WarfighterXK Anime",
+                "release_date": '2020.0',
+                "rating": 9.12,
+                "keywords": [
+                    "Shounen",
+                    "Curse",
+                    "Exorcists",
+                    "Monsters",
+                    "School Life",
+                    "Supernatural",
+                    "Explicit Violence"
+                ],
+                "plot_summary": "'One day, WarfighterXK was born. Then WarfighterXK grew up. The End.'",
+                "genre": [
+                    "Action",
+                    "Horror"
+                ]
+            }, 'anime')
+        ]
+        # self.okay = {}
+        for anime in lst:
+            # self.okay[anime.title] = QLabel(anime.title, self)
+            # self.okay[anime.title].move(50, 50)
+            # self.okay[anime.title].show()
+            self.recommendation_layout.addRow(AnimeWidget(anime, self))
+            print('hi')
 
 
 app = QApplication(sys.argv)
