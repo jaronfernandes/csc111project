@@ -6,12 +6,14 @@ import random
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
+from nltk.corpus import stopwords
 import spacy
-
+STOP_WORDS = set(stopwords.words('english'))
 
 # nltk.download('punkt')
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('wordnet')
+# nltk.download('stopwords')
 
 
 def word_similarity(word1: str, word2: str) -> float:
@@ -50,8 +52,8 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
         nouns = set()  # empty set to hold all nouns
         word_types = nltk.pos_tag(words)
         for word, pos in word_types:
-            unique_score = sum(word_similarity(word, x) for x in words) / len(words)
-            if (pos == 'NN' or pos == 'NNS') and unique_score < 0.3:  # try tweaking this number
+            # unique_score = sum(word_similarity(word, x) for x in words) / len(words)
+            if (pos == 'NN' or pos == 'NNS') and word not in STOP_WORDS:  # and unique_score < 0.3:
                 word = wnl.lemmatize(word, pos='n')
                 if len(word) >= 3:
                     nouns.add(word.lower())
@@ -135,6 +137,7 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
                     df.at[index, 'keywords'] = [phrase]
                 else:
                     df.at[index, 'keywords'].append(phrase)
+
     json_data = json.loads(df.to_json(orient='records'))
     with open(edit_file, 'w') as f:
         json.dump(json_data, f, indent=4)
@@ -143,7 +146,7 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
-    nlp = spacy.load('en_core_web_lg')
+    # nlp = spacy.load('en_core_web_lg')
 
     # IMPORTANT!!! (read the following comment):
     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:
