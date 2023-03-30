@@ -105,26 +105,36 @@ def get_keywords_from_file(keyword_file: str) -> tuple[list[tokens.doc.Doc] | se
 
 ### IMPORTANT ###
 # GET KEYWORD_SET AND LENGTH FROM ABOVE FUNCTION!
-def make_edges(keyword_set: list[tokens.doc.Doc], length: int, threshold: float, start_chunk: int = 0,
+def make_edges(keyword_token_list: list[tokens.doc.Doc], length: int, threshold: float, start_chunk: int = 0,
                end_chunk: int = 0, sampling: bool = False) -> set[tuple]:
     """Creates edges between any two keywords in keyword_file with similarity score greater than threshold. Returns a
     set of tuples, where each tuple represents an edge.
+
+    Arguments:
+    - keyword_token_list: Is a list of tokenized keywords
+    - length: The length of the keyword_set
+    - threshold: For 2 keywords to form an edge, their similarity score (between 0 and 1 inclusive) must be > threshold
+    - start_chunk: The index of the keyword token list we are starting to make edges from
+    - end_chunk: The index of the keyword token list we are ending on
+    - sampling: Argument to determine whether we are sampling from a random subset of keyword_token_list
     """
-    if sampling:
-        keyword_set = random.sample(list(keyword_set), 50)
+    # NOTE: Commented out this line as the current argument (50) would return "list index out of range"...
+    # ... depending on what the start and stop index is
+    # if sampling:
+    #     keyword_token_list = random.sample(keyword_token_list, 50)
 
     edges = set()
     wn_lemmas = set(wn.all_lemma_names())
 
     for i in range(start_chunk, end_chunk):
-        word = str(keyword_set[i])
+        word = str(keyword_token_list[i])
         for j in range(length):
-            other_word = str(keyword_set[j])
+            other_word = str(keyword_token_list[j])
             if word in wn_lemmas and other_word in wn_lemmas and \
                     word != other_word and (word, other_word) not in edges and \
                     (other_word, word) not in edges:
                 # if keyword_set[i] != keyword_set[j] and (keyword_set[i], keyword_set[j]) not in edges:
-                similarity_score = word_similarity(keyword_set[i], keyword_set[j])
+                similarity_score = word_similarity(keyword_token_list[i], keyword_token_list[j])
                 if similarity_score > threshold:
                     edges.add((word, other_word))
     return edges
