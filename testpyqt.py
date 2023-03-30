@@ -41,6 +41,8 @@ def extract_movies_file(filename: str) -> dict:
 class AnimeWidget(QWidget):
     """Widget for each recommended anime."""
     anime_data: Media
+    box: QGroupBox
+    form_layout: QFormLayout
     full_description: str
     description: QLabel
     image: Optional[QPixmap]
@@ -58,7 +60,8 @@ class AnimeWidget(QWidget):
         self.parent = parent
         self.anime_data = anime_data
         self.full_description = anime_data.synopsis
-        self.description = QLabel(anime_data.synopsis[:50] + '...')
+        self.description = QLabel(anime_data.synopsis[:200] + '...')
+        self.description.setWordWrap(True)
         self.description.setFont(QFont('Verdana', 20))
         self.layout = QVBoxLayout()
         self.title = QLabel(anime_data.title)
@@ -74,14 +77,35 @@ class AnimeWidget(QWidget):
 
         self.layout.addWidget(self.title)
         self.layout.addWidget(self.description)
-        self.layout.addWidget(self.left_button)
-        self.layout.addWidget(self.right_button)
+
+        self.box = QGroupBox()
+        self.form_layout = QFormLayout()
+
+        self.form_layout.addRow(self.left_button, self.right_button)
+
+        self.box.setLayout(self.form_layout)
+
+        self.layout.addWidget(self.box)
 
         if image is not None:
             self.image = QPixmap('imgs/samplegradient.jpeg')
             self.title.setPixmap(self.image)
 
+        self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+        self.description.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+
         self.setLayout(self.layout)
+
+        self.right_button.clicked.connect(self.switch_animes)
+        self.left_button.clicked.connect(self.switch_animes)
+
+    def switch_animes(self, going_left: bool = False) -> None:
+        """Button Events to switch the anime recommendation"""
+        self.hide()
+        if going_left:
+            self.left.show()
+        else:
+            self.right.show()
 
 
 class MovieWidget(QWidget):
@@ -171,8 +195,12 @@ class MainWindow(QMainWindow):
         group_box = QGroupBox('Movies and Shows Added')
         group_box.setFont(QFont('Verdana', 30))
 
+        group_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+
         anime_box = QGroupBox('Recommended Anime:')
         anime_box.setFont(QFont('Verdana', 30))
+
+        anime_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
         anime_box.setLayout(self.recommendation_layout)
 
         group_box.setLayout(self.form_layout)
@@ -202,10 +230,12 @@ class MainWindow(QMainWindow):
 
         self.submit_button = QPushButton('Submit')
         self.submit_button.setFixedSize(QtCore.QSize(200, 40))
-        container_layout.addWidget(self.submit_button)
+        container_layout.addWidget(self.submit_button, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         container.setLayout(container_layout)
         self.setCentralWidget(container)
+
+        self.showMaximized()
 
         self.add_movie_button.clicked.connect(self.on_movie_added)
         self.submit_button.clicked.connect(self.on_submit)
@@ -221,6 +251,9 @@ class MainWindow(QMainWindow):
     def on_submit(self) -> None:
         """Button event that triggers recommendation generation
         when the user submits their list of movies/shows.
+
+        Preconditions:
+        - The amount of recommended animes returned != 0
         """
         things_to_recommend = self.added_movies
         self.searchbar.hide()
@@ -273,13 +306,33 @@ class MainWindow(QMainWindow):
                 ]
             }, 'anime')
         ]
-        # self.okay = {}
-        for anime in lst:
+        self.okay = {}
+        for i in range(0, len(lst)):
+            anime = lst[i]
+
+            if i == 0:
+                self.okay[anime.title] = AnimeWidget(anime, self)
+                self.recommendation_layout.addRow(self.okay[anime.title])
+
+            # centerPoint = QDesktopWidget().availableGeometry().center()
+            # qtRectangle.moveCenter(centerPoint)
             # self.okay[anime.title] = QLabel(anime.title, self)
-            # self.okay[anime.title].move(50, 50)
+            # self.okay[anime.title].move(500, 100)
             # self.okay[anime.title].show()
-            self.recommendation_layout.addRow(AnimeWidget(anime, self))
-            print('hi')
+
+            self.recommendation_layout.addRow(self.okay[anime.title])
+            if i + 1 != len(lst):
+                self.okay[lst[i + 1].title] = AnimeWidget(lst[i + 1], self)
+                self.okay[anime.title].right = self.okay[lst[i + 1].title]
+            if i != 0:
+                self.okay[anime.title].left = self.okay[lst[i - 1].title]
+                self.okay[anime.title].hide()
+
+        self.okay[lst[-1].title].right = self.okay[lst[0].title]
+        self.okay[lst[0].title].left = self.okay[lst[-1].title]
+
+        # SELF REMINDER THAT I CAN USE A DICTIONARY/LIST TO STORE ALL THE WIDGETS AFTER THE RECOMMENDED
+        # ANIMES ARE GENERATED, AND THEN KEEP IT AND THEN HIDE/SHOW AS USERS SCROLL THROUGH EACH ONE.
 
 
 app = QApplication(sys.argv)
