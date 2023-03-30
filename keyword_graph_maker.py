@@ -8,20 +8,31 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
 from nltk.corpus import stopwords
 import spacy
-STOP_WORDS = set(stopwords.words('english'))
+from spacy import tokens
 
+# import ssl
+
+# try:
+#     _create_unverified_https_context = ssl._create_unverified_context
+# except AttributeError:
+#     pass
+# else:
+#     ssl._create_default_https_context = _create_unverified_https_context
+
+# nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('wordnet')
 # nltk.download('stopwords')
 
+STOP_WORDS = set(stopwords.words('english'))
 
-def word_similarity(word1: str, word2: str) -> float:
+
+### IMPORTANT ###
+def word_similarity(token1: tokens.doc.Doc, token2: tokens.doc.Doc) -> float:
     """Uses spacy's en_core_web_lg module to compute semantic similarity between two words. Outputs a float between 0
     and 1.
     """
-    token1 = nlp(word1)
-    token2 = nlp(word2)
     return token1.similarity(token2)
 
 
@@ -53,7 +64,7 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
         word_types = nltk.pos_tag(words)
         for word, pos in word_types:
             # unique_score = sum(word_similarity(word, x) for x in words) / len(words)
-            if (pos == 'NN' or pos == 'NNS') and word not in STOP_WORDS:  # and unique_score < 0.3:
+            if (pos == 'NN' or pos == 'NNS') and word not in STOP_WORDS:
                 word = wnl.lemmatize(word, pos='n')
                 if len(word) >= 3:
                     nouns.add(word.lower())
@@ -74,24 +85,46 @@ def extract_all_keywords(movie_file: str, show_file: str, anime_file: str, colum
     return keywords
 
 
-def make_edges(keyword_file: str, threshold: float, sampling: bool = False) -> set[tuple]:
+### IMPORTANT ###
+# USE THIS ONCE TO GET LIST OF TOKENS!
+def get_keywords_from_file(keyword_file: str) -> tuple[list[tokens.doc.Doc] | set, int]:
+    """Read and return TOKENIZED contents of keyword_file with number of keywords."""
+    with open(keyword_file, 'r', encoding='LATIN-1') as file:
+        lines = file.readlines()
+
+    # keyword_set = set(lines[0].split("', '"))
+
+    keyword_set = lines[0].split("', '")
+    keyword_set[0] = keyword_set[0].strip("{'")
+    keyword_set[-1] = keyword_set[-1].strip("'}")
+
+    length = len(keyword_set)
+
+    return [nlp(keyword) for keyword in keyword_set], length
+
+
+### IMPORTANT ###
+# GET KEYWORD_SET AND LENGTH FROM ABOVE FUNCTION!
+def make_edges(keyword_set: list[tokens.doc.Doc], length: int, threshold: float, start_chunk: int = 0,
+               end_chunk: int = 0, sampling: bool = False) -> set[tuple]:
     """Creates edges between any two keywords in keyword_file with similarity score greater than threshold. Returns a
     set of tuples, where each tuple represents an edge.
     """
-    with open(keyword_file, 'r') as file:
-        lines = file.readlines()
-
-    keyword_set = set(lines[0].split("', '"))
     if sampling:
         keyword_set = random.sample(list(keyword_set), 50)
+
     edges = set()
     wn_lemmas = set(wn.all_lemma_names())
 
-    for word in keyword_set:
-        for other_word in keyword_set:
+    for i in range(start_chunk, end_chunk):
+        word = str(keyword_set[i])
+        for j in range(length):
+            other_word = str(keyword_set[j])
             if word in wn_lemmas and other_word in wn_lemmas and \
-                    word != other_word and (word, other_word) not in edges:
-                similarity_score = word_similarity(word, other_word)
+                    word != other_word and (word, other_word) not in edges and \
+                    (other_word, word) not in edges:
+                # if keyword_set[i] != keyword_set[j] and (keyword_set[i], keyword_set[j]) not in edges:
+                similarity_score = word_similarity(keyword_set[i], keyword_set[j])
                 if similarity_score > threshold:
                     edges.add((word, other_word))
     return edges
@@ -119,7 +152,8 @@ def write_edges(edge_file: str) -> None:
 
 def update_dataset_keywords(reference_file: str, edit_file: str, column: str) -> None:
     """Only to be run after the keyword_graph.txt file has at least the first line completed
-    i.e. write_keywords() has been called
+    i.e. write_keywords() has been called.
+
     Preconditions
     - the column is a valid column of the edit_file's json dataframe, and it contains a string
     """
@@ -146,11 +180,11 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
-    # nlp = spacy.load('en_core_web_lg')
+    nlp = spacy.load('en_core_web_lg')
 
     # IMPORTANT!!! (read the following comment):
     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:
-    write_keywords('datasets/filtered/keyword_graph.txt')  # this will create a keyword_graph.txt file
+    # write_keywords('datasets/filtered/keyword_graph.txt')  # this will create a keyword_graph.txt file
 
     # only run this if the previous line has been run or the txt file already exists with a valid keywords set in line 1
     # write_edges('datasets/filtered/keyword_graph.txt')  # this will read that keyword_graph.txt file and then write a
@@ -158,7 +192,9 @@ if __name__ == '__main__':
 
     # once we have all our keywords, we can update our datasets to include them
     # (we don't need to do this for final_animes since that already came with keywords (originally tags))
-    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-                            'datasets/filtered/final_imdb_movies.json', 'plot_summary')
-    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-                            'datasets/filtered/final_imdb_shows.json', 'plot_summary')
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_movies.json', 'plot_summary')
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_shows.json', 'plot_summary')
+
+    # write_edges('datasets/filtered/keyword_graph.txt')
