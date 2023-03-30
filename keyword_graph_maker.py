@@ -192,21 +192,21 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
 if __name__ == '__main__':
     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
-    # nlp = spacy.load('en_core_web_lg')
+    nlp = spacy.load('en_core_web_lg')
 
     # IMPORTANT!!! (read the following comment):
     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:
-    write_keywords('datasets/filtered/keyword_graph.txt')  # this will create a keyword_graph.txt file
+    # write_keywords('datasets/filtered/keyword_graph.txt')  # this will create a keyword_graph.txt file
 
     # once we have all our keywords, we can update our datasets to include them
     # (we don't need to do this for final_animes since that already came with keywords (originally tags))
-    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-                            'datasets/filtered/final_imdb_movies.json', 'plot_summary')
-    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-                            'datasets/filtered/final_imdb_shows.json', 'plot_summary')
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_movies.json', 'plot_summary')
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_shows.json', 'plot_summary')
     #
     # # run this once
-    # keywords_info = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
+    keywords_info = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
     # # only run this if the previous line has been run or the txt file already exists with a valid keywords set in line 1
     # # this will read that keyword_graph.txt file and then write a second line onto it
-    # write_edges('datasets/filtered/keyword_graph.txt', keywords_info[0], keywords_info[1], 0.65, 0, keywords_info[1])
+    write_edges('datasets/filtered/keyword_graph.txt', keywords_info[0], keywords_info[1], 0.65, 0, keywords_info[1])
