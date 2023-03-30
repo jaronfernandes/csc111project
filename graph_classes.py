@@ -38,31 +38,13 @@ class _Vertex:
                         return True
             return False
 
-    def get_spanning_tree(self, visited: set[_Vertex]) -> list[set]:
-        """Return a spanning tree for all items this vertex is connected to,
-        WITHOUT using any of the vertices in visited.
-        Preconditions:
-            - self not in visited
-        """
-        visited.add(self)
-        edges_so_far = []
-        for u in self.neighbours:
-            if u not in visited:
-                edges_so_far.append({self.item, u.item})
-                edges_so_far.extend(u.get_spanning_tree(visited))
-        return edges_so_far
-
 
 class Graph:
     """A graph.
-    Representation Invariants: (COMPLETE FOR HOMEWORK)
+    Representation Invariants:
         - for each key in self._vertices, the corresponding vertex's item attribute
           equals that key
     """
-    # Private Instance Attributes:
-    #     - _vertices:
-    #         A collection of the vertices contained in this graph.
-    #         Maps item to _Vertex object.
     _vertices: dict[Any, _Vertex]
 
     def __init__(self) -> None:
@@ -144,14 +126,14 @@ class Graph:
         else:
             return all(self.connected(u, v) for u in self._vertices for v in self._vertices)
 
-    def spanning_tree(self) -> list[set]:
-        """Return a subset of the edges of this graph that form a spanning tree.
-        The edges are returned as a list of sets, where each set contains the two
-        ITEMS corresponding to an edge. Each returned edge is in this graph
-        (i.e., this function doesn't create new edges!).
-        Preconditions:
-            - this graph is connected
+    def shortest_path(self, item1: Any, item2: Any) -> tuple[int, list] | bool:
+        """gets the length and path sequence of the shortest path between two vertices
+        uses breadth-first approach
         """
-        all_vertices = list(self._vertices.values())
-        start_vertex = all_vertices[0]   # Could also use random.choice(all_vertices)
-        return start_vertex.get_spanning_tree(set())
+        path_length = 0
+        if self.connected(item1, item2):
+            for u in self._vertices[item1].neighbours:
+
+
+        else:
+            return False  # no path found
