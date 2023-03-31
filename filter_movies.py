@@ -6,16 +6,20 @@ Module description
 This Python module is responsible for loading the IMDB media dataset (which is file filtered_basics.txt)
 and the IMDB movie details dataset (which is file IMDB_movie_details.json). It then merges the 2 datasets
 together to form a final IMDB movie dataset (file final_imdb_movies.json).
+
+This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
 import csv
 import json
 
 
-# from json import JSONDecodeError
+def load_json_file(filename: str) -> list[dict]:
+    """Opens a json file and returns a list of its contents.
 
+    Preconditions:
+        - filename is a valid json file name
 
-def load_json_file(filename: str) -> list:
-    """Opens a json file and returns a list of its contents."""
+    """
     file_contents_so_far = []
 
     with open(filename, 'r') as file:
@@ -25,8 +29,9 @@ def load_json_file(filename: str) -> list:
     return file_contents_so_far
 
 
-def get_id_to_movies(file_contents: list) -> dict:
-    """Returns a dictionary mapping id to movies from the IMDb json file."""
+def get_id_to_movies(file_contents: list[dict]) -> dict:
+    """Returns a dictionary mapping id to movies from the IMDb json file.
+    """
     id_to_movies = {}
 
     for movie in file_contents:
@@ -59,7 +64,7 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
             if row[0][0:2] == 'tt' and row[1] == 'movie' and row[0] in id_to_movies:
                 # The above if statement checks if the ID of the current movie entry in the IMDB text dataset...
                 # ... corresponds to a movie entry in the IMDB json file.
-                movie = id_to_movies[row[0]]
+                # movie = id_to_movies[row[0]]
                 id_to_movies[row[0]]['title'] = row[3]  # Title of movie changed to the name on the IMDB text file
                 id_to_movies[row[0]].pop('plot_synopsis')
                 id_to_movies[row[0]].pop('duration')
@@ -76,10 +81,18 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
 if __name__ == '__main__':
     merge_datasets('datasets/raw/IMDB_movie_details.json', 'datasets/raw/filtered_basics.txt',
                    'datasets/filtered/final_imdb_movies.json')
-    # import python_ta
-    #
-    # python_ta.check_all(config={
-    #     'extra-imports': ["json"],
-    #     'allowed-io': ["load_json_file", "get_id_to_movies", "merge_datasets"],
-    #     'max-line-length': 120,
-    # })
+
+    # Enabling doctest checking features:
+
+    import doctest
+
+    doctest.testmod(verbose=True)
+
+    # Enabling python_ta configurations:
+    import python_ta
+
+    python_ta.check_all(config={
+        'extra-imports': ["json", "csv"],
+        'allowed-io': ["load_json_file", "get_id_to_movies", "merge_datasets"],
+        'max-line-length': 120,
+    })

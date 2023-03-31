@@ -1,3 +1,8 @@
+# Packages to be installed (copied from CSC110 Software installation guide
+pytest
+python-ta~=2.4.2
+
+# Additional packages to be installed for our project
 nltk
 spacy
 PyQt6

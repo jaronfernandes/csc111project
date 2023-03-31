@@ -1,8 +1,18 @@
-"""creates the keyword graph by getting keywords from all the synposes in final_shows and final_movies
+"""CSC111 Course Project: keyword_graph_maker.py
+
+Module description
+===============================
+
+This Python module is responsible for creating a text file (called keyword_graph.txt)
+that contains 2 key pieces of information pertaining to the keyword graph. Firstly, it write a set of all keywords
+from all the synposes in final_animes.json, final_imdb_movies.json and final_imdb_shows.json.
+Then, in the same text file, it also writes a set of edges between all keywords in the generated
+set that have a similarity score greater than a certain threshold.
+
+This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
 import pandas as pd
 import json
-import random
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet as wn
@@ -25,10 +35,12 @@ from spacy import tokens
 # nltk.download('wordnet')
 # nltk.download('stopwords')
 
+# Global variable that contains a list of common "stopwords" from NLKT. Stopwords are common words like "the", "an"...
+# ... that provide little context to texts that are often analyzed. For our keyword graph, we will not be considering
+# ... these stop words as "keywords".
 STOP_WORDS = set(stopwords.words('english'))
 
 
-### IMPORTANT ###
 def word_similarity(token1: tokens.doc.Doc, token2: tokens.doc.Doc) -> float:
     """Uses spacy's en_core_web_lg module to compute semantic similarity between two words. Outputs a float between 0
     and 1.
@@ -37,7 +49,10 @@ def word_similarity(token1: tokens.doc.Doc, token2: tokens.doc.Doc) -> float:
 
 
 def get_anime_keywords(anime_file: str) -> set[str]:
-    """Gets genres from filtered anime file as keywords.
+    """Gets genres from filtered anime file (eg: final_animes.json). These will be the keywords for the anime file.
+
+    Preconditions:
+        - anime_file is a correct filename referring to a json file containing anime entries
     """
     tvshows = pd.read_json(anime_file)
     words = set()
@@ -48,7 +63,8 @@ def get_anime_keywords(anime_file: str) -> set[str]:
 
 
 def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
-    """Makes a set of all keywords from synopses of IMDb movies or IMDb shows (stored in imdb_file).
+    """Makes a set of all keywords from synopses of IMDb movies or IMDb shows. In our project, these would be
+    files final_imdb_shows.json and final_imdb_movies.json
 
     Preconditions:
         - column must be a valid column in imdb_file.
@@ -95,7 +111,13 @@ def extract_all_keywords(movie_file: str, show_file: str, anime_file: str, colum
 ### IMPORTANT ###
 # USE THIS ONCE TO GET LIST OF TOKENS!
 def get_keywords_from_file(keyword_file: str) -> tuple[list[tokens.doc.Doc] | set, int]:
-    """Read and return TOKENIZED contents of keyword_file with number of keywords."""
+    """Read and return TOKENIZED contents of keyword_file with number of keywords.
+    We need to tokenize (a process in NLKT that refers to parsing text and characters)
+    in order to be able to compare keyword similarity in method make_edges.
+
+    Preconditions:
+        - keyword_file is a name of a txt file that contains a set of keywords
+    """
     with open(keyword_file, 'r', encoding='LATIN-1') as file:
         lines = file.readlines()
 
@@ -117,13 +139,17 @@ def make_edges(keyword_token_list: list[tokens.doc.Doc], length: int, threshold:
     """Creates edges between any two keywords in keyword_file with similarity score greater than threshold. Returns a
     set of tuples, where each tuple represents an edge.
 
-    Arguments:
+    List of arguments:
     - keyword_token_list: Is a list of tokenized keywords
     - length: The length of the keyword_set
     - threshold: For 2 keywords to form an edge, their similarity score (between 0 and 1 inclusive) must be > threshold
     - start_chunk: The index of the keyword token list we are starting to make edges from
     - end_chunk: The index of the keyword token list we are ending on
     - sampling: Argument to determine whether we are sampling from a random subset of keyword_token_list
+
+    Preconditions:
+        - threshold >= 0.0 and threshold <= 1.0
+        - end_chunk <= the length of the keyword file
     """
     edges = set()
     wn_lemmas = set(wn.all_lemma_names())
@@ -206,7 +232,23 @@ if __name__ == '__main__':
     #                         'datasets/filtered/final_imdb_shows.json', 'plot_summary')
     #
     # # run this once
-    keywords_info = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
+    # keywords_info = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
     # # only run this if the previous line has been run or the txt file already exists with a valid keywords set in line 1
     # # this will read that keyword_graph.txt file and then write a second line onto it
-    write_edges('datasets/filtered/keyword_graph.txt', keywords_info[0], keywords_info[1], 0.65, 0, keywords_info[1])
+    # write_edges('datasets/filtered/keyword_graph.txt', keywords_info[0], keywords_info[1], 0.65, 0, keywords_info[1])
+
+    # Enabling doctest checking features:
+
+    # import doctest
+    #
+    # doctest.testmod(verbose=True)
+    #
+    # # Enabling python_ta configurations:
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'extra-imports': ["pandas", "json", "nlkt", "spacy"],
+    #     'allowed-io': ["get_imdb_keywords", "get_keywords_from_file", "write_keywords", "write_edges",
+    #                    "write_dataset_keywords"],
+    #     'max-line-length': 120,
+    # })
