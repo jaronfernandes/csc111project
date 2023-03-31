@@ -228,8 +228,8 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container_layout = QVBoxLayout()
         row = QFormLayout()
+        row.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
         row.addRow(self.searchbar, self.add_movie_button)
-        row.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         container_layout.addLayout(row)
         thing = QVBoxLayout()
 
