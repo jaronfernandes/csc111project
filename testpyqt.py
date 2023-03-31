@@ -13,9 +13,14 @@ import os
 
 import sys
 
+import python_ta
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import *
-from PyQt6.QtGui import QFont, QPixmap, QFontDatabase
+from PyQt6.QtWidgets import (
+    QWidget, QGroupBox, QFormLayout, QHBoxLayout, QVBoxLayout, QLabel, QPushButton,
+    QMainWindow, QLineEdit, QCompleter, QScrollArea, QSpacerItem, QSizePolicy, QApplication
+)
+
+from PyQt6.QtGui import QFont, QPixmap
 from PyQt6 import QtCore
 from Recommedation_algorithm import Media
 
@@ -56,13 +61,13 @@ class AnimeWidget(QWidget):
 
     def __init__(self, anime_data: Media, parent: MainWindow, image: Optional[str] = None) -> None:
         """Initializer"""
-        super(AnimeWidget, self).__init__()
+        super().__init__()
         self.parent = parent
         self.anime_data = anime_data
         self.full_description = anime_data.synopsis
         self.description = QLabel(anime_data.synopsis[:200] + '...')
         self.description.setWordWrap(True)
-        self.description.setFont(QFont('Avenir', 20))
+        self.description.setFont(QFont('Verdana', 20))
         self.layout = QVBoxLayout()
         self.title = QLabel(anime_data.title)
         self.left = None
@@ -85,7 +90,7 @@ class AnimeWidget(QWidget):
 
         self.box.setLayout(self.form_layout)
 
-        self.layout.addWidget(self.box)
+        self.layout.addWidget(self.box, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         if image is not None:
             self.image = QPixmap('imgs/samplegradient.jpeg')
@@ -117,22 +122,23 @@ class MovieWidget(QWidget):
     layout: QHBoxLayout
     parent: MainWindow
 
-    def __init__(self, movie_name: str, parent: MainWindow, movie_type: str):
+    def __init__(self, movie_name: str, parent: MainWindow, movie_type: str) -> None:
         """Initializer"""
-        super(MovieWidget, self).__init__()
+        super().__init__()
         self.parent = parent
 
         # self.setMaximumHeight(50)
         self.movie_name = movie_name
         self.label = QLabel(self.movie_name, self)
-        self.type = QLabel('Type: '+movie_type, self)
+        self.type = QLabel('Type: ' + movie_type, self)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
-        self.close_button.setFont(QFont('Avenir', 30))
+        self.close_button.setFont(QFont('Verdana', 30))
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.type)
+        self.type.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.layout.addWidget(self.close_button)
         self.setLayout(self.layout)
 
@@ -143,7 +149,7 @@ class MovieWidget(QWidget):
         """When the button is clicked."""
         self.parent.added_movies.remove(self.movie_name)
         self.layout.removeWidget(self)
-        print(self.parent.added_movies)
+        # print(self.parent.added_movies)
         # self.destroy()
 
 
@@ -151,10 +157,10 @@ class MainWindow(QMainWindow):
     """Main window for the application."""
     add_movie_button: QPushButton
     added_movies: set
-    completer: QCompleter
     container: QWidget
     container_layout: QVBoxLayout
     form_layout: QFormLayout
+    recommended_animes: dict
     recommendation_layout: QFormLayout
     recommendation_box: QGroupBox
     movies: dict
@@ -162,8 +168,8 @@ class MainWindow(QMainWindow):
     searchbar: QLineEdit
     submit_button: QPushButton
 
-    def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.setWindowTitle('Anime Recommendation System')
         self.container = QWidget()
@@ -173,7 +179,10 @@ class MainWindow(QMainWindow):
         self.add_movie_button = QPushButton('Add Movie or Show')
         self.add_movie_button.setFixedSize(QtCore.QSize(200, 40))
         self.form_layout = QFormLayout()
+        self.recommended_animes = {}
+        self.recommendation_box = QGroupBox('Recommended Anime:')
         self.recommendation_layout = QFormLayout()
+        self.scroll = QScrollArea()
         self.added_movies = set()
 
         movie_names = extract_movies_file('datasets/filtered/final_imdb_movies.json')
@@ -181,51 +190,53 @@ class MainWindow(QMainWindow):
 
         self.movies = movie_names
 
+        self.create_interface()
+
+    def create_interface(self) -> None:
+        """Helper method to continue creating the interface."""
         # To space the drop-down.
         spacer = QSpacerItem(10, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.container_layout.addItem(spacer)
         self.container.setLayout(self.container_layout)
 
         # Create the auto-complete
-        self.completer = QCompleter(movie_names)
-        self.completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        self.searchbar.setCompleter(self.completer)
+        completer = QCompleter(self.movies)
+        completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        self.searchbar.setCompleter(completer)
 
         # Group Box
         group_box = QGroupBox('Movies and Shows Added')
-        group_box.setFont(QFont('Avenir', 30))
+        group_box.setFont(QFont('Verdana', 30))
 
         group_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
-        anime_box = QGroupBox('Recommended Anime:')
-        anime_box.setFont(QFont('Avenir', 30))
+        self.recommendation_box.setFont(QFont('Verdana', 30))
 
-        anime_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
-        anime_box.setLayout(self.recommendation_layout)
+        self.recommendation_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+        self.recommendation_box.setLayout(self.recommendation_layout)
 
         group_box.setLayout(self.form_layout)
 
         # Scroll Area Properties.
-        self.scroll = QScrollArea()
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(group_box)
-        self.container_layout.addWidget(anime_box)
+        # self.container_layout.addWidget(anime_box)
 
         # Creating the container
         container = QWidget()
         container_layout = QVBoxLayout()
         row = QFormLayout()
         row.addRow(self.searchbar, self.add_movie_button)
+        row.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         container_layout.addLayout(row)
         thing = QVBoxLayout()
 
         self.scroll.setLayout(thing)
         container_layout.addWidget(self.scroll)
-        container_layout.addWidget(anime_box)
+        container_layout.addWidget(self.recommendation_box)
 
-        self.recommendation_box = anime_box
         self.recommendation_box.hide()
 
         self.submit_button = QPushButton('Submit')
@@ -246,7 +257,7 @@ class MainWindow(QMainWindow):
         if text in self.movies and text not in self.added_movies:
             self.form_layout.addRow(MovieWidget(text, self, self.movies[text]))
             self.added_movies.add(text)
-            print(self.added_movies)
+            # print(self.added_movies)
 
     def on_submit(self) -> None:
         """Button event that triggers recommendation generation
@@ -255,7 +266,6 @@ class MainWindow(QMainWindow):
         Preconditions:
         - The amount of recommended animes returned != 0
         """
-        things_to_recommend = self.added_movies
         self.searchbar.hide()
         self.submit_button.hide()
         self.add_movie_button.hide()
@@ -306,30 +316,29 @@ class MainWindow(QMainWindow):
                 ]
             }, 'anime')
         ]
-        self.okay = {}
         for i in range(0, len(lst)):
             anime = lst[i]
 
             if i == 0:
-                self.okay[anime.title] = AnimeWidget(anime, self)
-                self.recommendation_layout.addRow(self.okay[anime.title])
+                self.recommended_animes[anime.title] = AnimeWidget(anime, self)
+                self.recommendation_layout.addRow(self.recommended_animes[anime.title])
 
             # centerPoint = QDesktopWidget().availableGeometry().center()
             # qtRectangle.moveCenter(centerPoint)
-            # self.okay[anime.title] = QLabel(anime.title, self)
-            # self.okay[anime.title].move(500, 100)
-            # self.okay[anime.title].show()
+            # self.recommended_animes[anime.title] = QLabel(anime.title, self)
+            # self.recommended_animes[anime.title].move(500, 100)
+            # self.recommended_animes[anime.title].show()
 
-            self.recommendation_layout.addRow(self.okay[anime.title])
+            self.recommendation_layout.addRow(self.recommended_animes[anime.title])
             if i + 1 != len(lst):
-                self.okay[lst[i + 1].title] = AnimeWidget(lst[i + 1], self)
-                self.okay[anime.title].right = self.okay[lst[i + 1].title]
+                self.recommended_animes[lst[i + 1].title] = AnimeWidget(lst[i + 1], self)
+                self.recommended_animes[anime.title].right = self.recommended_animes[lst[i + 1].title]
             if i != 0:
-                self.okay[anime.title].left = self.okay[lst[i - 1].title]
-                self.okay[anime.title].hide()
+                self.recommended_animes[anime.title].left = self.recommended_animes[lst[i - 1].title]
+                self.recommended_animes[anime.title].hide()
 
-        self.okay[lst[-1].title].right = self.okay[lst[0].title]
-        self.okay[lst[0].title].left = self.okay[lst[-1].title]
+        self.recommended_animes[lst[-1].title].right = self.recommended_animes[lst[0].title]
+        self.recommended_animes[lst[0].title].left = self.recommended_animes[lst[-1].title]
 
         # SELF REMINDER THAT I CAN USE A DICTIONARY/LIST TO STORE ALL THE WIDGETS AFTER THE RECOMMENDED
         # ANIMES ARE GENERATED, AND THEN KEEP IT AND THEN HIDE/SHOW AS USERS SCROLL THROUGH EACH ONE.
@@ -343,7 +352,7 @@ app.setStyleSheet("""
     QMainWindow {"""f"""
         background-color: "white";
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         background-image: url({BACKGROUND_IMAGE});
         background-repeat: no-repeat;
         border-image: url({BACKGROUND_IMAGE}) 0 0 0 0 stretch stretch;
@@ -359,7 +368,7 @@ app.setStyleSheet("""
     QGroupBox {
         background-color: "white";
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         background: transparent !important;
         color: white;
         font-size: 30px;
@@ -368,7 +377,7 @@ app.setStyleSheet("""
     }
     QGroupBox::title {
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         color: white;
         font-size: 30px;
         opacity: 0;
@@ -378,7 +387,7 @@ app.setStyleSheet("""
     }
     QPushButton {
         font-size: 16px;
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         background-color: "lightblue";
         border-collapse: separate;
         border-radius: 20%;
@@ -386,7 +395,7 @@ app.setStyleSheet("""
     }
     MainWindow::QPushButton {
         font-size: 16px;
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         background-color: "white";
         border-collapse: separate;
         border-radius: 4px;
@@ -394,12 +403,12 @@ app.setStyleSheet("""
     }
     QLineEdit {
         background-color: "white";
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         color: "black";
         opacity: 0;
     }
     QLabel {
-        font-family: "Avenir", monospace;
+        font-family: "Verdana", monospace;
         font-size: 25px;
         color: white;
         opacity: 0;
@@ -412,4 +421,21 @@ app.setStyleSheet("""
 
 w = MainWindow()
 w.show()
+
+
+if __name__ == '__main__':
+    python_ta.check_all(config={
+        'extra-imports': [
+            'PyQt6', 'PyQt6.QtCore', 'PyQt6.QtWidgets', 'PyQt6.QtGui', 'Qt', 'os', 'sys', 'random', 'json', 'QWidget',
+            'QGroupBox', 'QFormLayout', 'QHBoxLayout', 'QVBoxLayout', 'QLabel', 'QPushButton', 'QMainWindow',
+            'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'Recommedation_algorithm',
+            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication'
+        ],
+        # the names (strs) of imported modules
+        'allowed-io': ['extract_movies_file', ],     # the names (strs) of functions that call print/open/input
+        'disable': ['E0611', 'E9992', 'E9997', 'R0902'],  # Need E0611 and R0902 especially because of instance attribs.
+        'max-line-length': 120
+    })
+
+
 sys.exit(app.exec())
