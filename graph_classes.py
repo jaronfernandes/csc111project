@@ -1,7 +1,7 @@
 """Code for the graph"""
 from __future__ import annotations
 from typing import Any
-# TODO: breadth first method that finds the shortest path between two vertices, and returns the path length
+from collections import deque
 
 
 class _Vertex:
@@ -126,14 +126,45 @@ class Graph:
         else:
             return all(self.connected(u, v) for u in self._vertices for v in self._vertices)
 
-    def shortest_path(self, item1: Any, item2: Any) -> tuple[int, list] | bool:
-        """gets the length and path sequence of the shortest path between two vertices
-        uses breadth-first approach
+    def shortest_path(self, start: Any, end: Any) -> tuple[int, list] | bool:
+        """Finds shortest path with BFS. Length of path is number of vertices, not edges.
+
+        PROCESS:
+             - Track paths, not nodes as in naive BFS
+             - Start queue with a path that has only start
+             - Until queue is empty
+                - Add current node to visited
+                - Add current no
+                - Get latest path
+                - Get latest node in path
+                - If latest node is already end, return
+                - If latest node is not already end, add new paths to the queue incremented by neighbours that haven't
+                been visited.
+                - Repeat
+
+        INTUITION:
+            - Goes level by level until end is reached. This means that the first time end is reached, we have the
+            shortest path.
         """
-        path_length = 0
-        if self.connected(item1, item2):
-            for u in self._vertices[item1].neighbours:
+        tracker = deque()
+        visited = set()
 
+        current_node = self._vertices[start]
 
-        else:
-            return False  # no path found
+        # Queue initial path.
+        tracker.append([current_node])
+
+        while tracker:
+            current_path = tracker.pop()
+            current_node = current_path[-1]
+            visited.add(current_node)
+
+            if current_node.item == end:
+                path = [node.item for node in current_path]
+                return len(path), path
+
+            for neighbour in current_node.neighbours:
+                if neighbour not in visited:
+                    tracker.append(current_path + [neighbour])
+
+        return False
