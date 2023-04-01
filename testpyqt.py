@@ -87,6 +87,7 @@ class AnimeWidget(QWidget):
     right: Optional[AnimeWidget]
     right_button: QPushButton
     title: QLabel
+    TESTY: QPushButton
 
     def __init__(self, anime_data: Media, parent: MainWindow, image: Optional[str] = None) -> None:
         """Initializer"""
@@ -94,7 +95,7 @@ class AnimeWidget(QWidget):
         self.parent = parent
         self.anime_data = anime_data
         self.full_description = anime_data.synopsis
-        self.description = QLabel(anime_data.synopsis[:200] + '...')
+        self.description = QLabel(anime_data.synopsis)
         self.description.setWordWrap(True)
         self.description.setFont(QFont('Verdana', 20))
         self.layout = QVBoxLayout()
@@ -111,16 +112,16 @@ class AnimeWidget(QWidget):
 
         self.layout.addWidget(self.title, alignment=Qt.AlignmentFlag.AlignHCenter)
         # self.layout.addWidget(QLabel('\n\n'), alignment=Qt.AlignmentFlag.AlignHCenter)
-        spacer2 = QSpacerItem(0, 100, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        spacer2 = QSpacerItem(0, 50, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         self.layout.addItem(spacer2)  # SPACER IS IMPORTANT FOR MAKING THE < > ARROWS DETACHED!!!
-        self.layout.addWidget(self.description)
+        # self.layout.addWidget(self.description)
 
-        self.box = QGroupBox()
-        self.form_layout = QFormLayout()
+        # self.box = QGroupBox()
+        # self.form_layout = QFormLayout()
 
-        self.form_layout.addRow(self.left_button, self.right_button)
+        # self.form_layout.addRow(self.left_button, self.right_button)
 
-        self.box.setLayout(self.form_layout)
+        # self.box.setLayout(self.form_layout)
 
         # Attempting to find an image (within a try-except in-case internet or image does not exist)
         image = QImage()
@@ -137,9 +138,38 @@ class AnimeWidget(QWidget):
         spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.layout.addItem(spacer)  # SPACER IS IMPORTANT FOR MAKING THE < > ARROWS DETACHED!!!
 
+        self.scroll = QScrollArea()
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.description)
+        self.scroll.setLayout(QVBoxLayout())
+        # self.scroll.verticalScrollBar().setStyleSheet(
+        #     """QScrollBar {
+        #         color: transparent !important;
+        #         opacity: 0;
+        #     }"""
+        # )
+        # self.scroll.setStyleSheet(
+        #     """QScrollArea {
+        #         border: none;
+        #         background-color: transparent !important;
+        #     }""")
+
+        self.setStyleSheet("""
+        QLabel {
+            border: none;
+            background: none;
+            background-color: transparent !important;
+            opacity: 0;
+        }""")
+
+        self.layout.addWidget(self.scroll)
+
         #  self.submit_button.setFixedSize(QtCore.QSize(200, 40))
         # self.layout.addWidget(self.left_button, alignment=Qt.AlignmentFlag.AlignHCenter)
 
+        # this is to center the buttons at the bottom
         deez = QFormLayout()
         deez.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
         deez.addRow(self.left_button, self.right_button)
@@ -160,11 +190,13 @@ class AnimeWidget(QWidget):
     def switch_animes_left(self) -> None:
         """Button Events to switch the anime recommendation left through LinkedList"""
         self.hide()
+        self.parent.recommendation_box.setTitle('Recommended Anime: ' + self.left.anime_data.title)
         self.left.show()
 
     def switch_animes_right(self) -> None:
         """Button Events to switch the anime recommendation right through LinkedList"""
         self.hide()
+        self.parent.recommendation_box.setTitle('Recommended Anime: ' + self.right.anime_data.title)
         self.right.show()
 
 
@@ -275,7 +307,7 @@ class MainWindow(QMainWindow):
         group_box.setLayout(self.form_layout)
 
         # Scroll Area Properties.
-        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(group_box)
@@ -364,7 +396,7 @@ class MainWindow(QMainWindow):
                     "Supernatural",
                     "Explicit Violence"
                 ],
-                "plot_summary": "'One day, WarfighterXK was born. Then WarfighterXK grew up. The End.'",
+                "plot_summary": "On the eve of noblemann the eve of nobleman Oz Bezarius's fifteenth birthday, he and his loved ones gather to celebrate in a coming-of-age ceremony. But after Oz steps under a long-stopped clock and the hands finally move once more - thus fulfilling a mysterious prophecy - he is violently thrown into the legendary prison known as the Abyss by three cloaked intruders. Existing in another dimension, the Abyss is home to lifeforms born within its walls known as Chains; these beings can only live in the real world if they make contracts with humans, binding their power to the person's body. However, there's a catch - in time, the human will be overcome by the Chain's power and then thrown into the deepest level of the Abyss. When Oz wakes up in the Abyss he is quickly attacked by hungry Chains, only to be saved by one named Alice - a Chain who appeared just before he was thrown into the prison. Together, the two make a contract and return to the real world, where they are enlisted into the Pandora organization - a group researching both the Abyss and the trio that threw Oz into it. \\xa0Along with members of Pandora, the duo searches to find Alice's lost memory fragments that are scattered throughout the world, to discover the secrets of the Abyss, and to determine if there's a way their contract can be broken without killing either Oz or Alice.\"",
                 "genre": [
                     "Action",
                     "Horror"
@@ -384,6 +416,10 @@ class MainWindow(QMainWindow):
                     "Explicit Violence"
                 ],
                 "plot_summary": "'Dee was a squirrel who had BIG nuts! His nutsack was SO BIG, that it would drag on "
+                                "the ground everywhere he went. Dee had a friend named Sarah who loved nuts, Sarah go "
+                                "around town trying to put everyone’s nuts in her mouth. Sarah LOVED how BIG Dee’s nuts"
+                                " were, his nuts were her favourite!"
+                                " Dee was a squirrel who had BIG nuts! His nutsack was SO BIG, that it would drag on "
                                 "the ground everywhere he went. Dee had a friend named Sarah who loved nuts, Sarah go "
                                 "around town trying to put everyone’s nuts in her mouth. Sarah LOVED how BIG Dee’s nuts"
                                 " were, his nuts were her favourite!",
@@ -437,6 +473,11 @@ app.setStyleSheet("""
         opacity: 0;
     """"""}
     """"""
+    AnimeWidget {
+        opacity: 0;
+        background: transparent !important;
+        border: none;
+    }
     QFormLayout {
         border: none;
         background: transparent !important;
@@ -448,6 +489,18 @@ app.setStyleSheet("""
         font-family: "Verdana", monospace;
         background: transparent !important;
         color: white;
+        font-size: 30px;
+        padding: 70px;
+        opacity: 0;
+    }
+    QVGroupBox {
+        background: transparent !important;
+        opacity: 0;
+    }
+    AnimeWidget::QLabel {
+        border: none;
+        font-family: "Verdana", monospace;
+        background: transparent !important;
         font-size: 30px;
         padding: 70px;
         opacity: 0;
