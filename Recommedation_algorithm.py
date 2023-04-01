@@ -1,12 +1,12 @@
 """Makes sure this file is only run after 'datasets/filtered/keyword_graph.txt' is made"""
 # TODO: media dataclass, compare function, other helper functions, read keywords graph function
 from __future__ import annotations
-import graph_classes
 from typing import Optional
 import json
-
 # NEW IMPORT
 import numpy as np
+import graph_classes
+
 
 # Commented out this code as we have yet to generate keyword edges
 # with open('datasets/filtered/keyword_graph.txt', 'r') as f:
@@ -32,7 +32,7 @@ class Media:
     keywords: set[str]  # set of words that describe the media.
     recommendation: Optional[set[tuple[set[Media], float]]]
 
-    def __init__(self, entry: dict, form: str):
+    def __init__(self, entry: dict, form: str) -> None:
         """
         Preconditions:
         - The entry is a dictionary from a finalized json dataset that conforms with the naming scheme
@@ -48,11 +48,12 @@ class Media:
         self.keywords = set(entry['keywords'])  # Originally, entry['keywords'] was a list
         self.recommendation = set()
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns a string representation of a Media object
         """
-        return f"Media({self.title}, {self.type}, {self.genres}, {self.rating}, {self.date}, {self.synopsis}, {self.keywords}, {self.recommendation})"
+        return f"Media({self.title}, {self.type}, {self.genres}, " \
+               f"{self.rating}, {self.date}, {self.synopsis}, {self.keywords}, {self.recommendation})"
 
     def compare(self, other: Media, parent_set: set[Media]) -> float:
         """compares itself to another media with 4 assessments,
@@ -77,14 +78,89 @@ class Media:
         perfect_score = 4 * sum(mul)
         return sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
 
-    def date_comparison(self, other, list_of_media) -> float:
+    # TODO: Need to arrange function calls and structure of method (see the # ISSUE in function body)
+    def rating_comparison(self, other: Media, list_of_media: list[Media]) -> float:
         """
-        Compute the difference in dates between itself (a Media object) and another Media object.
-        Then, compare this number to the date
+        This function first computes the IQR (Interquartile range) of the ratings of the input show list.
+        Then, it checks if the ratings of the recommended show is within that IQR. If yes, then it is deemed to be
+        a "good fit" and so its rating score is set to the maximum score (ie: 1.0).
+
+        If not, then we calculate the z-score for the input show rating. Z scores describe the number of standard
+        deviations a point is above or below the mean. Taking the absolute value would mean we would be investigating
+        simply how many standard deviations a point is away from the mean (regardless of directionality)
+
+        This z-score is calculated by getting the following:
+            1. Getting the mean rating from the input show list
+            2. Getting the standard deviation from the input show list. Standard deviation is a measure of spread and
+            variation.
+            3. Calculating (recommended show rating - mean show rating) / standard deviation).
+            Here, a negative z-score would mean that the recommended show rating is BELOW the mean show rating of
+            input list. A positive z-score would mean that the recommended show rating is ABOVE
+            the mean show rating of input list. A z-score of 0 would mean the recommended show rating is close to
+            average.
+
+        Our group has made the design decision to only recommend shows that have either a rating close to or above the
+        average rating from the input list.
+
+        Therefore, if the z-score is negative, the rating score would be set to the MINIMUM (ie: 0.0).
+        If the z-score is 0.0, the rating score would be 0.5 (arbitrary, mean benchmark established)
+        If the z-score is positive, the rating score would be 0.5 + z score
 
         Arguments:
         self: Refers to the Media object of reference
-        other: Referes to comparison Media object
+        other: Refers to comparison Media object
+        list_of_media: Refers to the list of input media objects
+        """
+        # ISSUE: Similar to date_comparison()
+
+        # Step 3: Get mean rating from list of user-input shows (this is used for z score calculation)
+        mean_rating = calculating_mean_rating(list_of_media)
+
+        # Step 3: Get IQR date range from list of user-input shows
+        iqr_of_ratings = calculating_iqr_of_ratings(list_of_media)
+
+        # Step 4: Get the standard deviation and z score of the recommendation
+        standard_dev_of_ratings = calculating_s_d_ratings(list_of_media)
+        z_score_of_recommend = (other.rating - mean_rating) / standard_dev_of_ratings
+
+        # Step 4: If the recommended show's date falls within the range dictated by the values in iqr_of_dates...
+        # ... then the show is a good fit "date wise" with the user inputs.
+        if other.rating >= iqr_of_ratings[0] and other.rating <= iqr_of_ratings[1]:
+            return 1.0
+        elif z_score_of_recommend < 1:
+            return 0.0
+        elif z_score_of_recommend == 0.0:
+            return 0.5
+        else:  # Reaching here implies z_score_of_recommend > 0.0:
+            return 0.5 + z_score_of_recommend
+
+    # TODO: Need to arrange function calls and structure of method (see the # ISSUE in function body)
+    def date_comparison(self, other: Media, list_of_media: list[Media]) -> float:
+        """
+        This function first computes the IQR (Interquartile range) of the dates of the input show list.
+        Then, it checks if the date of the recommended show is within that IQR. If yes, then it is deemed to be
+        a "good fit" and so its date score is set to the MAXIMUM score (ie: 1.0).
+
+        If not, then we calculate the z-score for the input show date. Z scores describe the number of standard
+        deviations a point is above or below the mean. Taking the absolute value would mean we would be investigating
+        simply how many standard deviations a point is away from the mean (regardless of directionality)
+
+        This z-score is calculated by getting the following:
+            1. Getting the mean date from the input show list
+            2. Getting the standard deviation from the input show list. Standard deviation is a measure of spread and
+            variation.
+            3. Calculating abs((recommended show date - mean date) / standard deviation). We take the absolute value
+            because z-scores can be negative, and as mentioned prior, we do not care about directionality.
+
+        The higher the z-score, the further away the recommended show date is from the mean show date from the input
+        set. Therefore, the higher the z-score, the lower the date score should be.
+
+        So, if the abs(z-score) is < 1, we would consider that a good fit and also return the maximum score (1.0)
+        Otherwise, we would return 1/abs(z-score).
+
+        Arguments:
+        self: Refers to the Media object of reference
+        other: Refers to comparison Media object
         list_of_media: Refers to the list of input media objects
         """
         # ISSUE: There is a lot of redundant calling in this method, as for each time date_comparison()...
@@ -104,27 +180,23 @@ class Media:
         iqr_of_dates = calculating_iqr_of_dates(list_of_media)
 
         # Step 4: Get the standard deviation and z score of the recommendation
-        # Aside: This concept of measuring how far a point strays from a mean can be computed using z scores...
-        # ... specifically by measuring how many standard deviations away from the mean a point is
         standard_dev_of_dates = calculating_s_d_dates(list_of_media)
-        z_score_of_recommend = (other.date - mean_date) / standard_dev_of_dates
+        abs_z_score_of_recommend = abs((other.date - mean_date) / standard_dev_of_dates)
 
         # Step 4: If the recommended show's date falls within the range dictated by the values in iqr_of_dates...
-        # ... then the show is a good fit "date wise" with the user inputs. Thus, the score for date comparison...
-        # ... is maxed out (at 1)
-        if other.date in range(iqr_of_dates[0], iqr_of_dates[1]) or z_score_of_recommend < 1:
+        # ... then the show is a good fit "date wise" with the user inputs.
+        if other.date in range(iqr_of_dates[0], iqr_of_dates[1]) or abs_z_score_of_recommend < 1:
             return 1.0
         else:
-            # The higher the z-score, the lower the date score should be (we represent this using an inverse
-            # proportional relationship
-            return 1 / z_score_of_recommend
+            return 1 / abs_z_score_of_recommend
 
-    def genre_comparison(self, other) -> float:
+    def genre_comparison(self, other: Media) -> float:
         """
         Compute the fraction of shared genres between itself (a Media object) and another Media object
         """
         num_genre_shared = len(self.genres.intersection(other.genres))
         return num_genre_shared / len(other.genres)
+
 
 def converting_show_to_media_obj(user_input_file_path: str) -> list[Media]:
     """
@@ -150,26 +222,56 @@ def converting_show_to_media_obj(user_input_file_path: str) -> list[Media]:
             # by default, genres for movie entries stored in a list. Needed to convert to a set
     return user_input_media
 
+
 # def calculating_median_date(user_input_media: list[Media]) -> int:
 #     """
 #     Calculates the median date of a user input media list
 #     """
 #     all_input_show_dates = np.array([user_input_media[index].date for index in range(len(user_input_media))])
 #     return int(np.median(all_input_show_dates))
+def calculating_mean_rating(user_input_media: list[Media]) -> float:
+    """
+    Calculates the mean show rating of a user input media list
+    """
+    all_input_show_ratings = np.array([input_show.rating for input_show in user_input_media])
+    return float(np.mean(all_input_show_ratings))
+
+
+def calculating_s_d_ratings(user_input_media: list[Media]) -> float:
+    """
+    Calculates the standard deviation of the show ratings of a user input media list
+    """
+    all_input_show_ratings = np.array([input_show.rating for input_show in user_input_media])
+    return float(np.std(all_input_show_ratings))
+
+
+def calculating_iqr_of_ratings(user_input_media: list[Media]) -> tuple[float, float]:
+    """
+    Returns a tuple of 2 show ratings, with the lower one representing Q1 (the show rating of which 25% of the all
+    show ratings of the input set fall below this threshold) and the higher one representing Q3
+    (the show rating of which 75% of the all show ratings of the input set fall below this threshold)
+    """
+    all_input_show_ratings = np.array([input_show.rating for input_show in user_input_media])
+    # Note that IQR = Q3 - Q1
+    q1, q3 = np.percentile(all_input_show_ratings, [25, 75])
+    return (float(q1), float(q3))
+
 
 def calculating_mean_date(user_input_media: list[Media]) -> int:
     """
     Calculates the mean date of a user input media list
     """
-    all_input_show_dates = np.array([user_input_media[index].date for index in range(len(user_input_media))])
+    all_input_show_dates = np.array([input_show.date for input_show in user_input_media])
     return int(np.mean(all_input_show_dates))
+
 
 def calculating_s_d_dates(user_input_media: list[Media]) -> float:
     """
     Calculates the standard deviation of the dates of a user input media list
     """
-    all_input_show_dates = np.array([user_input_media[index].date for index in range(len(user_input_media))])
+    all_input_show_dates = np.array([input_show.date for input_show in user_input_media])
     return float(np.std(all_input_show_dates))
+
 
 def calculating_iqr_of_dates(user_input_media: list[Media]) -> tuple[int, int]:
     """
@@ -177,7 +279,25 @@ def calculating_iqr_of_dates(user_input_media: list[Media]) -> tuple[int, int]:
     dates of the input set fall below this threshold) and the higher one representing Q3
     (the date of which 75% of the all dates of the input set fall below this threshold)
     """
-    all_input_show_dates = [user_input_media[index].date for index in range(len(user_input_media))]
+    all_input_show_dates = np.array([input_show.date for input_show in user_input_media])
     # Note that IQR = Q3 - Q1
-    q1, q3 = np.percentile(all_input_show_dates, [25,75])
+    q1, q3 = np.percentile(all_input_show_dates, [25, 75])
     return (int(q1), int(q3))
+
+
+if __name__ == '__main__':
+    # Enabling doctest checking features:
+
+    import doctest
+
+    doctest.testmod(verbose=True)
+
+    # Enabling python_ta configurations:
+    import python_ta
+
+    python_ta.check_all(config={
+        'extra-imports': ["json", "numpy", "graph_classes"],
+        'allowed-io': ["converting_show_to_media_obj"],
+        'disable': ['R0902'],
+        'max-line-length': 120,
+    })
