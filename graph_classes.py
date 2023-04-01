@@ -1,7 +1,7 @@
 """Code for the graph"""
 from __future__ import annotations
 from typing import Any
-from collections import deque
+from queue import Queue
 
 
 class _Vertex:
@@ -146,16 +146,16 @@ class Graph:
             - Goes level by level until end is reached. This means that the first time end is reached, we have the
             shortest path.
         """
-        tracker = deque()
+        tracker = Queue()
         visited = set()
 
         current_node = self._vertices[start]
 
         # Queue initial path.
-        tracker.append([current_node])
+        tracker.put([current_node])
 
         while tracker:
-            current_path = tracker.pop()
+            current_path = tracker.get()
             current_node = current_path[-1]
             visited.add(current_node)
 
@@ -165,6 +165,6 @@ class Graph:
 
             for neighbour in current_node.neighbours:
                 if neighbour not in visited:
-                    tracker.append(current_path + [neighbour])
+                    tracker.put(current_path + [neighbour])
 
         return False
