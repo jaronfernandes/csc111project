@@ -99,11 +99,11 @@ def extract_all_keywords(movie_file: str, show_file: str, anime_file: str, colum
         - column must be a valid column in movie_file and show_file.
     """
     anime_keywords = get_anime_keywords(anime_file)
-    print('done with animes')
+    # print('done with animes')
     show_keywords = get_imdb_keywords(show_file, column)
-    print('done with shows')
+    # print('done with shows')
     movie_keywords = get_imdb_keywords(movie_file, column)
-    print('done with movies')
+    # print('done with movies')
     keywords = {*anime_keywords, *movie_keywords, *show_keywords}
     return keywords
 
@@ -196,9 +196,11 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
     - the column is a valid column of the edit_file's json dataframe, and it contains a string
     """
     df = pd.read_json(edit_file)
+    df = df.loc[:, ~df.columns.isin(['plot_synopsis', 'duration'])]
     df = df.assign(keywords='')
-    with open(reference_file, 'r') as file:
+    with open(reference_file, 'r', encoding='LATIN-1') as file:
         lines = file.readlines()
+
     keywords = set(lines[0].split("', '"))
 
     for index, _ in df.iterrows():
@@ -227,7 +229,7 @@ if __name__ == '__main__':
     # once we have all our keywords, we can update our datasets to include them
     # (we don't need to do this for final_animes since that already came with keywords (originally tags))
     # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-    #                         'datasets/filtered/final_imdb_movies.json', 'plot_summary')
+                            # 'datasets/filtered/final_imdb_movies.json', 'plot_summary')
     # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
     #                         'datasets/filtered/final_imdb_shows.json', 'plot_summary')
     #

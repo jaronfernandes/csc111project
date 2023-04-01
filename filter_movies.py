@@ -66,12 +66,14 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
                 # ... corresponds to a movie entry in the IMDB json file.
                 # movie = id_to_movies[row[0]]
                 id_to_movies[row[0]]['title'] = row[3]  # Title of movie changed to the name on the IMDB text file
-                id_to_movies[row[0]].pop('plot_synopsis')
-                id_to_movies[row[0]].pop('duration')
 
             elif row[0][0:2] == 'tt' and row[0] in id_to_movies:
                 # If a movie is not in both the text and json file, remove it from the dictionary id_to_movies
                 id_to_movies.pop(row[0])
+
+            if row[0][0:2] == 'tt':
+                id_to_movies[row[0]].pop('plot_synopsis')
+                id_to_movies[row[0]].pop('duration')
 
         with open(new_filename, 'w') as new_file:  # Converting the new dictionary of movies into a JSON file, then
             # storing it
