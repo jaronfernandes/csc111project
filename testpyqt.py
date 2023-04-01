@@ -5,13 +5,17 @@ jaiz if you see this im sorry for the code being so messy and undocumented lol
 i will fix later
 """
 from __future__ import annotations
+
+import csv
+
 from typing import Optional
 
 import json
 import random
 import os
-
 import sys
+
+import requests  # You must have an internet connection
 
 import python_ta
 from PyQt6.QtCore import Qt
@@ -20,16 +24,21 @@ from PyQt6.QtWidgets import (
     QMainWindow, QLineEdit, QCompleter, QScrollArea, QSpacerItem, QSizePolicy, QApplication
 )
 
-from PyQt6.QtGui import QFont, QPixmap
+from PyQt6.QtGui import QFont, QPixmap, QImage
 from PyQt6 import QtCore
 from Recommedation_algorithm import Media
 
 
-BACKGROUND_IMAGE = f"imgs/{random.choice(os.listdir('imgs'))}"  # Picks a random one at the start
+# Picks a random background image at the start of the program
+BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
 
 
 def extract_movies_file(filename: str) -> dict:
-    """extract movies file"""
+    """extract movies file
+
+    Preconditions:
+    - filename is the path of a valid readable JSON file
+    """
     names = {}
 
     with open(filename, 'r') as f:
@@ -41,6 +50,26 @@ def extract_movies_file(filename: str) -> dict:
                 names[line['title']] = 'Show'
 
     return names
+
+
+def extract_images_file() -> dict[str, str]:
+    """Extracting images for animes through the AnimeList.csv dataset.
+    Manipulates the invalid image URLs into valid (working) ones
+    """
+    images = {}
+
+    with open('datasets/raw/AnimeList.csv', 'r') as file:
+        reader = csv.reader(file)
+
+        next(reader)
+
+        for row in reader:
+            # Loop Invariant:
+            assert row[5] == '' or row[5].find('anime/') == 40  # row[5] is not an empty str ==> index is 40
+
+            images[row[1]] = 'https://cdn.myanimelist.net/images/anime/' + row[5][46:]
+
+    return images
 
 
 class AnimeWidget(QWidget):
@@ -78,9 +107,12 @@ class AnimeWidget(QWidget):
         self.right_button.setFixedSize(QtCore.QSize(40, 40))
 
         # self.title.move(self.parent.rect().center())
-        self.title.move(50, 50)
+        # self.title.move(50, 50)
 
-        self.layout.addWidget(self.title)
+        self.layout.addWidget(self.title, alignment=Qt.AlignmentFlag.AlignHCenter)
+        # self.layout.addWidget(QLabel('\n\n'), alignment=Qt.AlignmentFlag.AlignHCenter)
+        spacer2 = QSpacerItem(0, 100, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.layout.addItem(spacer2)  # SPACER IS IMPORTANT FOR MAKING THE < > ARROWS DETACHED!!!
         self.layout.addWidget(self.description)
 
         self.box = QGroupBox()
@@ -90,27 +122,50 @@ class AnimeWidget(QWidget):
 
         self.box.setLayout(self.form_layout)
 
-        self.layout.addWidget(self.box, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
+        # Attempting to find an image (within a try-except in-case internet or image does not exist)
+        image = QImage()
+        try:
+            url = self.parent.movie_images[self.title.text()]
+            image.loadFromData(requests.get(url).content)
+        except (KeyError, LookupError):
+            image = QPixmap('imgs/sadge.jpeg')
+        finally:
+            self.title.setPixmap(QPixmap(image))
+            self.title.setScaledContents(True)
+            self.title.setFixedSize(250, 250)
 
-        if image is not None:
-            self.image = QPixmap('imgs/samplegradient.jpeg')
-            self.title.setPixmap(self.image)
+        spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.layout.addItem(spacer)  # SPACER IS IMPORTANT FOR MAKING THE < > ARROWS DETACHED!!!
+
+        #  self.submit_button.setFixedSize(QtCore.QSize(200, 40))
+        # self.layout.addWidget(self.left_button, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+        deez = QFormLayout()
+        deez.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+        deez.addRow(self.left_button, self.right_button)
+        self.layout.addLayout(deez)
+
+        # if image is not None:
+        #     self.image = QPixmap('imgs/samplegradient.jpeg')
+        #     self.title.setPixmap(self.image)
 
         self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.description.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         self.setLayout(self.layout)
 
-        self.right_button.clicked.connect(self.switch_animes)
-        self.left_button.clicked.connect(self.switch_animes)
+        self.right_button.clicked.connect(self.switch_animes_right)
+        self.left_button.clicked.connect(self.switch_animes_left)
 
-    def switch_animes(self, going_left: bool = False) -> None:
-        """Button Events to switch the anime recommendation"""
+    def switch_animes_left(self) -> None:
+        """Button Events to switch the anime recommendation left through LinkedList"""
         self.hide()
-        if going_left:
-            self.left.show()
-        else:
-            self.right.show()
+        self.left.show()
+
+    def switch_animes_right(self) -> None:
+        """Button Events to switch the anime recommendation right through LinkedList"""
+        self.hide()
+        self.right.show()
 
 
 class MovieWidget(QWidget):
@@ -160,10 +215,11 @@ class MainWindow(QMainWindow):
     container: QWidget
     container_layout: QVBoxLayout
     form_layout: QFormLayout
+    movies: dict
+    movie_images: dict[str, str]
     recommended_animes: dict
     recommendation_layout: QFormLayout
     recommendation_box: QGroupBox
-    movies: dict
     scroll: QScrollArea
     searchbar: QLineEdit
     submit_button: QPushButton
@@ -189,6 +245,7 @@ class MainWindow(QMainWindow):
         movie_names.update(extract_movies_file('datasets/filtered/final_imdb_shows.json'))
 
         self.movies = movie_names
+        self.movie_images = extract_images_file()
 
         self.create_interface()
 
@@ -247,6 +304,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
         self.showMaximized()
+        self.showFullScreen()
 
         self.add_movie_button.clicked.connect(self.on_movie_added)
         self.submit_button.clicked.connect(self.on_submit)
@@ -287,17 +345,14 @@ class MainWindow(QMainWindow):
                 ],
                 "plot_summary": "'Although Yuji Itadori looks like your average teenager, "
                                 "his immense physical strength is something to behold! Every sports club w"
-                                "ants him to join, but Itadori would rather hang out with the school outcasts in "
-                                "the Occult Research Club. One day, the club manages to get their hands on a sealed"
-                                " cursed object. Little do they know the terror they\u2019ll unleash when they break"
-                                " the seal\u2026'",
+                                "ants him to join,",
                 "genre": [
                     "Action",
                     "Horror"
                 ]
             }, 'anime'),
             Media({
-                "title": "WarfighterXK Anime",
+                "title": "Shingeki no Kyojin",
                 "release_date": '2020.0',
                 "rating": 9.12,
                 "keywords": [
@@ -314,7 +369,29 @@ class MainWindow(QMainWindow):
                     "Action",
                     "Horror"
                 ]
-            }, 'anime')
+            }, 'anime'),
+            Media({
+                "title": "Sword Art Online",
+                "release_date": '2069.0',
+                "rating": 10,
+                "keywords": [
+                    "Shounen",
+                    "Curse",
+                    "Exorcists",
+                    "Monsters",
+                    "School Life",
+                    "Supernatural",
+                    "Explicit Violence"
+                ],
+                "plot_summary": "'Dee was a squirrel who had BIG nuts! His nutsack was SO BIG, that it would drag on "
+                                "the ground everywhere he went. Dee had a friend named Sarah who loved nuts, Sarah go "
+                                "around town trying to put everyone’s nuts in her mouth. Sarah LOVED how BIG Dee’s nuts"
+                                " were, his nuts were her favourite!",
+                "genre": [
+                    "Action",
+                    "Horror"
+                ]
+            }, 'anime'),
         ]
         for i in range(0, len(lst)):
             anime = lst[i]
@@ -429,10 +506,11 @@ if __name__ == '__main__':
             'PyQt6', 'PyQt6.QtCore', 'PyQt6.QtWidgets', 'PyQt6.QtGui', 'Qt', 'os', 'sys', 'random', 'json', 'QWidget',
             'QGroupBox', 'QFormLayout', 'QHBoxLayout', 'QVBoxLayout', 'QLabel', 'QPushButton', 'QMainWindow',
             'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'Recommedation_algorithm',
-            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication'
+            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv'
         ],
         # the names (strs) of imported modules
-        'allowed-io': ['extract_movies_file', ],     # the names (strs) of functions that call print/open/input
+        'allowed-io': ['extract_movies_file', 'extract_images_file'],
+        # the names (strs) of functions that call print/open/input
         'disable': ['E0611', 'E9992', 'E9997', 'R0902'],  # Need E0611 and R0902 especially because of instance attribs.
         'max-line-length': 120
     })
