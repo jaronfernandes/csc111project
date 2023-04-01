@@ -1,4 +1,4 @@
-# Packages to be installed (copied from CSC110 Software installation guide
+# Testing and code checking
 pytest
 python-ta~=2.4.2
 
