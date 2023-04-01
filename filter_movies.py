@@ -58,6 +58,8 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
         reader = csv.reader(csv_file)
         next(reader)
 
+        unchecked_keys = set(id_to_movies.keys())
+
         for row in reader:
             id_to_movies[row[0]]['release_date'] = id_to_movies[row[0]]['release_date'][0:4]
 
@@ -66,14 +68,20 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
                 # ... corresponds to a movie entry in the IMDB json file.
                 # movie = id_to_movies[row[0]]
                 id_to_movies[row[0]]['title'] = row[3]  # Title of movie changed to the name on the IMDB text file
-
-            elif row[0][0:2] == 'tt' and row[0] in id_to_movies:
-                # If a movie is not in both the text and json file, remove it from the dictionary id_to_movies
-                id_to_movies.pop(row[0])
-
-            if row[0][0:2] == 'tt':
+                unchecked_keys.remove(row[0])
                 id_to_movies[row[0]].pop('plot_synopsis')
                 id_to_movies[row[0]].pop('duration')
+                # print(id_to_movies[row[0]].pop('plot_synopsis'))
+                # print(id_to_movies[row[0]].pop('duration'))
+
+            # Code below is redudnant but I will be leaving it in incase someone else wants to use it
+            # elif row[0][0:2] == 'tt' and row[0] in id_to_movies:
+            #     # If a movie is not in both the text and json file, remove it from the dictionary id_to_movies
+            #     id_to_movies.pop(row[0])
+            #     print('oof')
+
+        for key in unchecked_keys:
+            id_to_movies.pop(key)
 
         with open(new_filename, 'w') as new_file:  # Converting the new dictionary of movies into a JSON file, then
             # storing it
