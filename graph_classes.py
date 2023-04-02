@@ -21,6 +21,11 @@ class _Vertex:
         self.item = item
         self.neighbours = neighbours
 
+    def get_neighbours(self) -> set:
+        """gets the item values of all the vertices that are neighbours with this vertex
+        """
+        return {x.item for x in self.neighbours}
+
     def check_connected(self, target_item: Any, visited: set[_Vertex]) -> bool:
         """Return whether this vertex is connected to a vertex corresponding to target_item,
         by a path that DOES NOT use any vertex in visited.
@@ -100,6 +105,10 @@ class Graph:
         total_degree = sum(len(self._vertices[item].neighbours) for item in self._vertices)
         return total_degree // 2
 
+    def get_neighbour_map(self) -> dict[Any, tuple]:
+        """gets a dictionary for vertex item to a tuple of its neighbours"""
+        return {self._vertices[x].item: tuple(self._vertices[x].get_neighbours()) for x in self._vertices}
+
     def connected(self, item1: Any, item2: Any) -> bool:
         """Return whether item1 and item2 are connected vertices
         in this graph.
@@ -143,30 +152,29 @@ class Graph:
                 - Repeat
 
         INTUITION:
-            - Goes forward level by level until end is reached. This means that the first time end is reached, we have the
+            - Goes level by level until end is reached. This means that the first time end is reached, we have the
             shortest path.
         """
-        current_node = self._vertices[start]
-        if not current_node.check_connected(end, set()):
+        if self.connected(start, end):
+            tracker = Queue()
+            visited = set()
+
+            current_node = self._vertices[start]
+
+            # Queue initial path.
+            tracker.put([current_node])
+
+            while tracker:
+                current_path = tracker.get()
+                current_node = current_path[-1]
+                visited.add(current_node)
+
+                if current_node.item == end:
+                    path = [node.item for node in current_path]
+                    return len(path), path
+
+                for neighbour in current_node.neighbours:
+                    if neighbour not in visited:
+                        tracker.put(current_path + [neighbour])
+        else:
             return False
-
-        tracker = Queue()
-        visited = set()
-
-        # Queue initial path.
-        tracker.put([current_node])
-
-        while tracker:
-            current_path = tracker.get()
-            current_node = current_path[-1]
-            visited.add(current_node)
-
-            if current_node.item == end:
-                path = [node.item for node in current_path]
-                return len(path), path
-
-            for neighbour in current_node.neighbours:
-                if neighbour not in visited:
-                    tracker.put(current_path + [neighbour])
-
-        return False
