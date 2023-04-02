@@ -4,7 +4,7 @@ This file should mostly just import the other files, and do some function callin
 from __future__ import annotations
 
 import graph_classes
-import Recommedation_algorithm
+import recommendation_algorithm
 import filter_movies
 
 import csv
@@ -27,7 +27,7 @@ from PyQt6.QtWidgets import (
 
 from PyQt6.QtGui import QFont, QPixmap, QImage
 from PyQt6 import QtCore
-from Recommedation_algorithm import Media
+from recommendation_algorithm import Media
 
 # Picks a random background image at the start of the program
 BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
@@ -46,7 +46,7 @@ def build_keyword_graph_from_file() -> graph_classes.Graph:
     return keyword_graph
 
 
-def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[Recommedation_algorithm.Media]:
+def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[recommendation_algorithm.Media]:
     """
     every dict in the input_set is a valid entry format (json entry, form)
     """
@@ -55,10 +55,10 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
     input_media_set = set()
     keyword_graph = build_keyword_graph_from_file()
     for item in input_set:
-        input_media_set.add(Recommedation_algorithm.Media(item[0], item[1]))
+        input_media_set.add(recommendation_algorithm.Media(item[0], item[1]))
 
     for anime in anime_list:
-        anime_media = Recommedation_algorithm.Media(anime, 'anime')
+        anime_media = recommendation_algorithm.Media(anime, 'anime')
         rec_score = 0
         full_score = 0
         for item in input_media_set:
@@ -81,7 +81,7 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
 
 
 # TEMPORARY BELOW BC IDK IF THE ONE ABOVE IS SUPPOSED TO WORK THAT WAY
-def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int) -> list[Recommedation_algorithm.Media]:
+def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int) -> list[recommendation_algorithm.Media]:
     """
     every dict in the input_set is a valid entry format (json entry, form)
     """
@@ -90,12 +90,12 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
     input_media_set = set()
     keyword_graph = build_keyword_graph_from_file()
     for item in input_set:
-        input_media_set.add(Recommedation_algorithm.Media(item[0], item[1]))
+        input_media_set.add(recommendation_algorithm.Media(item[0], item[1]))
 
     count = 0
     print(len(anime_list))
     for anime in anime_list:
-        anime_media = Recommedation_algorithm.Media(anime, 'anime')
+        anime_media = recommendation_algorithm.Media(anime, 'anime')
         rec_score = 0
         full_score = 0
         for item in input_media_set:
@@ -124,7 +124,7 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         return anime_media_list  # i edited this cause otherwise it's gonna put the ENTIRE anime list
 
 
-def get_anime_rec_score(anime: Recommedation_algorithm.Media, input_set: set[Recommedation_algorithm.Media]):
+def get_anime_rec_score(anime: recommendation_algorithm.Media, input_set: set[recommendation_algorithm.Media]):
     """used for sorting the finalized anime list"""
     for recommendation in anime.recommendation:
         if input_set in anime.recommendation[recommendation]:
@@ -666,7 +666,7 @@ if __name__ == '__main__':
         'extra-imports': [
             'PyQt6', 'PyQt6.QtCore', 'PyQt6.QtWidgets', 'PyQt6.QtGui', 'Qt', 'os', 'sys', 'random', 'json', 'QWidget',
             'QGroupBox', 'QFormLayout', 'QHBoxLayout', 'QVBoxLayout', 'QLabel', 'QPushButton', 'QMainWindow',
-            'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'Recommedation_algorithm',
+            'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'recommendation_algorithm',
             'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv'
         ],
         # the names (strs) of imported modules
