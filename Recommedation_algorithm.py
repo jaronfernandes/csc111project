@@ -1,11 +1,11 @@
 """Makes sure this file is only run after 'datasets/filtered/keyword_graph.txt' is made"""
-# TODO: media dataclass, compare function, other helper functions, read keywords graph function
 from __future__ import annotations
 from typing import Optional
 import json
 # NEW IMPORT
 import numpy as np
 import graph_classes
+import main
 
 
 class Media:
@@ -29,9 +29,12 @@ class Media:
         self.title = entry['title']
         self.type = form
         # self.genres = set(entry['genre'].split())
-        self.genres = entry['genre']
+        if isinstance(entry['genre'], str):
+            self.genres = set(entry['genre'].split(' '))
+        else:
+            self.genres = set(entry['genre'])
         self.rating = float(entry['rating'])
-        self.date = int(entry['release_date'][:4])
+        self.date = entry['release_date']
         self.synopsis = entry['plot_summary']
         self.keywords = set(entry['keywords'])  # Originally, entry['keywords'] was a list
         self.recommendation = set()
@@ -51,11 +54,11 @@ class Media:
         - other in parent_set
         """
         sim_scores = [0, 0, 0, 0]
-        mul = (0.1, 0.2, 0.3, 0.4)  # this should be subject to change (and tweaking will majorly affect results)
+        mul = (0.07, 0.11, 0.28, 0.54)  # this should be subject to change (and tweaking will majorly affect results)
         # 1. date comparison
-        sim_scores[0] = self.rating_comparison(other, list(parent_set))
+        sim_scores[0] = self.date_comparison(other, list(parent_set))
         # 2. rating comparison
-        sim_scores[1] = self.date_comparison(other, list(parent_set))
+        sim_scores[1] = self.rating_comparison(other, list(parent_set))
         # 3. genre comparison
         sim_scores[2] = self.genre_comparison(other)
         # 4. keyword comparison
@@ -64,21 +67,22 @@ class Media:
         assert sum(sim_scores) <= 4  # 4 would be if it gets perfect scores in each
         assert len(sim_scores) == len(mul)
         perfect_score = 4 * sum(mul)
-        return sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
+        act_score = sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
+        return min(act_score + (self.rating/50), 1)
 
     def keyword_comparison(self, other: Media, graph: graph_classes.Graph) -> float:
         """compares two medias' keywords using a keyword graph"""
-
         true_path_scores = []
         for anime_keyword in self.keywords:
+            anime_word = anime_keyword.lower()
             paths = []
             for other_keyword in other.keywords:
-
+                other_word = other_keyword.lower()
                 # the following two lines assert line is for testing only (so delete later)
-                words = {x.item for x in graph._vertices}
-                assert anime_keyword in words and other_keyword in words
+                words = {x for x in graph._vertices}
+                assert anime_word in words and other_word in words
 
-                path = graph.shortest_path(anime_keyword, other_keyword)
+                path = graph.shortest_path(anime_word, other_word)
                 if path:
                     paths.append(path[0])
             if not paths:  # if all the shortest_path lengths were False, i.e. no words connected
@@ -86,7 +90,11 @@ class Media:
             else:
                 true_path_score = 1 / min(paths)  # one of these other shows's keywords relates to this keyword the best
                 true_path_scores.append(true_path_score)
+        while true_path_scores.count(0) >= 5 and any(x > 0 for x in true_path_scores):
+            true_path_scores.remove(0)
         return sum(true_path_scores) / len(true_path_scores)
+
+
 
     # TODO: Need to arrange function calls and structure of method (see the # ISSUE in function body)
     def rating_comparison(self, other: Media, list_of_media: list[Media]) -> float:
@@ -289,20 +297,48 @@ def calculating_iqr_of_dates(user_input_media: list[Media]) -> tuple[int, int]:
     return (int(q1), int(q3))
 
 
-if __name__ == '__main__':
-    # Enabling doctest checking features:
+# if __name__ == '__main__':
+    # # Enabling doctest checking features:
+    #
+    # import doctest
+    #
+    # doctest.testmod(verbose=True)
+    #
+    # # Enabling python_ta configurations:
+    # import python_ta
+    #
+    # python_ta.check_all(config={
+    #     'extra-imports': ["json", "numpy", "graph_classes"],
+    #     'allowed-io': ["converting_show_to_media_obj"],
+    #     'disable': ['R0902'],
+    #     # Disable instance attribute count as confirmed with instructor that this number is acceptable
+    #     'max-line-length': 120,
+    # })
 
-    import doctest
 
-    doctest.testmod(verbose=True)
+def test_compare() -> None:
+    """ tests compare fromrec"""
+    keyword_graph = main.build_keyword_graph_from_file()
+    rec_list = []
+    with open('datasets/filtered/final_animes.json', 'r') as file:
+        user_input_media = json.load(file)  # Datatype of this is now list[dict]
+    anime_list = []
+    for x in user_input_media:
+        anime_list.append(Media(x, 'anime'))
 
-    # Enabling python_ta configurations:
-    import python_ta
+    with open('datasets/filtered/sample_input_shows.json', 'r') as file:
+        user_input_media2 = json.load(file)  # Datatype of this is now list[dict]
+    input_list = []
+    for x in user_input_media2:
+        input_list.append(Media(x, 'show'))
 
-    python_ta.check_all(config={
-        'extra-imports': ["json", "numpy", "graph_classes"],
-        'allowed-io': ["converting_show_to_media_obj"],
-        'disable': ['R0902'],
-        # Disable instance attribute count as confirmed with instructor that this number is acceptable
-        'max-line-length': 120,
-    })
+    for anime in anime_list:
+        rec_score = 0
+        for item in input_list:
+            sim_score = anime.compare(item, set(input_list), keyword_graph)
+            rec_score += sim_score
+        rec_score /= len(input_list)
+        rec_list.append((rec_score, anime.title))
+        # print('checked ' + anime.title)
+        # print(max(rec_list))
+    print(max(rec_list))
