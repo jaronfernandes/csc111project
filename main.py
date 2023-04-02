@@ -3,10 +3,6 @@ This file should mostly just import the other files, and do some function callin
 """
 from __future__ import annotations
 
-import graph_classes
-import recommendation_algorithm
-import filter_movies
-
 import csv
 
 from typing import Optional
@@ -28,6 +24,9 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QFont, QPixmap, QImage
 from PyQt6 import QtCore
 from recommendation_algorithm import Media
+import graph_classes
+import recommendation_algorithm
+import filter_movies
 
 # Picks a random background image at the start of the program
 BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
@@ -46,42 +45,8 @@ def build_keyword_graph_from_file() -> graph_classes.Graph:
     return keyword_graph
 
 
-def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[recommendation_algorithm.Media]:
-    """
-    every dict in the input_set is a valid entry format (json entry, form)
-    """
-    anime_list = filter_movies.load_json_file('datasets/filtered/final_animes.json')
-    anime_media_list = []
-    input_media_set = set()
-    keyword_graph = build_keyword_graph_from_file()
-    for item in input_set:
-        input_media_set.add(recommendation_algorithm.Media(item[0], item[1]))
-
-    for anime in anime_list:
-        anime_media = recommendation_algorithm.Media(anime, 'anime')
-        rec_score = 0
-        full_score = 0
-        for item in input_media_set:
-            sim_score = anime_media.compare(item, input_media_set, keyword_graph)
-            if anime_media.type == 'movie':
-                sim_score /= 2
-                full_score += 0.5
-            else:
-                full_score += 1
-            rec_score += sim_score
-        rec_score /= full_score
-        anime_media.recommendation.add((rec_score, input_media_set))
-        anime_media_list.append(anime_media)
-
-    anime_media_list.sort(key=get_anime_rec_score)
-    if num_rec <= len(anime_media_list):
-        return anime_media_list[0:num_rec]
-    else:
-        return anime_media_list
-
-
-# TEMPORARY BELOW BC IDK IF THE ONE ABOVE IS SUPPOSED TO WORK THAT WAY
-def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int) -> list[recommendation_algorithm.Media]:
+def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int) -> \
+        list[recommendation_algorithm.Media]:
     """
     every dict in the input_set is a valid entry format (json entry, form)
     """
@@ -114,9 +79,6 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         # if count == 10:  # Remove during actual submission
         #     break
 
-    print(num_rec)
-    print(len(input_set))
-    print(type(input_set))
     anime_media_list.sort(key=lambda anime: get_anime_rec_score(anime, input_media_set))
     if num_rec <= len(anime_media_list):  # uhhhh what?
         return anime_media_list[0:num_rec]
@@ -124,12 +86,13 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         return anime_media_list  # i edited this cause otherwise it's gonna put the ENTIRE anime list
 
 
-def get_anime_rec_score(anime: recommendation_algorithm.Media, input_set: set[recommendation_algorithm.Media]):
+def get_anime_rec_score(anime: recommendation_algorithm.Media, input_set: set[recommendation_algorithm.Media]) -> float:
     """used for sorting the finalized anime list"""
     for recommendation in anime.recommendation:
         if input_set in anime.recommendation[recommendation]:
-            print('dab')
             return anime.recommendation[recommendation][0]  # this should be the rec_score
+
+    return 0.0  # This should never run though bc we are certain the if condition in the loop will execute once.
 
 
 def extract_movies_file(filename: str) -> tuple[dict[str, str], dict[str, dict]]:
@@ -259,12 +222,12 @@ class AnimeWidget(QWidget):
         spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.layout.addItem(spacer)  # SPACER IS IMPORTANT FOR MAKING THE < > ARROWS DETACHED!!!
 
-        self.scroll = QScrollArea()
-        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.scroll.setWidgetResizable(True)
-        self.scroll.setWidget(self.description)
-        self.scroll.setLayout(QVBoxLayout())
+        scroll = QScrollArea()
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(self.description)
+        scroll.setLayout(QVBoxLayout())
         # self.scroll.verticalScrollBar().setStyleSheet(
         #     """QScrollBar {
         #         color: transparent !important;
@@ -285,7 +248,7 @@ class AnimeWidget(QWidget):
             opacity: 0;
         }""")
 
-        self.layout.addWidget(self.scroll)
+        self.layout.addWidget(scroll)
 
         #  self.submit_button.setFixedSize(QtCore.QSize(200, 40))
         # self.layout.addWidget(self.left_button, alignment=Qt.AlignmentFlag.AlignHCenter)
@@ -533,8 +496,8 @@ class MainWindow(QMainWindow):
         print('started')
         # print(self.json_movies)
         lst = modified_get_recommendations(
-            [(self.json_movies[entry], self.movies[entry]) for entry in self.json_movies if entry in self.added_movies]
-            , max(3, len(self.added_movies)))
+            [(self.json_movies[entry], self.movies[entry]) for entry in self.json_movies if entry in self.added_movies],
+            max(3, len(self.added_movies)))
         print('done')
         for i in range(0, len(lst)):
             anime = lst[i]
@@ -667,12 +630,19 @@ if __name__ == '__main__':
             'PyQt6', 'PyQt6.QtCore', 'PyQt6.QtWidgets', 'PyQt6.QtGui', 'Qt', 'os', 'sys', 'random', 'json', 'QWidget',
             'QGroupBox', 'QFormLayout', 'QHBoxLayout', 'QVBoxLayout', 'QLabel', 'QPushButton', 'QMainWindow',
             'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'recommendation_algorithm',
-            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv'
+            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv', 'graph_classes', 'filter_movies'
         ],
         # the names (strs) of imported modules
-        'allowed-io': ['extract_movies_file', 'extract_images_file'],
+        'allowed-io': [
+            'extract_movies_file',
+            'extract_images_file',
+            'modified_get_recommendations',
+            'MainWindow.on_submit',
+            'build_keyword_graph_from_file'
+        ],
         # the names (strs) of functions that call print/open/input
-        'disable': ['E0611', 'E9992', 'E9997', 'R0902'],  # Need E0611 and R0902 especially because of instance attribs.
+        'disable': ['E0611', 'E9992', 'E9997', 'R0902', 'W0123'],
+        # Need E0611 and R0902 especially because of instance attributes
         'max-line-length': 120
     })
 
