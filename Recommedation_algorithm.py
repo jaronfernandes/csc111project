@@ -299,5 +299,6 @@ if __name__ == '__main__':
         'extra-imports': ["json", "numpy", "graph_classes"],
         'allowed-io': ["converting_show_to_media_obj"],
         'disable': ['R0902'],
+        # Disable instance attribute count as confirmed with instructor that this number is acceptable
         'max-line-length': 120,
     })
