@@ -86,8 +86,7 @@ class Media:
             else:
                 true_path_score = 1 / min(paths)  # one of these other shows's keywords relates to this keyword the best
                 true_path_scores.append(true_path_score)
-
-
+        return sum(true_path_scores) / len(true_path_scores)
 
     # TODO: Need to arrange function calls and structure of method (see the # ISSUE in function body)
     def rating_comparison(self, other: Media, list_of_media: list[Media]) -> float:
