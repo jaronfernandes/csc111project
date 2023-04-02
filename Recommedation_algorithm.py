@@ -5,7 +5,7 @@ from typing import Optional
 import json
 # NEW IMPORT
 import numpy as np
-import Graph
+import graph_classes
 
 
 class Media:
