@@ -1,8 +1,12 @@
-"""test qt
+"""CSC111 Course Project: testpyqt.py FIXME: RENAME THE FILE TO SOMETHING MORE MEANINGFUL OR MERGE WITH MAIN.PY
 
-jaiz if you see this im sorry for the code being so messy and undocumented lol
+Module description
+===============================
+This Python module is responsible for creating and displaying all the necessary UI related to the project,
+using PyQt6 to create an application loaded with several widgets, images, labels, and layouts.
+Utilizes a function that takes in stylesheets to beautify the application.
 
-i will fix later
+This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
 from __future__ import annotations
 
@@ -28,13 +32,12 @@ from PyQt6.QtGui import QFont, QPixmap, QImage
 from PyQt6 import QtCore
 from Recommedation_algorithm import Media
 
-
 # Picks a random background image at the start of the program
 BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
 
 
 def extract_movies_file(filename: str) -> dict:
-    """extract movies file
+    """Helper function associated with extracting movies and shows from the final IMDB files in the filtered datasets.
 
     Preconditions:
     - filename is the path of a valid readable JSON file
@@ -73,10 +76,26 @@ def extract_images_file() -> dict[str, str]:
 
 
 class AnimeWidget(QWidget):
-    """Widget for each recommended anime."""
+    """Widget for each recommended anime.
+
+    Instance Attributes:
+    - anime_data: The media object which contains all the data regarding the anime
+    - full_description: The entire description (plot synopsis) of the anime.
+    - image: A QPixmap image used to show the anime icon from MAL.
+    - layout: A vertical layout for organizing the items of the anime recommendation.
+    - left: An AnimeWidget node.
+    - left_button: A QPushbutton to swap to the recommended anime on the left.
+    - parent: The parent window of this widget.
+    - right: An AnimeWidget node.
+    - right_button: A QPushbutton to swap to the recommended anime on the right.
+    - title: The QLabel used for representing the anime title.
+
+    Representation Invariants:
+    - self.anime_data is a valid Media object for the anime associated with this widget.
+    """
     anime_data: Media
-    box: QGroupBox
-    form_layout: QFormLayout
+    # box: QGroupBox
+    # form_layout: QFormLayout
     full_description: str
     description: QLabel
     image: Optional[QPixmap]
@@ -87,10 +106,13 @@ class AnimeWidget(QWidget):
     right: Optional[AnimeWidget]
     right_button: QPushButton
     title: QLabel
-    TESTY: QPushButton
 
-    def __init__(self, anime_data: Media, parent: MainWindow, image: Optional[str] = None) -> None:
-        """Initializer"""
+    def __init__(self, anime_data: Media, parent: MainWindow) -> None:
+        """Initializes the AnimeWidget.
+
+        Preconditions:
+        - anime_data is a valid Media object with the appropriate instance attributes for this anime widget.
+        """
         super().__init__()
         self.parent = parent
         self.anime_data = anime_data
@@ -128,7 +150,7 @@ class AnimeWidget(QWidget):
         try:
             url = self.parent.movie_images[self.title.text()]
             image.loadFromData(requests.get(url).content)
-        except (KeyError, LookupError):
+        except (KeyError, ConnectionError, requests.exceptions.ConnectionError):
             image = QPixmap('imgs/sadge.jpeg')
         finally:
             self.title.setPixmap(QPixmap(image))
@@ -169,7 +191,7 @@ class AnimeWidget(QWidget):
         #  self.submit_button.setFixedSize(QtCore.QSize(200, 40))
         # self.layout.addWidget(self.left_button, alignment=Qt.AlignmentFlag.AlignHCenter)
 
-        # this is to center the buttons at the bottom
+        # This is to center the < and > buttons at the bottom of the window
         deez = QFormLayout()
         deez.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
         deez.addRow(self.left_button, self.right_button)
@@ -201,22 +223,40 @@ class AnimeWidget(QWidget):
 
 
 class MovieWidget(QWidget):
-    """Widget for each movie in the dropdown."""
-    movie_name: str
+    """Widget for each movie in the dropdown.
+
+    Instance Attributes:
+    - name: The name of the movie/show.
+    - type: The QLabel associating to the type (either movie or show)
+    - label: The QLabel associated with the name of the movie or show.
+    - close_button: The QPushButton object used to remove the item from the list.
+    - layout: The layout for this widget
+    - parent: The parent that this object is linked to (MainWindow)
+
+    Representation Invariants:
+    - self.name is a valid movie/show name.
+    - self.type in {'Movie', 'Show'}
+    """
+    name: str
     type: QLabel
     label: QLabel
     close_button: QPushButton
     layout: QHBoxLayout
     parent: MainWindow
 
-    def __init__(self, movie_name: str, parent: MainWindow, movie_type: str) -> None:
-        """Initializer"""
+    def __init__(self, name: str, parent: MainWindow, movie_type: str) -> None:
+        """The initializer to create an object.
+
+        Preconditions:
+        - name is a valid movie/show name
+        - movie_type in {'Movie', 'Show'}
+        """
         super().__init__()
         self.parent = parent
 
         # self.setMaximumHeight(50)
-        self.movie_name = movie_name
-        self.label = QLabel(self.movie_name, self)
+        self.name = name
+        self.label = QLabel(self.name, self)
         self.type = QLabel('Type: ' + movie_type, self)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
@@ -233,15 +273,37 @@ class MovieWidget(QWidget):
         batotn.clicked.connect(self.on_clicked)
 
     def on_clicked(self) -> None:
-        """When the button is clicked."""
-        self.parent.added_movies.remove(self.movie_name)
+        """Method that removes itself when the button is clicked.
+        This *should* be garbage collected as there is no reference to it (?)
+        """
+        self.parent.added_movies.remove(self.name)
         self.layout.removeWidget(self)
         # print(self.parent.added_movies)
         # self.destroy()
 
 
 class MainWindow(QMainWindow):
-    """Main window for the application."""
+    """Main window for the application.
+
+    Instance Attributes:
+    - add_movie_button: A QPushButton responsible for adding a MovieWidget to the displayed list.
+    - added_movies: A set that contains the list of currently selected movie/show names.
+    - container: A container that aids with the layout.
+    - container_layout: A layout that organizes the positions of its children widgets.
+    - form_layout: A layout used for adding multiple elements on a single horizontal row.
+    - movies: A dict of all the movies extracted from the dataset.
+    - movie_images: The images of all the animes as extracted from the dataset.
+    - recommended_animes: A dictionary holding every AnimeWidget and its associated key (the anime name)
+    - recommendation_box: A QGroupBox that stores holds all the AnimeWidgets.
+    - scroll: A scroll object used to scroll through the recommendation_box when it gets too large.
+    - searchbar: A QLineEdit object used for the user to search up movies/shows.
+    - submit_button: The button that fires a signal when the user wants to generate recommendations.
+
+    Representation Invariants:
+    - every movie in self.movies is from the filtered dataset.
+    - every image in self.movie_images is a url (that can be manipulated).
+    - self.added_movies contains movies and shows from the filtered dataset.
+    """
     add_movie_button: QPushButton
     added_movies: set
     container: QWidget
@@ -257,6 +319,7 @@ class MainWindow(QMainWindow):
     submit_button: QPushButton
 
     def __init__(self) -> None:
+        """Initializes the MainWindow."""
         super().__init__()
 
         self.setWindowTitle('Anime Recommendation System')
@@ -429,6 +492,7 @@ class MainWindow(QMainWindow):
                 ]
             }, 'anime'),
         ]
+        # lst = main.get_recommendations()
         for i in range(0, len(lst)):
             anime = lst[i]
 
