@@ -5,19 +5,7 @@ from typing import Optional
 import json
 # NEW IMPORT
 import numpy as np
-import graph_classes
-
-
-# Commented out this code as we have yet to generate keyword edges
-# with open('datasets/filtered/keyword_graph.txt', 'r') as f:
-#     lines = f.readlines()
-# keyword_graph = graph_classes.Graph()
-# edges = eval(lines[1])
-# keyword_graph.add_all_edges(edges)
-
-# # This section of the code is responsible for opening a json file and converting its contents to a dict
-# with open('datasets/filtered/sample_input_mix.json', 'r') as file:
-#     user_watch_list = json.load(file)
+import Graph
 
 
 class Media:
@@ -30,7 +18,7 @@ class Media:
     date: int  # the year of the media’s initial release
     synopsis: str  # string of a brief summary, contains keywords to be extracted
     keywords: set[str]  # set of words that describe the media.
-    recommendation: Optional[set[tuple[set[Media], float]]]
+    recommendation: Optional[set[tuple[float, set[Media]]]]
 
     def __init__(self, entry: dict, form: str) -> None:
         """
@@ -62,21 +50,44 @@ class Media:
         Preconditions:
         - other in parent_set
         """
-        sim_scores = (0, 0, 0, 0)
+        sim_scores = [0, 0, 0, 0]
         mul = (0.1, 0.2, 0.3, 0.4)  # this should be subject to change (and tweaking will majorly affect results)
         # 1. date comparison
-
+        sim_scores[0] = self.rating_comparison(other, list(parent_set))
         # 2. rating comparison
-
+        sim_scores[1] = self.date_comparison(other, list(parent_set))
         # 3. genre comparison
-
+        sim_scores[2] = self.genre_comparison(other)
         # 4. keyword comparison
-
+        sim_scores[3] = self.keyword_comparison(other, graph)
         # balancing comparison values
         assert sum(sim_scores) <= 4  # 4 would be if it gets perfect scores in each
         assert len(sim_scores) == len(mul)
         perfect_score = 4 * sum(mul)
         return sum(sim_scores[x] * mul[x] for x in range(0, len(sim_scores))) / perfect_score
+
+    def keyword_comparison(self, other: Media, graph: graph_classes.Graph) -> float:
+        """compares two medias' keywords using a keyword graph"""
+
+        true_path_scores = []
+        for anime_keyword in self.keywords:
+            paths = []
+            for other_keyword in other.keywords:
+
+                # the following two lines assert line is for testing only (so delete later)
+                words = {x.item for x in graph._vertices}
+                assert anime_keyword in words and other_keyword in words
+
+                path = graph.shortest_path(anime_keyword, other_keyword)
+                if path:
+                    paths.append(path[0])
+            if not paths:  # if all the shortest_path lengths were False, i.e. no words connected
+                true_path_scores.append(0)
+            else:
+                true_path_score = 1 / min(paths)  # one of these other shows's keywords relates to this keyword the best
+                true_path_scores.append(true_path_score)
+
+
 
     # TODO: Need to arrange function calls and structure of method (see the # ISSUE in function body)
     def rating_comparison(self, other: Media, list_of_media: list[Media]) -> float:
@@ -223,12 +234,6 @@ def converting_show_to_media_obj(user_input_file_path: str) -> list[Media]:
     return user_input_media
 
 
-# def calculating_median_date(user_input_media: list[Media]) -> int:
-#     """
-#     Calculates the median date of a user input media list
-#     """
-#     all_input_show_dates = np.array([user_input_media[index].date for index in range(len(user_input_media))])
-#     return int(np.median(all_input_show_dates))
 def calculating_mean_rating(user_input_media: list[Media]) -> float:
     """
     Calculates the mean show rating of a user input media list
