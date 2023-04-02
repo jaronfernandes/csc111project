@@ -64,7 +64,7 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
         for item in input_media_set:
             sim_score = anime_media.compare(item, input_media_set, keyword_graph)
             if anime_media.type == 'movie':
-                rec_score /= 2
+                sim_score /= 2
                 full_score += 0.5
             else:
                 full_score += 1
@@ -74,7 +74,7 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
         anime_media_list.append(anime_media)
 
     anime_media_list.sort(key=get_anime_rec_score)
-    if num_rec <= len(input_set):
+    if num_rec <= len(anime_media_list):
         return anime_media_list[0:num_rec]
     else:
         return anime_media_list
@@ -101,7 +101,7 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         for item in input_media_set:
             sim_score = anime_media.compare(item, input_media_set, keyword_graph)
             if anime_media.type == 'movie':
-                rec_score /= 2
+                sim_score /= 2
                 full_score += 0.5
             else:
                 full_score += 1
@@ -118,10 +118,10 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
     print(len(input_set))
     print(type(input_set))
     anime_media_list.sort(key=lambda anime: get_anime_rec_score(anime, input_media_set))
-    if num_rec <= len(input_set):  # uhhhh what?
+    if num_rec <= len(anime_media_list):  # uhhhh what?
         return anime_media_list[0:num_rec]
     else:
-        return anime_media_list[0:num_rec]  # i edited this cause otherwise it's gonna put the ENTIRE anime list
+        return anime_media_list  # i edited this cause otherwise it's gonna put the ENTIRE anime list
 
 
 def get_anime_rec_score(anime: Recommedation_algorithm.Media, input_set: set[Recommedation_algorithm.Media]):
