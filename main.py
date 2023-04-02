@@ -31,6 +31,7 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
     every dict in the input_set is a valid entry format (json entry, form)
     """
     anime_list = filter_movies.load_json_file('datasets/filtered/final_animes.json')
+    keyword_g = build_keyword_graph_from_file()
     anime_media_list = []
     input_media_set = set()
     for item in input_set:
@@ -40,7 +41,7 @@ def get_recommendations(input_set: set[tuple[dict, str]], num_rec: int) -> list[
         anime_media = Recommedation_algorithm.Media(anime, 'anime')
         rec_score = 0
         for item in input_media_set:
-            sim_score = anime_media.compare(item, input_media_set)
+            sim_score = anime_media.compare(item, input_media_set, graph=keyword_g)
             rec_score += sim_score
         rec_score /= len(input_media_set)
         anime_media.recommendation.add((rec_score, input_media_set))
