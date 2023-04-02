@@ -143,13 +143,15 @@ class Graph:
                 - Repeat
 
         INTUITION:
-            - Goes level by level until end is reached. This means that the first time end is reached, we have the
+            - Goes forward level by level until end is reached. This means that the first time end is reached, we have the
             shortest path.
         """
+        current_node = self._vertices[start]
+        if not current_node.check_connected(end, set()):
+            return False
+
         tracker = Queue()
         visited = set()
-
-        current_node = self._vertices[start]
 
         # Queue initial path.
         tracker.put([current_node])
