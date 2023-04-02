@@ -36,23 +36,26 @@ from Recommedation_algorithm import Media
 BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
 
 
-def extract_movies_file(filename: str) -> dict:
+def extract_movies_file(filename: str) -> tuple[dict[str, str], dict[str, dict]]:
     """Helper function associated with extracting movies and shows from the final IMDB files in the filtered datasets.
 
     Preconditions:
     - filename is the path of a valid readable JSON file
     """
     names = {}
+    json_lines = {}
 
     with open(filename, 'r') as f:
         string = f.read()
         for line in json.loads(string):
             if 'movie' in filename:
                 names[line['title']] = 'Movie'
+                json_lines[line['title']] = line
             elif 'show' in filename:
                 names[line['title']] = 'Show'
+                json_lines[line['title']] = line
 
-    return names
+    return names, json_lines
 
 
 def extract_images_file() -> dict[str, str]:
@@ -291,6 +294,7 @@ class MainWindow(QMainWindow):
     - container: A container that aids with the layout.
     - container_layout: A layout that organizes the positions of its children widgets.
     - form_layout: A layout used for adding multiple elements on a single horizontal row.
+    - json_movies: A dictionary that holds each movie entry from its filtered dataset.
     - movies: A dict of all the movies extracted from the dataset.
     - movie_images: The images of all the animes as extracted from the dataset.
     - recommended_animes: A dictionary holding every AnimeWidget and its associated key (the anime name)
@@ -303,12 +307,14 @@ class MainWindow(QMainWindow):
     - every movie in self.movies is from the filtered dataset.
     - every image in self.movie_images is a url (that can be manipulated).
     - self.added_movies contains movies and shows from the filtered dataset.
+    - every dict in json_movies corresponds to a dict in one of the final IMDB movies/shows filtered datasets.
     """
     add_movie_button: QPushButton
     added_movies: set
     container: QWidget
     container_layout: QVBoxLayout
     form_layout: QFormLayout
+    json_movies: dict
     movies: dict
     movie_images: dict[str, str]
     recommended_animes: dict
@@ -336,10 +342,13 @@ class MainWindow(QMainWindow):
         self.scroll = QScrollArea()
         self.added_movies = set()
 
-        movie_names = extract_movies_file('datasets/filtered/final_imdb_movies.json')
-        movie_names.update(extract_movies_file('datasets/filtered/final_imdb_shows.json'))
+        movie_names, json_lines = extract_movies_file('datasets/filtered/final_imdb_movies.json')
+        extracted_shows, json_shows = extract_movies_file('datasets/filtered/final_imdb_shows.json')
+        movie_names.update(extracted_shows)
+        json_lines.update(json_shows)
 
         self.movies = movie_names
+        self.json_movies = json_lines
         self.movie_images = extract_images_file()
 
         self.create_interface()
@@ -492,7 +501,7 @@ class MainWindow(QMainWindow):
                 ]
             }, 'anime'),
         ]
-        # lst = main.get_recommendations()
+        # lst = get_recommendations({(entry, self.movies[entry.title]) for entry in self.json_movies})
         for i in range(0, len(lst)):
             anime = lst[i]
 
