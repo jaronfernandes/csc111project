@@ -160,7 +160,7 @@ def extract_images_file() -> dict[str, str]:
     """
     images = {}
 
-    with open('datasets/raw/AnimeList.csv', 'r') as file:
+    with open('datasets/raw/AnimeList.csv', 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
 
         next(reader)
@@ -513,6 +513,7 @@ class MainWindow(QMainWindow):
         """Button event for when movies are added"""
         text = self.searchbar.text()
         if text in self.movies and text not in self.added_movies:
+            self.searchbar.setText('')
             self.form_layout.addRow(MovieWidget(text, self, self.movies[text]))
             self.added_movies.add(text)
             # print(self.added_movies)
@@ -529,79 +530,11 @@ class MainWindow(QMainWindow):
         self.add_movie_button.hide()
         self.scroll.hide()
         self.recommendation_box.show()
-        lst = [
-            Media({
-                "title": "Jujutsu Kaisen",
-                "release_date": '2020.0',
-                "rating": 9.12,
-                "keywords": [
-                    "Shounen",
-                    "Curse",
-                    "Exorcists",
-                    "Monsters",
-                    "School Life",
-                    "Supernatural",
-                    "Explicit Violence"
-                ],
-                "plot_summary": "'Although Yuji Itadori looks like your average teenager, "
-                                "his immense physical strength is something to behold! Every sports club w"
-                                "ants him to join,",
-                "genre": [
-                    "Action",
-                    "Horror"
-                ]
-            }, 'anime'),
-            Media({
-                "title": "Shingeki no Kyojin",
-                "release_date": '2020.0',
-                "rating": 9.12,
-                "keywords": [
-                    "Shounen",
-                    "Curse",
-                    "Exorcists",
-                    "Monsters",
-                    "School Life",
-                    "Supernatural",
-                    "Explicit Violence"
-                ],
-                "plot_summary": "On the eve of noblemann the eve of nobleman Oz Bezarius's fifteenth birthday, he and his loved ones gather to celebrate in a coming-of-age ceremony. But after Oz steps under a long-stopped clock and the hands finally move once more - thus fulfilling a mysterious prophecy - he is violently thrown into the legendary prison known as the Abyss by three cloaked intruders. Existing in another dimension, the Abyss is home to lifeforms born within its walls known as Chains; these beings can only live in the real world if they make contracts with humans, binding their power to the person's body. However, there's a catch - in time, the human will be overcome by the Chain's power and then thrown into the deepest level of the Abyss. When Oz wakes up in the Abyss he is quickly attacked by hungry Chains, only to be saved by one named Alice - a Chain who appeared just before he was thrown into the prison. Together, the two make a contract and return to the real world, where they are enlisted into the Pandora organization - a group researching both the Abyss and the trio that threw Oz into it. \\xa0Along with members of Pandora, the duo searches to find Alice's lost memory fragments that are scattered throughout the world, to discover the secrets of the Abyss, and to determine if there's a way their contract can be broken without killing either Oz or Alice.\"",
-                "genre": [
-                    "Action",
-                    "Horror"
-                ]
-            }, 'anime'),
-            Media({
-                "title": "Sword Art Online",
-                "release_date": '2069.0',
-                "rating": 10,
-                "keywords": [
-                    "Shounen",
-                    "Curse",
-                    "Exorcists",
-                    "Monsters",
-                    "School Life",
-                    "Supernatural",
-                    "Explicit Violence"
-                ],
-                "plot_summary": "'Dee was a squirrel who had BIG nuts! His nutsack was SO BIG, that it would drag on "
-                                "the ground everywhere he went. Dee had a friend named Sarah who loved nuts, Sarah go "
-                                "around town trying to put everyone’s nuts in her mouth. Sarah LOVED how BIG Dee’s nuts"
-                                " were, his nuts were her favourite!"
-                                " Dee was a squirrel who had BIG nuts! His nutsack was SO BIG, that it would drag on "
-                                "the ground everywhere he went. Dee had a friend named Sarah who loved nuts, Sarah go "
-                                "around town trying to put everyone’s nuts in her mouth. Sarah LOVED how BIG Dee’s nuts"
-                                " were, his nuts were her favourite!",
-                "genre": [
-                    "Action",
-                    "Horror"
-                ]
-            }, 'anime'),
-        ]
         print('started')
         # print(self.json_movies)
         lst = modified_get_recommendations(
             [(self.json_movies[entry], self.movies[entry]) for entry in self.json_movies if entry in self.added_movies]
-            , 3)
+            , max(3, len(self.added_movies)))
         print('done')
         for i in range(0, len(lst)):
             anime = lst[i]
