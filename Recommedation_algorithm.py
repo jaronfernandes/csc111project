@@ -55,7 +55,7 @@ class Media:
         return f"Media({self.title}, {self.type}, {self.genres}, " \
                f"{self.rating}, {self.date}, {self.synopsis}, {self.keywords}, {self.recommendation})"
 
-    def compare(self, other: Media, parent_set: set[Media]) -> float:
+    def compare(self, other: Media, parent_set: set[Media], graph: graph_classes.Graph) -> float:
         """compares itself to another media with 4 assessments,
         and mutates its recommendation accordingly
 
