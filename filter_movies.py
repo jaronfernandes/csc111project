@@ -40,21 +40,23 @@ def get_id_to_movies(file_contents: list[dict]) -> dict:
     return id_to_movies
 
 
-def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> None:
-    """Merges the IMDb json file (named json_filename), the IMDb csv file (named csv_filename)
-    to create a new json file (named new_filename).
+def merge_datasets(json_filename: str, text_filename: str, new_filename: str) -> None:
+    """
+    Merges the IMDb json file (named json_filename), the IMDb txt file (named text_filename)
+       to create a new json file (named new_filename).
 
     Preconditions:
-    - json_filename refers to a file in the .json file format
-    - csv_filename refers to a file in the .csv file format
-    - new_filename refers to a file in the .json file format
-    - json_filename and csv_filename follow the formats of IMDB_movie_details.json and filtered_basics.txt respectively
+       - json_filename refers to a file in the .json file format
+       - text_filename refers to a file in the .txt file format
+       - new_filename refers to a file in the .json file format
+       - json_filename and text_filename follow the formats of IMDB_movie_details.json and filtered_basics.txt
+       respectively
     """
 
     file_contents = load_json_file(json_filename)
     id_to_movies = get_id_to_movies(file_contents)
 
-    with open(csv_filename) as csv_file:
+    with open(text_filename) as csv_file:
         reader = csv.reader(csv_file)
         next(reader)
 
@@ -66,19 +68,10 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
             if row[0][0:2] == 'tt' and row[1] == 'movie' and row[0] in id_to_movies:
                 # The above if statement checks if the ID of the current movie entry in the IMDB text dataset...
                 # ... corresponds to a movie entry in the IMDB json file.
-                # movie = id_to_movies[row[0]]
                 id_to_movies[row[0]]['title'] = row[3]  # Title of movie changed to the name on the IMDB text file
                 unchecked_keys.remove(row[0])
                 id_to_movies[row[0]].pop('plot_synopsis')
                 id_to_movies[row[0]].pop('duration')
-                # print(id_to_movies[row[0]].pop('plot_synopsis'))
-                # print(id_to_movies[row[0]].pop('duration'))
-
-            # Code below is redudnant but I will be leaving it in incase someone else wants to use it
-            # elif row[0][0:2] == 'tt' and row[0] in id_to_movies:
-            #     # If a movie is not in both the text and json file, remove it from the dictionary id_to_movies
-            #     id_to_movies.pop(row[0])
-            #     print('oof')
 
         for key in unchecked_keys:
             id_to_movies.pop(key)
@@ -90,7 +83,19 @@ def merge_datasets(json_filename: str, csv_filename: str, new_filename: str) -> 
 
 if __name__ == '__main__':
     merge_datasets('datasets/raw/IMDB_movie_details.json', 'datasets/raw/filtered_basics.txt',
-                   'datasets/filtered/final_imdb_movies.json')
+                   'datasets/filtered/test_imdb_movies.json')
+
+    # IMPORTANT: PLEASE READ:
+    # You can test that the filtering and loading functionalities of this file work by commenting out
+    # the above "merge_datasets" call and instead include the following call below
+    # merge_datasets('datasets/raw/IMDB_movie_details.json', 'datasets/raw/filtered_basics.txt',
+    #                'datasets/filtered/test_imdb_movies.json')
+    # This would create a new file called test_imdb_movies.json that
+    # should have the same entries as final_imdb_shows.json...
+    # ... and formatted in a similar way too
+    # The only difference would be that ratings and release dates would be strings in the test file
+    # This is because in keyword_graph_maker.py, which is where we ran our final_imdb_movies.json file,...
+    # ... both attributes became integers
 
     # Enabling doctest checking features:
 

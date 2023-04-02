@@ -30,7 +30,7 @@ def anime_based_json() -> pd.DataFrame:
     Overall outline of changes made from original Anime.csv file
 
     1. Only including certain columns (Name, Rating, Release_year, Description, Tags). Renamed these columns
-    to be consistent with how other revised datasets wull be named
+    to be consistent with how other revised datasets will be named
 
     2. Filtered Anime.csv to only keep Anime show entries that are the first of its kind in a certain franchise
     (see Project Report for more details). Also, these anime shows must have a rating >= 3.7
@@ -117,9 +117,6 @@ def write_file(df: pd.DataFrame) -> None:
             if word in genres or word == 'Sci Fi':
                 if word == 'Sci Fi':
                     word = 'Sci-Fi'
-                    # entry['keywords'].remove('Sci Fi')
-                # else:
-                #     entry['keywords'].remove(word)
                 if entry['genre'] == '':
                     entry['genre'] = [word]
                 else:
@@ -133,8 +130,9 @@ def write_file(df: pd.DataFrame) -> None:
         json.dump(json_data, f, indent=4)
 
     # IMPORTANT: PLEASE READ:
-    # You can test the functionality of this file by commenting out
+    # You can test that the filtering and loading functionalities of this file work by commenting out
     # the above "with open" commands and uncommenting the test commands below
+    #  # You then NEED TO RUN THE MAIN BLOCK
     # This would create a new file called test_animes.json that should have the same entries ad final_animes.json...
     # ... and formatted in a similar way too
     # with open('datasets/filtered/test_animes.json', 'w') as f:
@@ -142,7 +140,7 @@ def write_file(df: pd.DataFrame) -> None:
 
 
 if __name__ == '__main__':
-    write_file(anime_based_json())
+    # write_file(anime_based_json())
 
     # Enabling doctest checking features:
 
