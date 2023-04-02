@@ -24,7 +24,25 @@ def load_json_file(filename: str) -> list[dict]:
 
     with open(filename, 'r') as file:
         for line in file:
+            print(line)
             file_contents_so_far.append(json.loads(line))
+
+    return file_contents_so_far
+
+
+def load_json_file_animes(filename: str) -> list[dict]:
+    """Opens a json file and returns a list of its contents.
+
+    Preconditions:
+        - filename == 'datasets/filtered/final_animes.json'
+    """
+    file_contents_so_far = []
+
+    with open(filename, 'r') as file:
+        string = file.read()
+        for line in json.loads(string):
+            print(line)
+            file_contents_so_far.append(line)
 
     return file_contents_so_far
 
