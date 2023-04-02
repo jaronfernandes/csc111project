@@ -119,7 +119,7 @@ class AnimeWidget(QWidget):
         self.full_description = anime_data.synopsis
         self.description = QLabel(anime_data.synopsis)
         self.description.setWordWrap(True)
-        self.description.setFont(QFont('Verdana', 20))
+        self.description.setFont(QFont('Avenir', 20))
         self.layout = QVBoxLayout()
         self.title = QLabel(anime_data.title)
         self.left = None
@@ -260,7 +260,7 @@ class MovieWidget(QWidget):
         self.type = QLabel('Type: ' + movie_type, self)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
-        self.close_button.setFont(QFont('Verdana', 30))
+        self.close_button.setFont(QFont('Avenir', 30))
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.label)
@@ -358,11 +358,11 @@ class MainWindow(QMainWindow):
 
         # Group Box
         group_box = QGroupBox('Movies and Shows Added')
-        group_box.setFont(QFont('Verdana', 30))
+        group_box.setFont(QFont('Avenir', 30))
 
         group_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
-        self.recommendation_box.setFont(QFont('Verdana', 30))
+        self.recommendation_box.setFont(QFont('Avenir', 30))
 
         self.recommendation_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.recommendation_box.setLayout(self.recommendation_layout)
@@ -529,7 +529,7 @@ app.setStyleSheet("""
     QMainWindow {"""f"""
         background-color: "white";
         border: none;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         background-image: url({BACKGROUND_IMAGE});
         background-repeat: no-repeat;
         border-image: url({BACKGROUND_IMAGE}) 0 0 0 0 stretch stretch;
@@ -550,7 +550,7 @@ app.setStyleSheet("""
     QGroupBox {
         background-color: "white";
         border: none;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         background: transparent !important;
         color: white;
         font-size: 30px;
@@ -563,7 +563,7 @@ app.setStyleSheet("""
     }
     AnimeWidget::QLabel {
         border: none;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         background: transparent !important;
         font-size: 30px;
         padding: 70px;
@@ -571,7 +571,7 @@ app.setStyleSheet("""
     }
     QGroupBox::title {
         border: none;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         color: white;
         font-size: 30px;
         opacity: 0;
@@ -581,7 +581,7 @@ app.setStyleSheet("""
     }
     QPushButton {
         font-size: 16px;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         background-color: "lightblue";
         border-collapse: separate;
         border-radius: 20%;
@@ -589,7 +589,7 @@ app.setStyleSheet("""
     }
     MainWindow::QPushButton {
         font-size: 16px;
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         background-color: "white";
         border-collapse: separate;
         border-radius: 4px;
@@ -597,12 +597,12 @@ app.setStyleSheet("""
     }
     QLineEdit {
         background-color: "white";
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         color: "black";
         opacity: 0;
     }
     QLabel {
-        font-family: "Verdana", monospace;
+        font-family: "Avenir", monospace;
         font-size: 25px;
         color: white;
         opacity: 0;
