@@ -12,11 +12,13 @@ set that have a similarity score greater than a certain threshold.
 This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
 import pandas as pd
+
 import json
+
 import nltk
 from nltk.stem import WordNetLemmatizer
-from nltk.corpus import wordnet as wn
-from nltk.corpus import stopwords
+from nltk.corpus import wordnet as wn, stopwords
+
 import spacy
 from spacy import tokens
 
@@ -28,6 +30,9 @@ from spacy import tokens
 #     pass
 # else:
 #     ssl._create_default_https_context = _create_unverified_https_context
+
+# Uncomment the block of code below to donwload specific nltk dependencies. Uncomment the block of code above if the
+# block below raise any errors.
 
 # nltk.download('stopwords')
 # nltk.download('punkt')
@@ -75,13 +80,18 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
     keywords = {}
     for entry in data:
         synopsis = entry[column]
-        words = nltk.word_tokenize(synopsis)  # tokenize string
-        nouns = set()  # empty set to hold all nouns
+
+        # Get a list of tokenized words.
+        words = nltk.word_tokenize(synopsis)
+        nouns = set()
         word_types = nltk.pos_tag(words)
         for word, pos in word_types:
-            # unique_score = sum(word_similarity(word, x) for x in words) / len(words)
+
+            # Get only words that are nouns and non-stop words.
             if (pos == 'NN' or pos == 'NNS') and word not in STOP_WORDS:
-                word = wnl.lemmatize(word, pos='n')
+                word = wnl.lemmatize(word, pos='n')  # Ensure that lemmatization occurs for a noun to avoid ambiguity.
+
+                # Ensure that words are long enough and are not hyperlinks.
                 if len(word) >= 3 and '.' not in word:
                     nouns.add(word.lower())
         for word in nouns:
@@ -99,17 +109,12 @@ def extract_all_keywords(movie_file: str, show_file: str, anime_file: str, colum
         - column must be a valid column in movie_file and show_file.
     """
     anime_keywords = get_anime_keywords(anime_file)
-    # print('done with animes')
     show_keywords = get_imdb_keywords(show_file, column)
-    # print('done with shows')
     movie_keywords = get_imdb_keywords(movie_file, column)
-    # print('done with movies')
     keywords = {*anime_keywords, *movie_keywords, *show_keywords}
     return keywords
 
 
-### IMPORTANT ###
-# USE THIS ONCE TO GET LIST OF TOKENS!
 def get_keywords_from_file(keyword_file: str) -> tuple[list[tokens.doc.Doc] | set, int]:
     """Read and return TOKENIZED contents of keyword_file with number of keywords.
     We need to tokenize (a process in NLKT that refers to parsing text and characters)
@@ -121,19 +126,17 @@ def get_keywords_from_file(keyword_file: str) -> tuple[list[tokens.doc.Doc] | se
     with open(keyword_file, 'r', encoding='LATIN-1') as file:
         lines = file.readlines()
 
-    # keyword_set = set(lines[0].split("', '"))
-
+    # Convert first line of keyword file (keyword vertices) into a Python list of keyword vertices.
     keyword_set = lines[0].split("', '")
     keyword_set[0] = keyword_set[0].strip("{'")
     keyword_set[-1] = keyword_set[-1].strip("'}")
 
     length = len(keyword_set)
 
+    # Return tokenized keywords (using spacy's en-core-web-lg' language model) and the number of keywords.
     return [nlp(keyword) for keyword in keyword_set], length
 
 
-# IMPORTANT #
-# GET KEYWORD_SET AND LENGTH FROM ABOVE FUNCTION!
 def make_edges(keyword_token_list: list[tokens.doc.Doc], length: int, threshold: float, start_chunk: int = 0,
                end_chunk: int = 0) -> set[tuple]:
     """Creates edges between any two keywords in keyword_file with similarity score greater than threshold. Returns a
@@ -152,17 +155,23 @@ def make_edges(keyword_token_list: list[tokens.doc.Doc], length: int, threshold:
         - end_chunk <= the length of the keyword file
     """
     edges = set()
+
+    # Get set of all lemmas.
     wn_lemmas = set(wn.all_lemma_names())
 
     for i in range(start_chunk, end_chunk):
         word = str(keyword_token_list[i])
         for j in range(length):
             other_word = str(keyword_token_list[j])
+
+            # Only pairs of words that are in their lemmatized form and do not already share an edge.
             if word in wn_lemmas and other_word in wn_lemmas and \
                     word != other_word and (word, other_word) not in edges and \
                     (other_word, word) not in edges:
-                # if keyword_set[i] != keyword_set[j] and (keyword_set[i], keyword_set[j]) not in edges:
+
                 similarity_score = word_similarity(keyword_token_list[i], keyword_token_list[j])
+
+                # Create edge if the similarity score is above a custom threshold.
                 if similarity_score > threshold:
                     edges.add((word, other_word))
     return edges
@@ -190,13 +199,13 @@ def write_edges(edge_file: str, tokenized_list: list, length: int, threshold: fl
 
 def update_dataset_keywords(reference_file: str, edit_file: str, column: str) -> None:
     """Only to be run after the keyword_graph.txt file has at least the first line completed
-    i.e. write_keywords() has been called.
+    i.e. write_keywords() has been called. Updates IMDb movie and TV show databases with keywords found.
 
     Preconditions
-    - the column is a valid column of the edit_file's json dataframe, and it contains a string
+    - the column is a valid column of the edit_file's json dataframe, and contains a string
     """
     df = pd.read_json(edit_file)
-    df = df.loc[:, ~df.columns.isin(['plot_synopsis', 'duration'])]
+    # df = df.loc[:, ~df.columns.isin(['plot_synopsis', 'duration'])]
     df = df.assign(keywords='')
     with open(reference_file, 'r', encoding='LATIN-1') as file:
         lines = file.readlines()
@@ -207,50 +216,47 @@ def update_dataset_keywords(reference_file: str, edit_file: str, column: str) ->
         synopsis = df.at[index, column].split(' ')
         for phrase in keywords:
             if phrase in synopsis:
+
+                # Assign a list consisting of keywords to the movie if no such list already exists. Else, append to...
+                # ...existing list.
                 if df.at[index, 'keywords'] == '':
                     df.at[index, 'keywords'] = [phrase]
                 else:
                     df.at[index, 'keywords'].append(phrase)
 
+    # Read and write data into edit_file by converting the dataframe to the .json format.
     json_data = json.loads(df.to_json(orient='records'))
     with open(edit_file, 'w') as f:
         json.dump(json_data, f, indent=4)
 
 
 if __name__ == '__main__':
-#     # makes sure this is only run after all the filtered datasets are finalized
     wnl = WordNetLemmatizer()
     nlp = spacy.load('en_core_web_lg')
-#
-#     # IMPORTANT!!! (read the following comment):
-#     # comment this next line if the datasets/filtered/keyword_graph.txt file already exists with 1 line, to save time:
-#     write_keywords('datasets/filtered/keyword_graph.txt')  # this will create a keyword_graph.txt file
-#
-#     # once we have all our keywords, we can update our datasets to include them
-#     # (we don't need to do this for final_animes since that already came with keywords (originally tags))
-    update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-                            'datasets/filtered/final_imdb_movies.json', 'plot_summary')
-#     update_dataset_keywords('datasets/filtered/keyword_graph.txt',
-#                             'datasets/filtered/final_imdb_shows.json', 'plot_summary')
-    #
-    # # run this once
-    #keywords_info = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
-    # # only run this if the previous line has been run or the txt file already exists with a valid keywords set in line 1
-    # # this will read that keyword_graph.txt file and then write a second line onto it
-    #write_edges('datasets/filtered/keyword_graph.txt', keywords_info[0], keywords_info[1], 0.65, 0, keywords_info[1])
 
-    # Enabling doctest checking features:
+    # Creates and stores keyword vertices in keyword_graph.txt.
+    # write_keywords('datasets/filtered/keyword_graph.txt')
 
-    # import doctest
-    #
-    # doctest.testmod(verbose=True)
-    #
-    # # Enabling python_ta configurations:
-    # import python_ta
-    #
-    # python_ta.check_all(config={
-    #     'extra-imports': ["pandas", "json", "nlkt", "spacy"],
-    #     'allowed-io': ["get_imdb_keywords", "get_keywords_from_file", "write_keywords", "write_edges",
-    #                    "write_dataset_keywords"],
-    #     'max-line-length': 120,
-    # })
+    # Run the block of code below after keyword vertices have been created. These update the movie and TV show...
+    # ...datasets to store keywords with the appropriate shows.
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_movies.json', 'plot_summary')
+    # update_dataset_keywords('datasets/filtered/keyword_graph.txt',
+    #                         'datasets/filtered/final_imdb_shows.json', 'plot_summary')
+
+    # Run the line of code below to extract keywords and return them tokenized.
+    # keyword_set, num_keywords = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
+
+    # Run this line next. Creates and stores keyword edges in keyword_graph.txt.
+    # write_edges('datasets/filtered/keyword_graph.txt', keyword_set, num_keywords, 0.65, 0, num_keywords)
+
+    # Enable python_ta configurations:
+    import python_ta
+
+    python_ta.check_all(config={
+        'extra-imports': ["pandas", "json", "nltk", "spacy", "nltk.stem", "nltk.corpus"],
+        'allowed-io': ["get_imdb_keywords", "get_keywords_from_file", "write_keywords", "write_edges",
+                       "write_dataset_keywords"],
+        'disable': ['E1101', 'F0002'],
+        'max-line-length': 120,
+    })
