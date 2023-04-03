@@ -126,6 +126,6 @@ if __name__ == '__main__':
 
     python_ta.check_all(config={
         'extra-imports': ["json", "csv"],
-        'allowed-io': ["load_json_file", "get_id_to_movies", "merge_datasets"],
+        'allowed-io': ["load_json_file", "get_id_to_movies", "merge_datasets", "load_json_file_animes"],
         'max-line-length': 120,
     })
