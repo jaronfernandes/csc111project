@@ -96,7 +96,7 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         rec_score /= full_score
         anime_media.recommendation['thing'] = (rec_score, input_media_set)
         anime_media_list.append(anime_media)
-        print(count + 1)
+        # print(count + 1)
         count += 1
         # if count == 10:  # Remove during actual submission
         #     break
@@ -539,7 +539,7 @@ class MainWindow(QMainWindow):
         # Customizable Settings Widgets (Whitelisting Genres)
         self.settings[6].setFixedSize(QtCore.QSize(200, 40))
         self.settings[6].setPlaceholderText('Ex. Comedy')
-        self.settings[8].setText('Set # to Recommend')
+        self.settings[8].setText('Add Genre to Whitelist')
         self.settings[8].setFixedSize(QtCore.QSize(200, 40))
         # Setting up the scroll area for the genre list.
         self.settings[9].setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
@@ -708,7 +708,7 @@ class MainWindow(QMainWindow):
             self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
             self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         else:
-            print('started')
+            # print('started')
             lst = modified_get_recommendations(
                 [(self.json_movies[entry], self.movies[entry])
                  for entry in self.json_movies if entry in self.added_movies],
@@ -716,7 +716,7 @@ class MainWindow(QMainWindow):
                 self.settings[1],
                 self.settings[7]
             )
-            print('done')
+            # print('done')
 
             if len(lst) == 0:
                 self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
@@ -765,7 +765,7 @@ app.setStyleSheet("""
     QMainWindow {"""f"""
         background-color: "white";
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         background-image: url({BACKGROUND_IMAGE});
         background-repeat: no-repeat;
         border-image: url({BACKGROUND_IMAGE}) 0 0 0 0 stretch stretch;
@@ -786,7 +786,7 @@ app.setStyleSheet("""
     QGroupBox {
         background-color: "white";
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         background: transparent !important;
         color: white;
         font-size: 30px;
@@ -799,7 +799,7 @@ app.setStyleSheet("""
     }
     AnimeWidget::QLabel {
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         background: transparent !important;
         font-size: 30px;
         padding: 70px;
@@ -807,7 +807,7 @@ app.setStyleSheet("""
     }
     QGroupBox::title {
         border: none;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         color: white;
         font-size: 30px;
         opacity: 0;
@@ -817,7 +817,7 @@ app.setStyleSheet("""
     }
     QPushButton {
         font-size: 16px;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         background-color: "lightblue";
         border-collapse: separate;
         border-radius: 20%;
@@ -825,7 +825,7 @@ app.setStyleSheet("""
     }
     MainWindow::QPushButton {
         font-size: 16px;
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         background-color: "white";
         border-collapse: separate;
         border-radius: 4px;
@@ -833,12 +833,12 @@ app.setStyleSheet("""
     }
     QLineEdit {
         background-color: "white";
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         color: "black";
         opacity: 0;
     }
     QLabel {
-        font-family: "Avenir", monospace;
+        font-family: "Avenir";
         font-size: 25px;
         color: white;
         opacity: 0;
