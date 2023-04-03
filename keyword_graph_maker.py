@@ -11,9 +11,9 @@ set that have a similarity score greater than a certain threshold.
 
 This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
-import pandas as pd
-
 import json
+
+import pandas as pd
 
 import nltk
 from nltk.stem import WordNetLemmatizer
@@ -88,7 +88,7 @@ def get_imdb_keywords(imdb_file: str, column: str) -> set[str]:
         for word, pos in word_types:
 
             # Get only words that are nouns and non-stop words.
-            if (pos == 'NN' or pos == 'NNS') and word not in STOP_WORDS:
+            if (pos in {'NN', 'NNS'}) and word not in STOP_WORDS:
                 word = wnl.lemmatize(word, pos='n')  # Ensure that lemmatization occurs for a noun to avoid ambiguity.
 
                 # Ensure that words are long enough and are not hyperlinks.
@@ -189,9 +189,12 @@ def write_keywords(keyword_file: str) -> None:
         f.write(str(keyword_set))
 
 
-def write_edges(edge_file: str, tokenized_list: list, length: int, threshold: float, start: int, end: int) -> None:
+def write_edges(edge_file: str, tokenized_list: list, length: int, threshold: float,
+                bound: tuple[int, int]) -> None:
     """Writes a set of all edges into edge_file in the .txt format.
     """
+    start, end = bound
+
     connections = make_edges(tokenized_list, length, threshold, start_chunk=start, end_chunk=end)
     with open(edge_file, 'a') as f:
         f.write('\n' + str(connections))
@@ -248,7 +251,7 @@ if __name__ == '__main__':
     # keyword_set, num_keywords = get_keywords_from_file('datasets/filtered/keyword_graph.txt')
 
     # Run this line next. Creates and stores keyword edges in keyword_graph.txt.
-    # write_edges('datasets/filtered/keyword_graph.txt', keyword_set, num_keywords, 0.65, 0, num_keywords)
+    # write_edges('datasets/filtered/keyword_graph.txt', keyword_set, num_keywords, 0.65, (0, num_keywords))
 
     # Enable python_ta configurations:
     import python_ta
@@ -256,7 +259,8 @@ if __name__ == '__main__':
     python_ta.check_all(config={
         'extra-imports': ["pandas", "json", "nltk", "spacy", "nltk.stem", "nltk.corpus"],
         'allowed-io': ["get_imdb_keywords", "get_keywords_from_file", "write_keywords", "write_edges",
-                       "write_dataset_keywords"],
+                       "write_dataset_keywords", "update_dataset_keywords"],
         'disable': ['E1101', 'F0002'],
+        'max-nested-blocks': 4,
         'max-line-length': 120,
     })
