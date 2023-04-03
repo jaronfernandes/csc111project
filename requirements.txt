@@ -1,3 +1,8 @@
+# IMPORTANT, PLEASE READ:
+# The link to our datasets folder is here:
+# https://utoronto-my.sharepoint.com/:f:/g/personal/carmenj_chau_mail_utoronto_ca/EuOER71V1i9JmdfQguIm0BQBQRYUQlrrFVmhuY8l_VKMUw?e=LZwHh5
+
+
 # Testing and code checking
 pytest
 python-ta~=2.4.2
@@ -9,9 +14,8 @@ PyQt6
 pandas
 numpy
 
-# run these lines in the console:
+# Please consult project overleaf on instructions to place this calls in Python Console
 # nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('wordnet')
-# nltk.download('stopwords')

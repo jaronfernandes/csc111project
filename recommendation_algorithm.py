@@ -301,6 +301,7 @@ def build_keyword_graph_from_file() -> graph_classes.Graph:
 # IMPORTANT: PLEASE READ HERE:
 # If you want to test out our recommendation algorithm (on one user entry and comparing to only a subset of all...
 # ... animes found on final_animes.json), you can run method test_compare() in the console.
+# NOTE: This check may take a couple of minutes (1-4 minutes)
 def test_compare() -> None:
     """
     A test function that returns the strongest ranked anime recommendation. Recommendation is made
