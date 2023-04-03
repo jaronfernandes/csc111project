@@ -651,7 +651,7 @@ class MainWindow(QMainWindow):
             # print(self.added_movies)
 
     def on_genre_added(self) -> None:
-        """Button event for when movies are added"""
+        """Button event for when genres are added"""
         text = self.settings[6].text()
         if text in ALL_GENRES and text not in self.settings[7]:
             self.searchbar.setText('')
