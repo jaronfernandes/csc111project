@@ -5,7 +5,7 @@ Module description
 
 This Python module is responsible for creating a text file (called keyword_graph.txt)
 that contains 2 key pieces of information pertaining to the keyword graph. Firstly, it write a set of all keywords
-from all the synposes in final_animes.json, final_imdb_movies.json and final_imdb_shows.json.
+from all the synposes in final_animes.json, final_imdb_movies.json, and final_imdb_shows.json.
 Then, in the same text file, it also writes a set of edges between all keywords in the generated
 set that have a similarity score greater than a certain threshold.
 
