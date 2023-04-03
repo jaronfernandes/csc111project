@@ -170,12 +170,14 @@ class AnimeWidget(QWidget):
     - left: An AnimeWidget node.
     - left_button: A QPushbutton to swap to the recommended anime on the left.
     - parent: The parent window of this widget.
+    - position: The ranking in which this anime was recommended.
     - right: An AnimeWidget node.
     - right_button: A QPushbutton to swap to the recommended anime on the right.
     - title: The QLabel used for representing the anime title.
 
     Representation Invariants:
     - self.anime_data is a valid Media object for the anime associated with this widget.
+    - self.position >= 1
     """
     anime_data: Media
     # box: QGroupBox
@@ -187,15 +189,17 @@ class AnimeWidget(QWidget):
     left: Optional[AnimeWidget]
     left_button: QPushButton
     parent: MainWindow
+    position: int
     right: Optional[AnimeWidget]
     right_button: QPushButton
     title: QLabel
 
-    def __init__(self, anime_data: Media, parent: MainWindow) -> None:
+    def __init__(self, anime_data: Media, parent: MainWindow, position: int) -> None:
         """Initializes the AnimeWidget.
 
         Preconditions:
         - anime_data is a valid Media object with the appropriate instance attributes for this anime widget.
+        - position >= 1
         """
         super().__init__()
         self.parent = parent
@@ -206,6 +210,7 @@ class AnimeWidget(QWidget):
         self.description.setFont(QFont('Avenir', 20))
         self.layout = QVBoxLayout()
         self.title = QLabel(anime_data.title)
+        self.position = position
         self.left = None
         self.right = None
         self.left_button = QPushButton('<')
@@ -296,13 +301,15 @@ class AnimeWidget(QWidget):
     def switch_animes_left(self) -> None:
         """Button Events to switch the anime recommendation left through LinkedList"""
         self.hide()
-        self.parent.recommendation_box.setTitle('Recommended Anime: ' + self.left.anime_data.title)
+        self.parent.recommendation_box.setTitle(
+            str(self.left.position) + ') Recommended Anime: ' + self.left.anime_data.title)
         self.left.show()
 
     def switch_animes_right(self) -> None:
         """Button Events to switch the anime recommendation right through LinkedList"""
         self.hide()
-        self.parent.recommendation_box.setTitle('Recommended Anime: ' + self.right.anime_data.title)
+        self.parent.recommendation_box.setTitle(
+            str(self.right.position) + ') Recommended Anime: ' + self.right.anime_data.title)
         self.right.show()
 
 
@@ -727,12 +734,19 @@ class MainWindow(QMainWindow):
                 self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
                 self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
+        print('Recommended Shows:',
+              {anim.title: anim.__dict__ for anim in lst})
+        print('Movies/shows Added:', self.added_movies)
+        print('Rating Filter:', self.settings[1])
+        print('Number of Animes to Recommend:', self.settings[4])
+        print('Genre Whitelist:', self.settings[7])
+
         for i in range(0, len(lst)):
             anime = lst[i]
 
             if i == 0:
-                self.recommendation_box.setTitle('Recommended Anime: ' + anime.title)
-                self.recommended_animes[anime.title] = AnimeWidget(anime, self)
+                self.recommendation_box.setTitle(f'{i + 1}) Recommended Anime: {anime.title}')
+                self.recommended_animes[anime.title] = AnimeWidget(anime, self, i + 1)
                 self.recommendation_layout.addRow(self.recommended_animes[anime.title])
 
             # centerPoint = QDesktopWidget().availableGeometry().center()
@@ -743,7 +757,7 @@ class MainWindow(QMainWindow):
 
             self.recommendation_layout.addRow(self.recommended_animes[anime.title])
             if i + 1 != len(lst):
-                self.recommended_animes[lst[i + 1].title] = AnimeWidget(lst[i + 1], self)
+                self.recommended_animes[lst[i + 1].title] = AnimeWidget(lst[i + 1], self, i + 2)
                 self.recommended_animes[anime.title].right = self.recommended_animes[lst[i + 1].title]
             if i != 0:
                 self.recommended_animes[anime.title].left = self.recommended_animes[lst[i - 1].title]
