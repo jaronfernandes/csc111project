@@ -1,5 +1,15 @@
-"""The main file, which the user must run to start the program.
-This file should mostly just import the other files, and do some function calling to start up the program
+"""CSC111 Course Project: main.py
+
+Module description
+===============================
+The main file, which the user must run to start the program.
+This file should mostly just import the other files, and do some function calling to start up the program.
+
+This Python module is also responsible for creating and displaying all the necessary UI related to the project,
+using PyQt6 to create an application loaded with several widgets, images, labels, and layouts.
+Utilizes a function that takes in stylesheets to beautify the application.
+
+This file is Copyright (c) 2023 Jaron Fernandes, Ethan Fine, Carmen Chau, Jaiz Jeeson
 """
 from __future__ import annotations
 
@@ -35,7 +45,7 @@ ALL_GENRES = anime_filter.get_genres()
 
 
 def build_keyword_graph_from_file() -> graph_classes.Graph:
-    """makes the graph to be used in the keywords assessment"""
+    """Makes the graph to be used in the keywords assessment"""
     with open('datasets/filtered/keyword_graph.txt', 'r') as f:
         lines = f.readlines()
     keyword_graph = graph_classes.Graph()
@@ -99,7 +109,7 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
 
 
 def get_anime_rec_score(anime: recommendation_algorithm.Media, input_set: set[recommendation_algorithm.Media]) -> float:
-    """used for sorting the finalized anime list"""
+    """Used for sorting the finalized anime list"""
     for recommendation in anime.recommendation:
         if input_set in anime.recommendation[recommendation]:
             return anime.recommendation[recommendation][0]  # this should be the rec_score
