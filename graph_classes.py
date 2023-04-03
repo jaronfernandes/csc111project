@@ -206,6 +206,7 @@ class Graph:
                     if neighbour not in visited:
                         tracker.put(current_path + [neighbour])
 
+            return False
         # If start and end are not connected by a path, there is no shortest path.
         else:
             return False
