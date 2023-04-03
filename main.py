@@ -27,9 +27,11 @@ from recommendation_algorithm import Media
 import graph_classes
 import recommendation_algorithm
 import filter_movies
+import anime_filter
 
 # Picks a random background image at the start of the program
 BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
+ALL_GENRES = anime_filter.get_genres()
 
 
 def build_keyword_graph_from_file() -> graph_classes.Graph:
@@ -45,12 +47,23 @@ def build_keyword_graph_from_file() -> graph_classes.Graph:
     return keyword_graph
 
 
-def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int) -> \
+def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int, rating: float, genres: set[str]) -> \
         list[recommendation_algorithm.Media]:
     """
-    every dict in the input_set is a valid entry format (json entry, form)
+    Generates a list of anime recommendations for the user.
+
+    Preconditions:
+    - every dict in the input_set is a valid entry format (json entry, form)
     """
     anime_list = filter_movies.load_json_file_animes('datasets/filtered/final_animes.json')
+    anime_list = (anime_list, anime_list.copy())
+
+    for anime in anime_list[0]:
+        if float(anime['rating']) < rating or not all(genre in anime['genre'] for genre in genres):
+            anime_list[1].remove(anime)
+
+    anime_list = anime_list[1]
+
     anime_media_list = []
     input_media_set = set()
     keyword_graph = build_keyword_graph_from_file()
@@ -58,7 +71,6 @@ def modified_get_recommendations(input_set: list[tuple[dict, str]], num_rec: int
         input_media_set.add(recommendation_algorithm.Media(item[0], item[1]))
 
     count = 0
-    print(len(anime_list))
     for anime in anime_list:
         anime_media = recommendation_algorithm.Media(anime, 'anime')
         rec_score = 0
@@ -284,8 +296,8 @@ class AnimeWidget(QWidget):
         self.right.show()
 
 
-class MovieWidget(QWidget):
-    """Widget for each movie in the dropdown.
+class ListWidgetTemplate(QWidget):
+    """A widget class that can be used by its subclasses as widgets that can be added and removed to lists.
 
     Instance Attributes:
     - name: The name of the movie/show.
@@ -300,13 +312,12 @@ class MovieWidget(QWidget):
     - self.type in {'Movie', 'Show'}
     """
     name: str
-    type: QLabel
     label: QLabel
     close_button: QPushButton
     layout: QHBoxLayout
     parent: MainWindow
 
-    def __init__(self, name: str, parent: MainWindow, movie_type: str) -> None:
+    def __init__(self, name: str, parent: MainWindow) -> None:
         """The initializer to create an object.
 
         Preconditions:
@@ -319,20 +330,55 @@ class MovieWidget(QWidget):
         # self.setMaximumHeight(50)
         self.name = name
         self.label = QLabel(self.name, self)
-        self.type = QLabel('Type: ' + movie_type, self)
+        self.label.setWordWrap(True)
         self.close_button = QPushButton('X', self)
         self.close_button.setFixedSize(QtCore.QSize(40, 40))
         self.close_button.setFont(QFont('Avenir', 30))
 
         self.layout = QHBoxLayout()
         self.layout.addWidget(self.label)
-        self.layout.addWidget(self.type)
-        self.type.setAlignment(Qt.AlignmentFlag.AlignRight)
-        self.layout.addWidget(self.close_button)
         self.setLayout(self.layout)
 
-        batotn = self.close_button
-        batotn.clicked.connect(self.on_clicked)
+        self.close_button.clicked.connect(self.on_clicked)
+
+    def on_clicked(self) -> None:
+        """
+        To be inherited by subclasses.
+        """
+        raise NotImplementedError
+
+
+class MovieWidget(ListWidgetTemplate):
+    """Widget for each movie in the dropdown.
+
+    Instance Attributes:
+    - name: The name of the movie/show.
+    - type: The QLabel associating to the type (either movie or show)
+    - label: The QLabel associated with the name of the movie or show.
+    - close_button: The QPushButton object used to remove the item from the list.
+    - layout: The layout for this widget
+    - parent: The parent that this object is linked to (MainWindow)
+
+    Representation Invariants:
+    - self.name is a valid movie/show name.
+    - self.type in {'Movie', 'Show'}
+    """
+    type: QLabel
+
+    def __init__(self, name: str, parent: MainWindow, movie_type: str) -> None:
+        """The initializer to create an object.
+
+        Preconditions:
+        - name is a valid movie/show name
+        - movie_type in {'Movie', 'Show'}
+        """
+        super().__init__(name, parent)
+        self.type = QLabel('Type: ' + movie_type)
+        self.type.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.layout.addWidget(self.type)
+        self.layout.addWidget(self.close_button)
+
+        self.close_button.clicked.connect(self.on_clicked)
 
     def on_clicked(self) -> None:
         """Method that removes itself when the button is clicked.
@@ -342,6 +388,37 @@ class MovieWidget(QWidget):
         self.layout.removeWidget(self)
         # print(self.parent.added_movies)
         # self.destroy()
+
+
+class GenreWidget(ListWidgetTemplate):
+    """Widget for each movie in the dropdown.
+
+    Instance Attributes:
+    - name: The name of the movie/show.
+    - label: The QLabel associated with the name of the movie or show.
+    - close_button: The QPushButton object used to remove the item from the list.
+    - layout: The layout for this widget
+    - parent: The parent that this object is linked to (MainWindow)
+
+    Representation Invariants:
+    - self.name is a valid movie/show name.
+    """
+
+    def __init__(self, name: str, parent: MainWindow) -> None:
+        """The initializer to create an object.
+
+        Preconditions:
+        - name in ALL_GENRES
+        """
+        super().__init__(name, parent)
+        self.layout.addWidget(self.close_button)
+
+    def on_clicked(self) -> None:
+        """Method that removes itself when the button is clicked.
+        This *should* be garbage collected as there is no reference to it (?)
+        """
+        self.parent.settings[7].remove(self.name)
+        self.layout.removeWidget(self)
 
 
 class MainWindow(QMainWindow):
@@ -360,6 +437,9 @@ class MainWindow(QMainWindow):
     - recommendation_box: A QGroupBox that stores holds all the AnimeWidgets.
     - scroll: A scroll object used to scroll through the recommendation_box when it gets too large.
     - searchbar: A QLineEdit object used for the user to search up movies/shows.
+    - settings: A list that holds customizable objects for the user to fine-tune their recommendation search. It
+    contains the rating_text_object, a float of the minimum rating, select_rating_button, num_animes_text object, an int
+    of the number of animes to recommend, select_num_animes_button, ...
     - submit_button: The button that fires a signal when the user wants to generate recommendations.
 
     Representation Invariants:
@@ -381,6 +461,7 @@ class MainWindow(QMainWindow):
     recommendation_box: QGroupBox
     scroll: QScrollArea
     searchbar: QLineEdit
+    settings: list
     submit_button: QPushButton
 
     def __init__(self) -> None:
@@ -398,6 +479,11 @@ class MainWindow(QMainWindow):
         self.recommended_animes = {}
         self.recommendation_box = QGroupBox('Recommended Anime:')
         self.recommendation_layout = QFormLayout()
+        self.settings = [
+            QLineEdit(), 0.0, QPushButton(),  # For minimum rating (indices 0 - 2)
+            QLineEdit(), 3, QPushButton(),  # For number of animes to recommend (indices 3 - 5)
+            QLineEdit(), set(), QPushButton(), QScrollArea(), QFormLayout()  # For whitelisting genres (indices 6 - 10)
+        ]
         self.scroll = QScrollArea()
         self.added_movies = set()
 
@@ -410,10 +496,6 @@ class MainWindow(QMainWindow):
         self.json_movies = json_lines
         self.movie_images = extract_images_file()
 
-        self.create_interface()
-
-    def create_interface(self) -> None:
-        """Helper method to continue creating the interface."""
         # To space the drop-down.
         spacer = QSpacerItem(10, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.container_layout.addItem(spacer)
@@ -424,23 +506,47 @@ class MainWindow(QMainWindow):
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.searchbar.setCompleter(completer)
 
+        # Scroll Area Properties.
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scroll.setWidgetResizable(True)
+
+        # Customizing the Recommendation box:
+        self.recommendation_box.setFont(QFont('Avenir', 30))
+        self.recommendation_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+        self.recommendation_box.setLayout(self.recommendation_layout)
+
+        # Customizable Settings Widgets (Minimum Rating Animes to Choose From)
+        self.settings[0].setFixedSize(QtCore.QSize(200, 40))
+        self.settings[0].setPlaceholderText('7.4 - 10.0')
+        self.settings[2].setText('Set Minimum Rating')
+        self.settings[2].setFixedSize(QtCore.QSize(200, 40))
+        # Customizable Settings Widgets (Minimum # of Animes to Recommend)
+        self.settings[3].setFixedSize(QtCore.QSize(200, 40))
+        self.settings[3].setPlaceholderText('Current: 3 Range: 1+')
+        self.settings[5].setText('Set # to Recommend')
+        self.settings[5].setFixedSize(QtCore.QSize(200, 40))
+        # Customizable Settings Widgets (Whitelisting Genres)
+        self.settings[6].setFixedSize(QtCore.QSize(200, 40))
+        self.settings[6].setPlaceholderText('Ex. Comedy')
+        self.settings[8].setText('Set # to Recommend')
+        self.settings[8].setFixedSize(QtCore.QSize(200, 40))
+        # Setting up the scroll area for the genre list.
+        self.settings[9].setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.settings[9].setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+        self.create_interface()
+
+    def create_interface(self) -> None:
+        """Helper method to continue creating the interface."""
         # Group Box
         group_box = QGroupBox('Movies and Shows Added')
         group_box.setFont(QFont('Avenir', 30))
 
         group_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
-        self.recommendation_box.setFont(QFont('Avenir', 30))
-
-        self.recommendation_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
-        self.recommendation_box.setLayout(self.recommendation_layout)
-
         group_box.setLayout(self.form_layout)
 
-        # Scroll Area Properties.
-        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(group_box)
         # self.container_layout.addWidget(anime_box)
 
@@ -450,12 +556,34 @@ class MainWindow(QMainWindow):
         row = QFormLayout()
         row.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
         row.addRow(self.searchbar, self.add_movie_button)
-        container_layout.addLayout(row)
-        thing = QVBoxLayout()
 
-        self.scroll.setLayout(thing)
+        genres_box = QGroupBox('Whitelist Genres:')
+        genres_box.setFont(QFont('Avenir', 30))
+        genres_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+
+        genres_box.setLayout(self.settings[10])
+
+        # Continued customization of the genre scroll (because python-ta is complaining about exceeding 50 statements)
+        self.settings[9].setWidgetResizable(True)
+        self.settings[9].setWidget(genres_box)
+
+        # Genre auto-complete
+        genre_completer = QCompleter(ALL_GENRES)
+        genre_completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        self.settings[6].setCompleter(genre_completer)
+
+        row.addRow(self.settings[0], self.settings[2])
+        row.addRow(self.settings[3], self.settings[5])
+        row.addRow(self.settings[6], self.settings[8])
+        row.addRow(self.settings[9])
+
+        # container_layout.addLayout(row)
+
+        selected_shows_layout = QVBoxLayout()
+
+        self.scroll.setLayout(selected_shows_layout)
         container_layout.addWidget(self.scroll)
-        container_layout.addWidget(self.recommendation_box)
+        # container_layout.addWidget(self.recommendation_box)
 
         self.recommendation_box.hide()
 
@@ -464,13 +592,36 @@ class MainWindow(QMainWindow):
         container_layout.addWidget(self.submit_button, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         container.setLayout(container_layout)
-        self.setCentralWidget(container)
+
+        main_container = QWidget()
+        layoutttt = QHBoxLayout()
+        layout_two = QVBoxLayout()
+
+        # # To space the list of genres.
+        # spacer = QSpacerItem(10, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        # row.addItem(spacer)
+
+        layoutttt.addWidget(container, stretch=1)
+        layout_two.addLayout(row)
+        layout_two.addWidget(self.settings[9])
+
+        widgety = QWidget()
+        widgety.setLayout(layout_two)
+        layoutttt.addWidget(widgety)
+        main_container.setLayout(layoutttt)
+
+        self.setCentralWidget(main_container)
+
+        # self.setCentralWidget(container)
 
         self.showMaximized()
         self.showFullScreen()
 
         self.add_movie_button.clicked.connect(self.on_movie_added)
         self.submit_button.clicked.connect(self.on_submit)
+        self.settings[2].clicked.connect(self.set_rating)
+        self.settings[5].clicked.connect(self.set_min_animes)
+        self.settings[8].clicked.connect(self.on_genre_added)
 
     def on_movie_added(self) -> None:
         """Button event for when movies are added"""
@@ -480,6 +631,47 @@ class MainWindow(QMainWindow):
             self.form_layout.addRow(MovieWidget(text, self, self.movies[text]))
             self.added_movies.add(text)
             # print(self.added_movies)
+
+    def on_genre_added(self) -> None:
+        """Button event for when movies are added"""
+        text = self.settings[6].text()
+        if text in ALL_GENRES and text not in self.settings[7]:
+            self.searchbar.setText('')
+            self.settings[10].addRow(GenreWidget(text, self))
+            self.settings[7].add(text)
+
+    def set_rating(self) -> None:
+        """Button event for when the minimum rating filter is set"""
+        min_rating = self.settings[0].text()
+        try:
+            min_rating = float(min_rating)
+        except ValueError:
+            if min_rating != '':
+                self.settings[0].setPlaceholderText('Error: Not 7.4 - 10.0')
+        else:
+            if not 7.4 <= min_rating <= 10.0:
+                self.settings[0].setPlaceholderText('Error: Not 7.4 - 10.0')
+            else:
+                self.settings[1] = min_rating
+                self.settings[0].setPlaceholderText(str(min_rating))
+        finally:
+            self.settings[0].setText('')
+
+    def set_min_animes(self) -> None:
+        """Button event for when the number of animes to recommend is set.
+
+        Sets the number of animes to recommend to the max of the min_num_animes provided and 1 (so no negatives)
+        """
+        min_animes = self.settings[3].text()
+        try:
+            min_animes = int(min_animes)
+        except ValueError:
+            pass
+        else:
+            self.settings[4] = max(min_animes, 1)
+        finally:
+            self.settings[3].setText('')
+            self.settings[3].setPlaceholderText(f'Current: {self.settings[4]} Range: 1+')
 
     def on_submit(self) -> None:
         """Button event that triggers recommendation generation
@@ -492,13 +684,39 @@ class MainWindow(QMainWindow):
         self.submit_button.hide()
         self.add_movie_button.hide()
         self.scroll.hide()
+        self.setCentralWidget(self.recommendation_box)
         self.recommendation_box.show()
-        print('started')
-        # print(self.json_movies)
-        lst = modified_get_recommendations(
-            [(self.json_movies[entry], self.movies[entry]) for entry in self.json_movies if entry in self.added_movies],
-            max(3, len(self.added_movies)))
-        print('done')
+
+        lst = []
+
+        if len(self.added_movies) == 0:
+            self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+            self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+            self.recommendation_layout.addRow(
+                QLabel("No animes to recommend! Please add some movies or shows you've watched for better results.")
+            )
+            self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+            self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        else:
+            print('started')
+            lst = modified_get_recommendations(
+                [(self.json_movies[entry], self.movies[entry])
+                 for entry in self.json_movies if entry in self.added_movies],
+                self.settings[4],
+                self.settings[1],
+                self.settings[7]
+            )
+            print('done')
+
+            if len(lst) == 0:
+                self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+                self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+                self.recommendation_layout.addRow(
+                    QLabel('No animes to recommend! Try lessening your filters for better results.')
+                )
+                self.recommendation_layout.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
+                self.recommendation_box.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
         for i in range(0, len(lst)):
             anime = lst[i]
 
@@ -521,8 +739,9 @@ class MainWindow(QMainWindow):
                 self.recommended_animes[anime.title].left = self.recommended_animes[lst[i - 1].title]
                 self.recommended_animes[anime.title].hide()
 
-        self.recommended_animes[lst[-1].title].right = self.recommended_animes[lst[0].title]
-        self.recommended_animes[lst[0].title].left = self.recommended_animes[lst[-1].title]
+        if len(lst) != 0:
+            self.recommended_animes[lst[-1].title].right = self.recommended_animes[lst[0].title]
+            self.recommended_animes[lst[0].title].left = self.recommended_animes[lst[-1].title]
 
         # SELF REMINDER THAT I CAN USE A DICTIONARY/LIST TO STORE ALL THE WIDGETS AFTER THE RECOMMENDED
         # ANIMES ARE GENERATED, AND THEN KEEP IT AND THEN HIDE/SHOW AS USERS SCROLL THROUGH EACH ONE.
@@ -630,7 +849,8 @@ if __name__ == '__main__':
             'PyQt6', 'PyQt6.QtCore', 'PyQt6.QtWidgets', 'PyQt6.QtGui', 'Qt', 'os', 'sys', 'random', 'json', 'QWidget',
             'QGroupBox', 'QFormLayout', 'QHBoxLayout', 'QVBoxLayout', 'QLabel', 'QPushButton', 'QMainWindow',
             'QLineEdit', 'QCompleter', 'QScrollArea', 'QFont', 'QPixmap', 'QtCore', 'recommendation_algorithm',
-            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv', 'graph_classes', 'filter_movies'
+            'Media', 'QSpacerItem', 'QSizePolicy', 'QApplication', 'requests', 'csv', 'graph_classes', 'filter_movies',
+            'anime_filter'
         ],
         # the names (strs) of imported modules
         'allowed-io': [
