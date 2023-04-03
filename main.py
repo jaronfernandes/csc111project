@@ -575,7 +575,7 @@ class MainWindow(QMainWindow):
         row.setFormAlignment(Qt.AlignmentFlag.AlignHCenter)
         row.addRow(self.searchbar, self.add_movie_button)
 
-        genres_box = QGroupBox('Whitelist Genres:')
+        genres_box = QGroupBox('Whitelisted Genres:')
         genres_box.setFont(QFont('Avenir', 30))
         genres_box.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
