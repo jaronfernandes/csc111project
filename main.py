@@ -39,8 +39,9 @@ import recommendation_algorithm
 import filter_movies
 import anime_filter
 
-# Picks a random background image at the start of the program
-BACKGROUND_IMAGE = f"imgs/background_images/{random.choice(os.listdir('imgs/background_images'))}"
+# Picks a random background image at the start of the program and excludes the .DS_Store path.
+BACKGROUND_IMAGE = \
+    f"imgs/background_images/{random.choice([x for x in os.listdir('imgs/background_images') if x[0] != '.'])}"
 ALL_GENRES = anime_filter.get_genres()
 
 
