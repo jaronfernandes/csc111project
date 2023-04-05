@@ -1,1 +1,1 @@
-# csc111project
+# csc111project: Anime Recommendation Program
