@@ -39,3 +39,8 @@ python -m spacy download en_core_web_lg
 ## What you should expect from main.py:
 After running main.py, you should expect to see a window pop up with two sections: a section that holds the movies and shows you’ve in and a section that holds all the widgets used to customizable the recommendation program. Please note that to properly set one of the settings, you need to click on the button beside it. If it’s valid, it will appear somewhere as a list or as placeholder text, depending on the specific setting. After selecting your settings and adding movies and shows, you can press the ”Submit” button below to start generating recommendations. This will take some time and will appear to ”freeze”, but depending on your filters and number of shows/movies you’ve added, it will take some time.
 • If you want to test main.py quickly (a few seconds), you should run it with a small input of movies/shows (1 or 2), and with a few filters (ex. rating: 8.5, genre: comedy and/or drama).
+
+![Screenshot](readme_images/sampleimg1.png)
+![Screenshot](readme_images/sampleimg2.png)
+![Screenshot](readme_images/sampleimg3.png)
+![Screenshot](readme_images/sampleimg4.png)
