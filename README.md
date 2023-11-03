@@ -3,7 +3,7 @@
 developers = ["Jaiz Jeeson", "Ethan Fine", "Carmen Chau", "Jaron Fernandes"]
 ```
 ## Downloading Libraries and running main.py
-Before we begin, you must download all the .py files and requirements.txt from Markus, and move it to the TOP LEVEL of the final csc111project folder. In other words, within the final csc111project folder, there is a datasets folder, an imgs folder (containing images for GUI background) and on the same level, all the .py files and requirement.txt files.
+Before we begin, you must download all the .py files and requirements.txt, and move it to the TOP LEVEL of the final csc111project folder. In other words, within the final csc111project folder, there is a datasets folder, an imgs folder (containing images for GUI background) and on the same level, all the .py files and requirement.txt files.
 
 We also highly suggest you create a new virtual environment (venv) to install requirements.txt and necessary packages
 
